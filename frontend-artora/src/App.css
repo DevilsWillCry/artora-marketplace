@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@import "tailwindcss";
+
+
+
+@theme {
+  --font-family-inter: Inter, system-ui, sans-serif;
+  --font-family-code: 'JetBrains Mono', monospace;
+  --font-family-fraunces : 'Fraunces', system-ui, serif;
+
+  /* SURFACES */
+  --color-cream: #F4ECE0;
+  --color-paper: #FAF6EE;
+  --color-shell: #EBE0CF;
+  
+  /* INK */
+  --color-ink: #2A2820;
+  --color-ink-soft: #5A554A;
+  --color-ink-mute: #8A8275;
+  --color-rule: #D9CDB8;
+
+  /* LINE */
+  --color-line: #C9BDA6;
+  --color-line-soft: #E9DDC6;
+
+  /* BRAND */
+
+  --color-terracotta: #B8593A;
+  --color-terracotta-dk: #9C4729 ;
+  --color-clay: #7A6049;
+  --color-clay-soft: #A88A6E;
+  --color-forest: #3A6B4A;
+  --color-forest-dk: #2A5C3A;
+
+  /* ACCENTS */
+  --color-sage: #8A9472;
+  --color-cream-2: #E9DDC6;
+  --color-ash: #C9BDA6;
+  --color-bone: #F4ECDC;
+
+
+  /* ANIMATIONS */
+  --animate-throwing-y-scroll: scroll-animation 1.5s ease-in-out infinite;
+  --animate-letter-in: letterIn 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  --animate-fade-up: fadeUp 1.4s ease 2.6s forwards;
+  --animate-scroll-down: scrollDown 2.4s ease-in-out infinite;
+  --animate-float: float 12s ease-in-out infinite;
+  --animate-ring-pulse: ringPulse 3s ease-in-out infinite;
+  --animate-breathe: breathe 6s ease-in-out infinite;
+
+  @keyframes scroll-animation {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(10rem);
+    }
+  };
+
+  @keyframes letterIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  };
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  };
+
+   @keyframes scrollDown {
+    0% { top: -30%; }
+    100% { top: 130%; }
+  };
+
+  @keyframes float {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(40px, -30px) scale(1.05); }
+    66% { transform: translate(-30px, 20px) scale(.95); }
+  };
+
+   @keyframes ringPulse {
+    0% { transform: scale(.6); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
+  };
+
+   @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  };
+}
