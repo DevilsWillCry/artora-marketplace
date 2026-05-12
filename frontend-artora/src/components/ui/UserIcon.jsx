@@ -1,32 +1,32 @@
 import { cn } from "@/lib/utils";
-function UserIcon({ 
-    size = "sm",
-    className
- }) {
+function UserIcon({ size = "sm", className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="currentColor"
+      strokeWidth="2"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={cn(baseStyles, sizes[size], className)}
     >
-      <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+      <path d="M5 21a7 7 0 1114 0M16 7a4 4 0 11-8 0 4 4 0 018 0z" />
     </svg>
   );
 }
 
 export default UserIcon;
 
-
 /* ───────────────────────────────────────────── */
 
 const baseStyles = `
   text-black
+  h-10
   flex items-center justify-center
   hover:text-white
   transition-all duration-200
 `;
-
 
 /* ───────────────────────────────────────────── */
 
