@@ -76,7 +76,7 @@ const products = [
 
     price: 24,
 
-    featured: true,
+    featured: false,
 
     description:
       "Vela de cera de abeja de combustión lenta con sutiles notas de cedro y ámbar.",
@@ -97,7 +97,7 @@ const products = [
 
     price: 58,
 
-    featured: true,
+    featured: false,
 
     description:
       "Tabla de servir de nogal macizo tallada y acabada a mano.",
@@ -118,7 +118,7 @@ const products = [
 
     price: 88,
 
-    featured: true,
+    featured: false,
 
     description:
       "Mantel de lino lavado suave diseñado para rituales de comida lenta.",

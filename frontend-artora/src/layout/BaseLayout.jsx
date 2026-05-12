@@ -1,9 +1,10 @@
 import { Outlet } from "react-router"
+import NavBar from "@/components/ui/NavBar"
 
 function BaseLayout() {
   return (
     <>
-      <h1>Artora</h1>
+      <NavBar />
       <Outlet />
     </>
   )

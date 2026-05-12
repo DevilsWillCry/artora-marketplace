@@ -7,7 +7,7 @@ function HeroContent({ dense, onShop, onAbout }) {
   return (
     <div>
       {/* Eyebrow */}
-      <div className="mb-5 flex items-center gap-2.5 uppercase tracking-[0.18em] text-terracotta">
+      <div className="mt-10 mb-5 flex items-center gap-2.5 uppercase tracking-[0.18em] text-terracotta">
         <span className="h-px w-4.5 bg-current" />
         <span className="font-mono text-[11px]">
           EST. 2026 · UN ESTUDIO PEQUEÑO
