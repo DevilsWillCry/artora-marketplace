@@ -97,7 +97,7 @@ const products = [
 
     price: 58,
 
-    featured: false,
+    featured: true,
 
     description:
       "Tabla de servir de nogal macizo tallada y acabada a mano.",

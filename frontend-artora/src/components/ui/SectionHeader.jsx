@@ -1,19 +1,31 @@
+import { cn } from "@/lib/utils";
+import Eyebrow from "./typography/Eyebrow";
+import Title from "./typography/Title";
+
 function SectionHeader({
   eyebrow,
+  eyebrowClassName,
   title,
+  titleClassName,
   actionLabel,
   onAction,
   centered = false,
+  className,
 }) {
+
+
   return (
     <div
-      className={`
+      className={cn(
+        `
         flex items-end justify-between gap-6
         ${centered ? "flex-col text-center" : ""}
         max-md:gap-5
         max-md:flex-col
         max-md:items-start
-      `}
+      `,
+        className,
+      )}
     >
       <div>
         {/* Eyebrow */}
@@ -28,7 +40,7 @@ function SectionHeader({
               text-terracotta
             "
           >
-            {eyebrow}
+            <Eyebrow className={eyebrowClassName}>{eyebrow}</Eyebrow>
           </div>
         )}
 
@@ -42,7 +54,7 @@ function SectionHeader({
             text-ink
           "
         >
-          {title}
+          <Title className={titleClassName}>{title}</Title>
         </h2>
       </div>
 

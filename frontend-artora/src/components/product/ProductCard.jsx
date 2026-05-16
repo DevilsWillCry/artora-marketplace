@@ -18,7 +18,7 @@ function ProductCard({ product, onView, onAdd }) {
         overflow-hidden 
         rounded-md
         border border-rule
-        bg-paper
+        bg-cream
         transition-all duration-300
         hover:-translate-y-1
         hover:shadow-[0_16px_40px_rgba(60,40,20,0.10)]
@@ -39,8 +39,9 @@ function ProductCard({ product, onView, onAdd }) {
           alt={product.name}
           className="
             h-full w-full object-cover
-            transition-transform duration-500
+            transition-transform duration-500s
             group-hover:scale-[1.03]
+            rounded-lg
           "
         />
 

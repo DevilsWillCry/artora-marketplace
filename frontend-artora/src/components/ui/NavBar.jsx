@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MenuArray from "@/data/menu_navigation";
+import { navigation } from "@/data/LinksList";
 import UserIcon from "./UserIcon";
 import MobileNavBar from "./MobileNavBar";
 import NavLogoAndTitle from "./NavLogoAndTitle";
@@ -23,13 +23,13 @@ function NavBar() {
 
   return (
     <section
-      className={`fixed flex items-center justify-between  w-full z-100 px-5  bg-cream transition-all duration-300 ${scrolled ? "py-3 shadow-2xl border-b-0" : "py-2  border-b"} border-terracotta`}
+      className={`fixed flex items-center justify-between  w-full z-100 px-5  bg-cream transition-all duration-300 ${scrolled ? "py-2.5 shadow-2xl border-b-0" : "py-2  border-b"} border-terracotta`}
     >
       {/*--- Logo  & Title --*/}
       <NavLogoAndTitle />
 
       {/* -- Menu PC-- */}
-      <DesktopNavBar MenuArray={MenuArray} />
+      <DesktopNavBar MenuArray={navigation} />
 
       <div>
         <NavLink to={`/profile/${localStorage.getItem("userId")}`} className="relative p-2">
@@ -44,7 +44,7 @@ function NavBar() {
       <MobileNavBar
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        MenuArray={MenuArray}
+        MenuArray={navigation}
       />
     </section>
   );

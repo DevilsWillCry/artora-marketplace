@@ -6,12 +6,13 @@ import ShopPage from "./pages/ShopPage";
 import PrivateOutlet from "./layout/PrivateOutlet";
 import LoginPage from "./pages/LoginPage";
 import { useAuth } from "./hooks/useAuth";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   const density = "compact";
   const user = useAuth();
   user.setUser("hola");
-  console.log(user);
+  console.log(user); // Continuar desarrollo de desarrollo
   return (
     <>
       <Routes>
@@ -26,6 +27,7 @@ function App() {
               </PrivateOutlet>
             }
           />
+          <Route path="/about" element={<AboutPage />} />
         </Route>
       </Routes>
     </>

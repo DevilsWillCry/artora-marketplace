@@ -32,7 +32,7 @@ function FeaturedProductsSection({
 
       <div
         className={`
-          mt-10 grid grid-cols-3
+          mt-10 grid grid-cols-4
           ${dense ? "gap-5" : "gap-7"}
           max-md:grid-cols-1
           max-md:gap-10
