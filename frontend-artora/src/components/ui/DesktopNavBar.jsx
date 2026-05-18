@@ -2,7 +2,7 @@ import NavLinks from "./NavLinks";
 
 function DesktopNavBar({ MenuArray }) {
   return (  
-    <div className="max-md:hidden relative flex flex-row tracking-widest items-center justify-end gap-3">
+    <div className="max-md:hidden relative flex flex-row tracking-widest items-center justify-end gap-8">
       <NavLinks
         mobile={false}
         desktopActive="text-terracotta"
