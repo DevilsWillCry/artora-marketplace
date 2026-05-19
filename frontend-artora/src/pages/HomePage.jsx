@@ -16,7 +16,7 @@ function HomePage({ density }) {
   }
 
   return (
-    <main>
+    <main className="pt-5"> 
       <HeroSection
         density={density}
         onShop={() => navigate("shop")}

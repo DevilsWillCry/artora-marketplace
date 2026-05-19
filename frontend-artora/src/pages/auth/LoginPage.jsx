@@ -10,15 +10,16 @@ import ArtoraInput from "@/components/ui/form/ArtoraInput";
 
 import ArtoraButton from "@/components/ui/ArtoraButton";
 
-import  useAuth from "@/hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 
 import { getUsers } from "@/storage/userStorage";
 
+import { Toaster, toast } from "sonner";
+
 function LoginPage({ density }) {
   const navigate = useNavigate();
-  const users =  getUsers();
+  const users = getUsers();
   const { login } = useAuth();
-
 
   const [form, setForm] = useState({
     email: "",
@@ -28,34 +29,46 @@ function LoginPage({ density }) {
 
   const [errors, setErrors] = useState({});
 
-
   function submit(e) {
     e.preventDefault();
     const userFinded = users.find(
       (user) => user.email === form.email && user.password === form.password,
     );
 
+    console.log(userFinded);
+
     const er = {};
 
     if (!form.email.includes("@")) {
-      er.email = "Please enter a valid email";
+      er.email = "Por favor ingresa un correo válido";
     }
 
     if (form.password.length < 6) {
-      er.password = "At least 6 characters";
+      er.password = "Al menos 6 caracteres";
     }
 
     if (!userFinded) {
-      er.notFoundUser = "User not found, please register";
+      er.notFoundUser = "Usuario no encontrado, intenta de nuevo o registrate";
     }
 
     setErrors(er);
 
     if (Object.keys(er).length === 0) {
       if (userFinded) {
-        const {password, ...safeUser} = userFinded;
+        const { password, ...safeUser } = userFinded;
         login(safeUser);
-        navigate("/");
+        
+        toast.success("¡Inicio de sesión exitoso!", {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       }
     }
   }
@@ -65,16 +78,17 @@ function LoginPage({ density }) {
       side="right"
       density={density}
       image="https://img.kwcdn.com/product/fancy/e319154d-9950-4c5b-8be9-65a576647a07.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"
+      textHero="Volver a un nombre que conoces se siente como algo pequeño y apropiado."
     >
-      <div className="max-w-105">
+      <div className="max-w-105 animate-fade-left animate-once animate-ease-out">
         <div
           className="
-            mb-4 font-mono text-[11px]
+            mb-4 font-mono text-xs
             uppercase tracking-[0.18em]
             text-terracotta
           "
         >
-          · Welcome back ·
+          · Bienvenido de nuevo ·
         </div>
 
         <h1
@@ -84,7 +98,7 @@ function LoginPage({ density }) {
             text-ink
           "
         >
-          Sign in to <em className="text-terracotta">your studio.</em>
+          Ingresa a <em className="text-terracotta">tu espacio.</em>
         </h1>
 
         <p
@@ -94,12 +108,16 @@ function LoginPage({ density }) {
             text-inkSoft
           "
         >
-          Pick up where you left off — saved pieces, past orders, and more.
+          Retoma donde lo dejaste: guarda tus artículos, consulta tus pedidos
+          anteriores y mucho más.
         </p>
 
         <form onSubmit={submit} className="flex flex-col gap-5">
+          {errors.notFoundUser && (
+            <p className="text-red-500">{errors.notFoundUser}</p>
+          )}
           <ArtoraInput
-            label="Email"
+            label="Correo electrónico"
             type="text"
             value={form.email}
             onChange={(value) =>
@@ -113,7 +131,7 @@ function LoginPage({ density }) {
           />
 
           <ArtoraInput
-            label="Password"
+            label="Contraseña"
             type="password"
             value={form.password}
             onChange={(value) =>
@@ -126,8 +144,12 @@ function LoginPage({ density }) {
             placeholder="••••••••"
           />
 
-          <ArtoraButton size="lg" type="submit">
-            Sign in →
+          <ArtoraButton
+            size="lg"
+            type="submit"
+            className="bg-terracotta hover:bg-black transition-all duration-300"
+          >
+            Iniciar sesión →
           </ArtoraButton>
         </form>
 
@@ -138,7 +160,7 @@ function LoginPage({ density }) {
             font-serif italic text-inkSoft
           "
         >
-          New to the studio?{" "}
+          ¿Nuevo en Artora?{" "}
           <button
             onClick={() => navigate("/register")}
             className="
@@ -146,12 +168,14 @@ function LoginPage({ density }) {
               text-terracotta
               hover:text-ink
               transition-all duration 300
+              
             "
           >
-            Make an account →
+            Crea una cuenta →
           </button>
         </div>
       </div>
+      <Toaster position="bottom-right" theme="" />
     </AuthShell>
   );
 }

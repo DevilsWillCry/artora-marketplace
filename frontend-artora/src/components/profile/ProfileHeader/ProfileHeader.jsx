@@ -14,6 +14,7 @@ export default function ProfileHeader({ setTab }) {
   const handleLogout = () => {
     logout();
   };
+  console.log(user.avatar)
 
   return (
     <section
@@ -50,13 +51,14 @@ export default function ProfileHeader({ setTab }) {
           onMouseOut={() => setIsEditing(false)}
         >
           <img
-            className="w-full h-full object-cover rounded-full shadow-2xl border-4 border-stone-200 hover:border-terracotta transition-all duration-300 cursor-pointer"
+            className="w-full h-full object-cover rounded-full shadow-2xl border-4 border-stone-200 hover:border-terracotta transition-all duration-300 cursor-pointer text-xs text-stone-700 text-center my-0 m-auto flex items-center justify-center"
             src={user.avatar}
-            alt={user.name}
+            onError={(e) => (e.target.src = "https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg")}
+            alt={`${user.name} icon`}
           />
 
           <p
-            className={`absolute top-1/2 right-0 -translate-y-1/2 bg-stone-300 tracking-widest text-xl text-stone-700 w-full h-full rounded-full transition-all duration-300 cursor-pointer text-center flex flex-col items-center justify-center ${isEditing ? "opacity-100" : "opacity-0"}`}
+            className={`absolute top-1/2 right-0 -translate-y-1/2 bg-paper tracking-widest text-xl text-stone-700 w-full h-full rounded-full transition-all duration-300 cursor-pointer text-center flex flex-col items-center justify-center ${isEditing ? "opacity-100" : "opacity-0"}`}
           >
             Change avatar
           </p>

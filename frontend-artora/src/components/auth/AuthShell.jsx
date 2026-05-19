@@ -4,7 +4,7 @@ import AuthHero from "./AuthHero";
 
 export default function AuthShell({ side = "right", density, children , ...props}) {
   const dense = density === "compact";
-
+  console.log(props);
   return (
     <main className="bg-paper">
       <div
@@ -14,7 +14,7 @@ export default function AuthShell({ side = "right", density, children , ...props
           lg:grid-cols-2
         "
       >
-        {side === "right" && <AuthHero density={density} image={props.image} />}
+        {side === "right" && <AuthHero density={density} className="animate-fade-right animate-once animate-duration-1000 animate-ease-out" image={props.image}  text={props.textHero}/>}
 
         <section
           className={`
@@ -25,7 +25,7 @@ export default function AuthShell({ side = "right", density, children , ...props
           {children}
         </section>
 
-        {side === "left" && <AuthHero density={density}  image={props.image} />}
+        {side === "left" && <AuthHero density={density} className="animate-fade-left animate-once animate-duration-1000 animate-ease-out"  image={props.image} text={props.textHero}/>}
       </div>
     </main>
   );

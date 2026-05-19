@@ -29,7 +29,7 @@ function RegisterPage({ density }) {
 
   function submit(e) {
     e.preventDefault();
-    const userFindedByEmail = users.find((user) => user.email === form.email);
+    const userFindedByEmail = users.find((user) => user.email.toLowerCase() === form.email.toLowerCase());
 
     const er = {};
 
@@ -42,15 +42,15 @@ function RegisterPage({ density }) {
       !form.email.includes(".") ||
       form.email.includes(" ")
     ) {
-      er.email = "Please enter a valid email";
+      er.email = "Por favor ingresa un correo válido";
     }
 
     if (form.password.length < 6) {
-      er.password = "At least 6 characters";
+      er.password = "Al menos 6 caracteres";
     }
 
     if (userFindedByEmail) {
-      er.email = "Email already in use";
+      er.email = "Correo ya registrado, intenta de nuevo";
     }
 
     setErrors(er);
@@ -75,8 +75,9 @@ function RegisterPage({ density }) {
       side="left"
       density={density}
       image="https://img.freepik.com/fotos-premium/bodegon-jarron-arcilla-blanca-mate-jarrones-varias-formas_639836-413.jpg"
+      textHero="A veces, el mejor comienzo es un nombre que se siente tuyo."
     >
-      <div className="max-w-105">
+      <div className="max-w-105 animate-fade-right animate-once animate-ease-out">
         <div
           className="
             mb-4 font-mono text-[11px]
@@ -84,7 +85,7 @@ function RegisterPage({ density }) {
             text-terracotta
           "
         >
-          · Join the studio ·
+          · Unete al estudio ·
         </div>
 
         <h1
@@ -94,7 +95,7 @@ function RegisterPage({ density }) {
             text-ink
           "
         >
-          Make an account. <em className="text-terracotta">Takes a minute.</em>
+          Crea una cuenta <em className="text-terracotta">tomara un minuto.</em>
         </h1>
 
         <p
@@ -104,13 +105,13 @@ function RegisterPage({ density }) {
             text-inkSoft
           "
         >
-          Save favourite pieces, follow your makers, and check out faster next
-          time.
+          Guarda tus artículos favoritos, sigue a tus creadores y compra más
+          rápido la próxima vez.
         </p>
 
         <form onSubmit={submit} className="flex flex-col gap-5">
           <ArtoraInput
-            label="Name"
+            label="Nombre"
             type="text"
             value={form.name}
             onChange={(value) =>
@@ -124,7 +125,7 @@ function RegisterPage({ density }) {
           />
 
           <ArtoraInput
-            label="Email"
+            label="Correo electrónico"
             type="text"
             value={form.email}
             onChange={(value) =>
@@ -138,7 +139,7 @@ function RegisterPage({ density }) {
           />
 
           <ArtoraInput
-            label="Password"
+            label="Contraseña"
             type="password"
             value={form.password}
             onChange={(value) =>
@@ -152,7 +153,7 @@ function RegisterPage({ density }) {
           />
 
           <ArtoraButton className="bg-terracotta" size="lg" type="submit">
-            CREATE ACCOUNT
+            Crea una cuenta →
           </ArtoraButton>
         </form>
 
@@ -163,7 +164,7 @@ function RegisterPage({ density }) {
             font-serif italic text-inkSoft
           "
         >
-          Already have an account?{" "}
+          ¿Ya tienes una cuenta?{" "}
           <button
             onClick={() => navigate("/login")}
             className="
@@ -173,7 +174,7 @@ function RegisterPage({ density }) {
               transition-all duration 300
             "
           >
-            Sing in →
+            Inicia sesión →
           </button>
         </div>
       </div>

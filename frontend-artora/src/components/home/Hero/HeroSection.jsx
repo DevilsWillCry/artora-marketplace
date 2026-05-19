@@ -24,7 +24,7 @@ function HeroSection({
           onAbout={onAbout}
         />
 
-        <HeroImageCollage dense={dense} className="max-md:mt-10" />
+        <HeroImageCollage dense={dense} className="max-md:mt-10 mt-25" />
       </div>
     </section>
   );

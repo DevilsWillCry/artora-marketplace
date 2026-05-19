@@ -8,13 +8,15 @@ function AboutImages() {
     setShowImage(index);
   };
 
+  console.log(showImage);
+
   return (
-    <section className="bg-paper w-full h-auto flex flex-row gap-8 p-10 items-center justify-center">
+    <section className="bg-paper w-full h-auto flex flex-row gap-8 p-10 items-center justify-center max-md:flex-col">
       {ImageArray.map((image) => (
         <div
-          className={`relative rounded-md w-100 h-120 drop-shadow-2xl overflow-hidden nth-2:h-140 transition-all duration-300 ${
+          className={`relative rounded-md w-100 h-120 drop-shadow-2xl overflow-hidden nth-2:h-140 transition-all duration-300 max-md:w-full max-md:h-100 ${
             image.id === showImage ? "grayscale-0" : "grayscale-100"
-          }`}
+          } animate-fade animate-once animate-duration-${image.duration} animate-ease-in animate-delay-none`}
           key={image.id}
           onMouseOver={() => handleImageShowInformation(image.id)}
           onMouseOut={() => handleImageShowInformation(null)}

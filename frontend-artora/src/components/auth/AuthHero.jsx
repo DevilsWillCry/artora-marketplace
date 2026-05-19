@@ -1,18 +1,12 @@
 // components/auth/AuthHero.jsx
+import { cn } from "@/lib/utils";
 
-export default function AuthHero({
-  density,
-  ...props
-}) {
+export default function AuthHero({ density, className, ...props }) {
   const dense = density === "compact";
-
-
+  console.log(props);
   return (
     <div
-      className="
-        relative overflow-hidden
-        bg-cover bg-center
-      "
+      className={cn("relative overflow-hidden bg-cover bg-center", className)}
       style={{
         backgroundImage: `url(${props.image})`,
         minHeight: dense ? 600 : 720,
@@ -31,6 +25,7 @@ export default function AuthHero({
         className="
           absolute bottom-9 left-9 right-9
           text-cream
+          animate-fade-up animate-once animate-duration-1000 animate-delay-300 animate-ease-out animate-fill-backwards
         "
       >
         <div
@@ -42,7 +37,7 @@ export default function AuthHero({
           "
         >
           <span className="h-px w-5 bg-current" />
-          From the studio
+          Desde Artora
         </div>
 
         <blockquote
@@ -52,8 +47,7 @@ export default function AuthHero({
             leading-tight tracking-[-0.01em]
           "
         >
-          "Coming back to a name you know feels
-          like the right kind of small."
+          {props.text}
         </blockquote>
 
         <p
@@ -63,7 +57,7 @@ export default function AuthHero({
             opacity-85
           "
         >
-          — Linnea Costa, founder
+          — Miguel Angel, fundador
         </p>
       </div>
     </div>
