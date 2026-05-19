@@ -1,8 +1,10 @@
 import { Navigate, Outlet } from "react-router"
+import useAuth from "@/hooks/useAuth"
 
 function PrivateOutlet() {
-  const condition = false // Cambia esto a true si el usuario está autenticado
-  return condition ? <Outlet /> : <Navigate to="/login" />
+  const { isAuthenticated } = useAuth()
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
   
 }
 

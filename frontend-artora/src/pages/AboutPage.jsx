@@ -18,14 +18,10 @@ function AboutPage() {
         titleClassName="text-center max-w-5xl text-7xl max-md:text-4xl max-md:max-w-xs"
       />
 
-  
       <AboutImages />
-
-      <AboutSection />
-
       
-
-
+      <AboutSection />
+  
     </section>
   );
 }

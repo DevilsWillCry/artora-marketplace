@@ -1,16 +1,34 @@
-import { useState } from "react"
-import { AuthContext } from "./AuthContext"
+import { useState } from "react";
+import { AuthContext } from "./AuthContext";
+import { getUser, saveUser, removeUser } from "@/storage/authStorage";
+import { useEffect } from "react";
 
 export default function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => getUser() || null);
+  const [loading, setLoading] = useState(true);
+  
+  
+  useEffect(() => {
+    const storedUser = getUser();
+
+    if (storedUser) {
+      setUser(storedUser);
+    }
+
+    setLoading(false);
+  }, []);
+
 
   const login = (userData) => {
-    setUser(userData)
-  }
+    setUser(userData);
+    saveUser(userData);
+  };
 
   const logout = () => {
-    setUser(null)
-  }
+    setUser(null);
+    removeUser();
+  };
+
 
   return (
     <AuthContext.Provider
@@ -18,11 +36,12 @@ export default function AuthProvider({ children }) {
         user,
         login,
         logout,
+        loading,
         setUser,
-        isAuthenticated: !!user
+        isAuthenticated: !!user,
       }}
     >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }

@@ -5,10 +5,13 @@ import MobileNavBar from "./MobileNavBar";
 import NavLogoAndTitle from "./NavLogoAndTitle";
 import DesktopNavBar from "./DesktopNavBar";
 import { NavLink } from "react-router";
+import useAuth from "@/hooks/useAuth";
 
 function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +35,7 @@ function NavBar() {
       <DesktopNavBar MenuArray={navigation} />
 
       <div>
-        <NavLink to={`/profile/${localStorage.getItem("userId")}`} className="relative p-2">
+        <NavLink to={`/profile/${user?.id}`} className="relative p-2">
           <UserIcon
             className="transition-all duration-300  text-ink-soft font-bold hover:text-terracotta h-7"
             size="sm"
