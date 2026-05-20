@@ -12,13 +12,13 @@ import ArtoraButton from "@/components/ui/ArtoraButton";
 
 import useAuth from "@/hooks/useAuth";
 
-import { getUsers } from "@/storage/userStorage";
+import { load } from "@/storage/storage";
 
 import { Toaster, toast } from "sonner";
 
 function LoginPage({ density }) {
   const navigate = useNavigate();
-  const users = getUsers();
+  const users = load("users", []); 
   const { login } = useAuth();
 
   const [form, setForm] = useState({
@@ -34,8 +34,6 @@ function LoginPage({ density }) {
     const userFinded = users.find(
       (user) => user.email === form.email && user.password === form.password,
     );
-
-    console.log(userFinded);
 
     const er = {};
 

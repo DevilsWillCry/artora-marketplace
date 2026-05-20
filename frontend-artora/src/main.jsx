@@ -4,9 +4,9 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router";
 import AuthProvider from "@/context/AuthProvider";
-import { initializeUsers } from "./storage/userStorage.js";
+import { initData } from "./lib/initData.js";
 
-initializeUsers();
+initData();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

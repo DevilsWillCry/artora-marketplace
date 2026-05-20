@@ -5,7 +5,7 @@ import products from "@/data/products";
 import ProductCard from "../../../components/product/ProductCard"
 
 export default function SavedTab() {
-  const savedProducts = products.slice(0, 6);
+  const savedProducts = products.slice(0, 3);
 
   return (
     <div>
@@ -52,7 +52,8 @@ export default function SavedTab() {
 
           md:grid-cols-2
 
-          xl:grid-cols-3
+          xl:grid-cols-5
+          xl:h-full
         "
       >
         {savedProducts.map((product) => (

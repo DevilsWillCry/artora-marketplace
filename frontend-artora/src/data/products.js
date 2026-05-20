@@ -9,7 +9,7 @@ const products = [
 
     categoryId : 1,
 
-    artisan: "Studio Linnea",
+    artisanId: 1,
 
     price: 64,
 
@@ -19,7 +19,7 @@ const products = [
       "Jarrón de cerámica hecho en torno, terminado con un esmalte mate suave inspirado en los tonos terrosos de la costa.",
 
     image:
-      "https://www.sweetpiedmont.com/cdn/shop/files/earthenvase2.png?v=1744134843&width=1946",
+      "https://http2.mlstatic.com/D_NQ_NP_792376-MLM100099182419_122025-O.webp",
   },
 
   {
@@ -114,7 +114,7 @@ const products = [
 
     categoryId: 2,
 
-    artisan: "Maison Terre",
+    artisan: 2,
 
     price: 88,
 

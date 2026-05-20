@@ -12,11 +12,11 @@ import ArtoraInput from "@/components/ui/form/ArtoraInput";
 import ArtoraButton from "@/components/ui/ArtoraButton";
 
 import useAuth from "@/hooks/useAuth";
-import { addUser, getUsers } from "@/storage/userStorage";
+import { save, load } from "@/storage/storage";
 
 function RegisterPage({ density }) {
   const navigate = useNavigate();
-  const users = getUsers();
+  const users = load("users", []);
 
   const [form, setForm] = useState({
     name: "",
@@ -61,9 +61,12 @@ function RegisterPage({ density }) {
         id: uuidv4(),
         role: "customer",
         avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 100)}`,
+        savedProducts: [],
+        purchasedOrders: [],
+        listings: [],
       };
 
-      addUser(newUser);
+      save("users", [...users, newUser]);
       login(newUser);
 
       navigate("/");
