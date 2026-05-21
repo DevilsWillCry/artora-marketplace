@@ -1,11 +1,18 @@
 // src/components/profile/Saved/SavedTab.jsx
 
-import products from "@/data/products";
+
 
 import ProductCard from "@/components/product/ProductCard";
 
+import { load } from "@/storage/storage";
+import useAuth from "@/hooks/useAuth";
+
 export default function SavedTab() {
-  const savedProducts = products.slice(0, 3);
+  const { user } = useAuth();
+
+  const savedProducts = load("products").filter((product) =>
+    user.savedProducts.includes(product.id)
+  );
 
   return (
     <div>

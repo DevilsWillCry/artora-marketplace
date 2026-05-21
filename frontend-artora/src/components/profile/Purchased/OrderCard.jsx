@@ -10,9 +10,8 @@ import useVisitUser from "@/hooks/useVisitUser";
 export default function OrderCard({ order }) {
   const products = load("products", []);
   const { visitUser } = useVisitUser();
-  console.log("USER", visitUser);
 
-  const productsFiltered = order.items.map((item) => {
+  const productsFiltered = order.items.map(({ productId: item }) => {
     return products.find((product) => product.id === item);
   });
 

@@ -14,6 +14,10 @@ import ArtoraButton from "@/components/ui/ArtoraButton";
 import useAuth from "@/hooks/useAuth";
 import { save, load } from "@/storage/storage";
 
+import countries from "@/data/countries";
+import ArtoraSelect from "../../components/ui/form/ArtoraSelect";
+import { useEffect } from "react";
+
 function RegisterPage({ density }) {
   const navigate = useNavigate();
   const users = load("users", []);
@@ -22,14 +26,20 @@ function RegisterPage({ density }) {
     name: "",
     email: "",
     password: "",
+    country: "", 
+    city: "",
   });
+
+  const [cities, setCities] = useState([]);
 
   const [errors, setErrors] = useState({});
   const { login } = useAuth();
 
   function submit(e) {
     e.preventDefault();
-    const userFindedByEmail = users.find((user) => user.email.toLowerCase() === form.email.toLowerCase());
+    const userFindedByEmail = users.find(
+      (user) => user.email.toLowerCase() === form.email.toLowerCase(),
+    );
 
     const er = {};
 
@@ -64,14 +74,42 @@ function RegisterPage({ density }) {
         savedProducts: [],
         purchasedOrders: [],
         listings: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       save("users", [...users, newUser]);
       login(newUser);
-
       navigate("/");
+      setCities([]);
     }
   }
+
+  useEffect(() => {
+    const getCity = async () => {
+      const response = await fetch(
+        "https://countriesnow.space/api/v0.1/countries/cities",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            iso2: form.country,
+          }),
+        },
+      );
+
+      return response.json();
+    };
+
+    getCity().then((data) => {
+      setCities(data.data);
+    });
+  }, [form.country]);
+
+
+
 
   return (
     <AuthShell
@@ -154,6 +192,36 @@ function RegisterPage({ density }) {
             error={errors.password}
             placeholder="••••••••"
           />
+
+          <ArtoraSelect
+            options={countries}
+            name="Countries"
+            id="location-countries"
+            hint="Selecciona el país"
+            value={form.country}
+            onChange={(value) =>
+              setForm((prev) => ({
+                ...prev,
+                country: value,
+              }))
+            }
+          />
+
+          {cities && (
+            <ArtoraSelect
+              options={cities}
+              name="Cities"
+              id="location-cities"
+              hint="Selecciona tu ciudad"
+              value={form.city}
+              onChange={(value) =>
+                setForm((prev) => ({
+                  ...prev,
+                  city: value,
+                }))
+              }
+            />
+          )}
 
           <ArtoraButton className="bg-terracotta" size="lg" type="submit">
             Crea una cuenta →

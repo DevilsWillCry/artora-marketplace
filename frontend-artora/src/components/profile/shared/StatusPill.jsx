@@ -21,8 +21,8 @@ const styles = {
   `,  
 
   active: `
-    bg-blue-100
-    text-blue-700
+    bg-green-200
+    text-green-700
   `,
 
   inactive: `
@@ -31,14 +31,14 @@ const styles = {
   `,
 
   sold: `
-    bg-purple-100
-    text-purple-700
+    bg-red-200
+    text-red-700
   `,
 
   draft: `
-    bg-gray-100
-    text-gray-700
-  `  
+    bg-brown-100
+    text-brown-700
+  `,
 };
 
 export default function StatusPill({

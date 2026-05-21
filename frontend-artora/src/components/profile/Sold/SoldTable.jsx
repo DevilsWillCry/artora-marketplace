@@ -9,24 +9,22 @@ export default function SoldTable({ listings }) {
   const { visitUser } = useVisitUser();
 
   const navigateToEdit = (productId, action) => {
-    // Implement navigation logic here, e.g., using React Router
-    console.log(`Navigate to edit page for product ID: ${productId}`);
     navigate(`/product/${productId}/action/${action}`);
   };
 
-  const navigateToProduct = (productId) => {
-    navigate(`/products/${productId}`);
+  const handleViewDetails = (id) => {
+    navigate(`/products/${id}`);
   };
 
   return (
     <div
-      className="
+      className={`
         overflow-hidden
         rounded-3xl
         border
-        bg-cream
         border-b-2
-      "
+        shadow-xl
+      `}
     >
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -47,6 +45,8 @@ export default function SoldTable({ listings }) {
             >
               <th className="px-6 py-4">Pieza</th>
 
+              <th className="px-6 py-4">Cantidad</th>
+
               <th className="px-6 py-4">Estado</th>
 
               <th
@@ -57,6 +57,17 @@ export default function SoldTable({ listings }) {
                 "
               >
                 Precio
+              </th>
+
+
+              <th
+                className="
+                  px-6
+                  py-4
+                  text-right
+                "
+              >
+                Vendidos
               </th>
 
               <th className="px-6 py-4">Actividad</th>
@@ -77,11 +88,12 @@ export default function SoldTable({ listings }) {
             {listings.map((listing) => (
               <tr
                 key={listing.id}
-                className="
+                className={`
                   border-b
                   border-black
                   last:border-none
-                "
+                  ${listing.status === "Sold" ? "bg-red-100" : "bg-green-100"}
+                `}
               >
                 {/* Piece */}
                 <td className="px-6 py-5">
@@ -127,6 +139,15 @@ export default function SoldTable({ listings }) {
                   </div>
                 </td>
 
+
+                {/* Stock */}
+                <td className="px-6 py-5 align-middle text-left">
+                  <span className="font-serif text-lg text-stone-900">
+                    {listing.stock}
+                  </span>
+                </td>
+
+
                 {/* Status */}
                 <td className="px-6 py-5 align-middle">
                   <StatusPill
@@ -152,6 +173,27 @@ export default function SoldTable({ listings }) {
                     "
                   >
                     ${listing.price.toLocaleString("es-CO")}
+                  </span>
+                </td>
+
+
+                {/* Stock solded */}
+                <td
+                  className="
+                    px-6
+                    py-5
+                    text-right
+                    align-middle
+                  "
+                >
+                  <span
+                    className="
+                      font-serif
+                      text-lg
+                      text-stone-900
+                    "
+                  >
+                    {listing.soldQuantity}
                   </span>
                 </td>
 
@@ -240,7 +282,7 @@ export default function SoldTable({ listings }) {
                         {listing.status === "Draft"
                           ? "Publicar"
                           : listing.status === "Sold"
-                            ? "Recibo"
+                            ? "Reponer"
                             : "Editar"}
                       </button>
                     </div>
@@ -273,7 +315,7 @@ export default function SoldTable({ listings }) {
                         hover:text-paper
                         
                       "
-                        onClick={() => navigateToProduct(listing.productId)}
+                        onClick={() => handleViewDetails(listing.productId)}
                       >
                         Comprar
                       </button>

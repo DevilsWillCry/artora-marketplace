@@ -23,9 +23,11 @@ const users = [
 
     purchasedOrders: [101, 102],
 
-    listings: [201, 202],
+    listings: [ 102 ],
 
-    location : "Madrid, España",
+    country : "ES",
+
+    city : "Barcelona",
 
     createdAt: "2026-01-15T10:00:00Z",
 
@@ -56,7 +58,9 @@ const users = [
 
     listings: [203],
 
-    location : "Cali, Colombia",
+    country : "CO",
+
+    city : "Cali",
 
     createdAt: "2026-02-20T14:30:00Z",
       

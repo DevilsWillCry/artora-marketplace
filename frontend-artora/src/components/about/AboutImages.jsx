@@ -8,8 +8,6 @@ function AboutImages() {
     setShowImage(index);
   };
 
-  console.log(showImage);
-
   return (
     <section className="bg-paper w-full h-auto flex flex-row gap-8 p-10 items-center justify-center max-md:flex-col">
       {ImageArray.map((image) => (
@@ -25,7 +23,7 @@ function AboutImages() {
             className="object-cover w-full h-full drop-shadow-2xl"
             src={image.image}
             alt={image.alt}
-          />
+          />  
           <div
             className={`absolute bottom-0 left-0 p-5 flex flex-col gap-3 text-paper transition-all duration-300 ${showImage === image.id ? "translate-y-0" : "translate-y-full"} bg-black/60`}
           >

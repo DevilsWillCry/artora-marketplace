@@ -46,7 +46,8 @@ function ProductCard({ product, onView, onAdd }) {
         className="
           relative 
           block 
-          aspect-4/5
+          w-full
+          aspect-square
           overflow-hidden
         "
       >
@@ -131,7 +132,8 @@ function ProductCard({ product, onView, onAdd }) {
             flex-row
             items-center
             justify-between
-            gap-4
+            gap-5
+            w-full
           "
         >
           <div

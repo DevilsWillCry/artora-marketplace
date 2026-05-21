@@ -4,7 +4,6 @@ import AuthHero from "./AuthHero";
 
 export default function AuthShell({ side = "right", density, children , ...props}) {
   const dense = density === "compact";
-  console.log(props);
   return (
     <main className="bg-paper">
       <div

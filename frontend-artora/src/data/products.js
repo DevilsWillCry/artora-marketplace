@@ -98,7 +98,7 @@ const products = [
 
     price: 24_000,
 
-    stock: 5,
+    stock: 0,
 
     featured: false,
 

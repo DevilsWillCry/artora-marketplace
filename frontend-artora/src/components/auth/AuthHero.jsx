@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 
 export default function AuthHero({ density, className, ...props }) {
   const dense = density === "compact";
-  console.log(props);
   return (
     <div
       className={cn("relative overflow-hidden bg-cover bg-center", className)}

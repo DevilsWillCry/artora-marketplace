@@ -12,6 +12,7 @@ export default function SummaryCard({
         rounded-2xl
         border
         p-6
+        shadow-xl
 
         ${
           accent

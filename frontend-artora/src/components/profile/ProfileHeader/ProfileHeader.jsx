@@ -52,7 +52,11 @@ export default function ProfileHeader({ setTab, watchingUser, logout }) {
             italic
             text-stone-700
           "
-          onMouseOver={() => setIsEditing(true)}
+          onMouseOver={() => {
+            if (!visitUser) {
+              setIsEditing(true);
+            }
+          }}
           onMouseOut={() => setIsEditing(false)}
         >
           <img
@@ -65,11 +69,15 @@ export default function ProfileHeader({ setTab, watchingUser, logout }) {
             alt={`${watchingUser.name} icon`}
           />
 
-          <p
-            className={`absolute top-1/2 right-0 -translate-y-1/2 bg-paper tracking-widest text-xl text-stone-700 w-full h-full rounded-full transition-all duration-300 cursor-pointer text-center flex flex-col items-center justify-center ${isEditing ? "opacity-100" : "opacity-0"}`}
-          >
-            Cambiar foto
-          </p>
+          {!visitUser && (
+            <p
+              className={`absolute top-1/2 right-0 -translate-y-1/2 bg-paper tracking-widest text-xl text-stone-700 w-full h-full rounded-full transition-all duration-300 cursor-pointer text-center flex flex-col items-center justify-center ${isEditing ? "opacity-100" : "opacity-0"}`}
+            >
+              Cambiar foto
+            </p>
+
+          )}
+
         </div>
 
         <div>
@@ -110,7 +118,8 @@ export default function ProfileHeader({ setTab, watchingUser, logout }) {
             <div className="flex items-center gap-2">
               <img className="w-3" src={LocationIcon} alt="Email" />
               <span className="text-xs text-ink tracking-widest">
-                {watchingUser.location}
+                {watchingUser.city} · {watchingUser.country}
+                
               </span>
             </div>
             <div className="flex items-center gap-2">

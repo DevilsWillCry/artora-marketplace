@@ -14,7 +14,7 @@ export default function SettingsTab() {
   const [formData, setFormData] = useState({
     name: user.name,
     email: user.email,
-    location: user.location,
+    city: user.city,
     accountType: user.accountType,
   });
 
@@ -112,13 +112,13 @@ export default function SettingsTab() {
 
         <SettingsRow
           label="Ubicación"
-          onEditing={() => setEditingField("location")}
-          isEditing={editingField === "location"}
-          value={formData.location}
+          onEditing={() => setEditingField("city")}
+          isEditing={editingField === "city"}
+          value={formData.city}
           onChange={(value) =>
             setFormData({
               ...formData,
-              location: value,
+              city: value,
             })
           }
         />

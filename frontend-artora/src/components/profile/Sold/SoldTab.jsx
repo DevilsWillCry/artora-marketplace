@@ -1,87 +1,158 @@
-// src/components/profile/Sold/SoldTab.jsx
+import { useMemo } from "react";
 
 import { load } from "@/storage/storage";
 
 import SummaryCard from "./SummaryCard";
 import SoldTable from "./SoldTable";
+
 import useVisitUser from "@/hooks/useVisitUser";
+import useAuth from "@/hooks/useAuth";
+
+const FALLBACK_IMAGE = "https://static.thenounproject.com/png/3482632-200.png";
 
 export default function SoldTab() {
-  const user = load("artora-user", null);
+  const { user } = useAuth();
   const { visitUser } = useVisitUser();
+
   const listings = load("listings", []);
   const products = load("products", []);
   const categories = load("categories", []);
+  const orders = load("orders", []);
 
-  const listingsWithDetails = listings
-    .filter((listing) => listing.artisanId === user.id)
-    .map((listing) => {
-      const product = products.find(
-        (product) => product.id === listing.productId,
-      );
+  const currentUser = visitUser || user;
 
-      const category = categories.find(
-        (category) => category.id === listing.category,
-      );
+  const {
+    listingsWithDetails,
+    activeListings,
+    totalViews,
+    totalSold,
+  } = useMemo(() => {
+    // Maps
+    const productsMap = new Map(
+      products.map((product) => [product.id, product]),
+    );
 
-      return {
-        ...listing,
-        name: product ? product.name : "Unknown product",
-        image: product
-          ? product.image
-          : "https://static.thenounproject.com/png/3482632-200.png",
-        category: category ? category.name : "Unknown category",
-        price: product ? product.price : 0,
-        status: product ? product.status : "Unknown",
-        nameStatus: product ? product.nameStatus : "Unknown",
-      };
-    });
+    const categoriesMap = new Map(
+      categories.map((category) => [category.id, category]),
+    );
 
-  const soldItems = listingsWithDetails.filter(
-    (listing) => listing.status === "Sold",
-  );
-  
+    const soldProductsMap = new Map();
 
-  const totalRevenue = soldItems
-    .reduce((acc, item) => acc + item.price, 0)
-    .toLocaleString("es-CO");
+    orders
+      .filter((order) => order.status === "delivered")
+      .forEach((order) => {
+        order.items.forEach(({ productId, quantity }) => {
+          const current = soldProductsMap.get(productId) || {
+            productId,
+            quantity: 0,
+            revenue: 0,
+            delivered: null,
+          };
+
+          const product = productsMap.get(productId);
+
+          soldProductsMap.set(productId, {
+            ...current,
+            quantity: current.quantity + quantity,
+            revenue: current.revenue + (product?.price || 0) * quantity,
+            delivered: order.status,
+          });
+        });
+      });
+
+    // Listings enriquecidos
+    const listingsWithDetails = listings
+      .filter((listing) => listing.artisanId === currentUser.id)
+      .map((listing) => {
+        const product = productsMap.get(listing.productId);
+
+        const category = categoriesMap.get(listing.category);
+
+        const salesData = soldProductsMap.get(listing.productId);
 
 
-  const activeListings = listingsWithDetails.filter(
-    (listing) => listing.status === "Active",
-  ).length;
+        return {
+          ...listing,
 
-  const totalViews = listingsWithDetails.reduce(
-    (acc, item) => acc + item.views,
-    0,
-  );
+          name: product?.name || "Unknown product",
+
+          image: product?.image || FALLBACK_IMAGE,
+
+          category: category?.name || "Unknown category",
+
+          price: product?.price || 0,
+
+          status: product?.status || "Unknown",
+
+          nameStatus: product?.nameStatus || "Unknown",
+
+          stock: product?.stock || 0,
+
+          soldQuantity: salesData?.quantity || 0,
+
+          revenue: salesData?.revenue || 0,
+
+          statusOrder: salesData?.delivered || null,
+        };
+      });
+
+    // Stats
+    const soldItems = listingsWithDetails.filter(
+      (listing) => listing.status === "Sold",
+    );
+
+    const activeListings = listingsWithDetails.filter(
+      (listing) => listing.status === "Active",
+    ).length;
+
+    const totalViews = listingsWithDetails.reduce(
+      (acc, item) => acc + item.views,
+      0,
+    );
+
+    // Órdenes entregadas
+    const deliveredOrders = listingsWithDetails.filter(
+      (listing) => listing.statusOrder === "delivered",
+    );
+
+    // Ingresos del artesano
+    const totalSold = deliveredOrders.reduce(
+      (acc, item) => acc + item.revenue,
+      0,
+    );
+
+    return {
+      listingsWithDetails,
+      soldItems,
+      activeListings,
+      totalViews,
+      totalSold,
+    };
+  }, [listings, products, categories, orders, currentUser.id]);
 
   return (
     <div>
-      {/* Summary */}
       {!visitUser && (
         <div
           className="
-          mb-12
-          grid
-          grid-cols-1
-          gap-5
-
-          md:grid-cols-2
-
-          xl:grid-cols-4
-        "
+            mb-12
+            grid
+            grid-cols-1
+            gap-5
+            md:grid-cols-2
+            xl:grid-cols-4
+          "
         >
           <SummaryCard
             label="Piezas vendidas"
-            value={soldItems.length}
+            value={listingsWithDetails.length}
             hint="Total de productos vendidos"
           />
 
           <SummaryCard
             label="Ingresos totales"
-            value={`${totalRevenue.toLocaleString("es-CO")} COP`}
-            hint="Despues de impuestos"
+            value={`${totalSold.toLocaleString("es-CO")} COP`}
+            hint="Después de impuestos"
             accent
           />
 
@@ -99,7 +170,6 @@ export default function SoldTab() {
         </div>
       )}
 
-      {/* Header */}
       <div
         className="
           mb-6
@@ -138,32 +208,30 @@ export default function SoldTab() {
               text-stone-500
             "
           >
-            Gestiona tu actividad, ventas, y borradores.
+            Gestiona tu actividad, ventas y borradores.
           </p>
         </div>
 
         {!visitUser && (
           <button
             className="
-            rounded-lg
-            border
-            px-5
-            py-2.5
-            text-sm
-            font-medium
-            transition-colors
-            duration-300
-
-            hover:bg-terracotta
-            hover:text-paper
-          "
+              rounded-lg
+              border
+              px-5
+              py-2.5
+              text-sm
+              font-medium
+              transition-colors
+              duration-300
+              hover:bg-terracotta
+              hover:text-paper
+            "
           >
             + Añade un nuevo producto
           </button>
         )}
       </div>
 
-      {/* Table */}
       <SoldTable listings={listingsWithDetails} />
     </div>
   );
