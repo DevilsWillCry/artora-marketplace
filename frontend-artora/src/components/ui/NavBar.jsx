@@ -6,7 +6,6 @@ import NavLogoAndTitle from "./NavLogoAndTitle";
 import DesktopNavBar from "./DesktopNavBar";
 import { NavLink } from "react-router";
 import useAuth from "@/hooks/useAuth";
-
 function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -24,15 +23,17 @@ function NavBar() {
     };
   }, []);
 
+  
+
   return (
     <section
-      className={`fixed flex items-center justify-between  w-full z-100 px-5  bg-cream transition-all duration-300 ${scrolled ? "py-2.5 shadow-2xl border-b-0" : "py-2  border-b"} border-terracotta`}
+      className={`fixed flex items-center justify-between w-full z-100 px-5  bg-cream transition-all duration-300 border-b border-black ${scrolled ? "shadow-md" : ""} `}
     >
       {/*--- Logo  & Title --*/}
       <NavLogoAndTitle />
 
       {/* -- Menu PC-- */}
-      <DesktopNavBar MenuArray={navigation} />
+      <DesktopNavBar MenuArray={navigation} /> 
 
       <div>
         <NavLink to={`/profile/${user?.id}`} className="relative p-2">

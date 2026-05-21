@@ -12,16 +12,24 @@ const users = [
 
     description: "Artista y creadora de productos hechos a mano.",
 
+    accountType: "Public",
+
     avatar:
       "https://i.pravatar.cc/150?img=32",
 
     role: "customer",
 
-    savedProducts: [1, 3, 5],
+    savedProducts: [1, 6, 5],
 
     purchasedOrders: [101, 102],
 
     listings: [201, 202],
+
+    location : "Madrid, España",
+
+    createdAt: "2026-01-15T10:00:00Z",
+
+    updatedAt: "2026-06-01T15:30:00Z",
   },
 
   {
@@ -35,6 +43,8 @@ const users = [
 
     description: "Coleccionando discretamente piezas hechas a mano.",
 
+    accountType: "Public",
+
     avatar:
       "https://i.pravatar.cc/150?img=12",
 
@@ -45,6 +55,13 @@ const users = [
     purchasedOrders: [103],
 
     listings: [203],
+
+    location : "Cali, Colombia",
+
+    createdAt: "2026-02-20T14:30:00Z",
+      
+    updatedAt: "2026-06-02T12:00:00Z",
+
   },
 ];
 

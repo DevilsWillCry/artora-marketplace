@@ -4,16 +4,19 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router";
 import AuthProvider from "@/context/AuthProvider";
+import VisitUserProvider from "@/context/VisitUserProvider";
 import { initData } from "./lib/initData.js";
 
 initData();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AuthProvider>
+    <VisitUserProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthProvider>
+    </VisitUserProvider>
   </StrictMode>,
 );

@@ -57,7 +57,7 @@ function LoginPage({ density }) {
         login(safeUser);
         
         toast.success("¡Inicio de sesión exitoso!", {
-          style: {
+          style: { 
             borderRadius: "10px",
             background: "#333",
             color: "#fff",

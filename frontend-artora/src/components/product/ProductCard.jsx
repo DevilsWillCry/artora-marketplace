@@ -1,12 +1,28 @@
 // src/components/product/ProductCard.jsx
 import ArtoraButton from "@/components/ui/ArtoraButton";
-import categories from "@/data/categories";
 import ShoppingCart from "../../assets/icons/ecommerce-cart.min.svg";
 
+import { load } from "@/storage/storage";
+import { useNavigate } from "react-router";
+
 function ProductCard({ product, onView, onAdd }) {
+  const navigate = useNavigate();
+
+  const users = load("users", []);
+  const categories = load("categories", []);
   const category = categories.find(
     (category) => category.id === product.categoryId,
   );
+  const artisan = users.find((user) => user.id === product.artisanId);
+
+  const handleAddToCart = (id) => {
+    console.log("Añadir al carrito", id);
+  };
+
+  const handleSendToUser = (id) => {
+    navigate(`/profile/${id}`);
+  }
+
   return (
     <article
       className="
@@ -63,9 +79,9 @@ function ProductCard({ product, onView, onAdd }) {
       </button>
 
       {/* Content */}
-      <div className="space-y-4 p-5 w-full">
+      <div className="space-y-4 p-5 w-full flex flex-col items-start justify-between">
         {/* Product info */}
-        <div>
+        <div className="w-full flex flex-col items-start justify-start">
           <button
             onClick={onView}
             className="
@@ -86,14 +102,15 @@ function ProductCard({ product, onView, onAdd }) {
             </h3>
           </button>
 
-          <p
+          <button
             className="
               mt-1 text-sm
               text-inkMute
             "
+            onClick={() => handleSendToUser(product.artisanId)}
           >
-            Hecho por <em className="font-semibold">{product.artisan}</em>
-          </p>
+            Hecho por <em className="text-terracotta cursor-pointer border-b hover:text-ink transition-colors">{artisan?.name}</em>
+          </button>
 
           <p
             className="
@@ -102,7 +119,7 @@ function ProductCard({ product, onView, onAdd }) {
               leading-relaxed
               text-inkSoft
             "
-          > 
+          >
             {product.description}
           </p>
         </div>
@@ -123,7 +140,7 @@ function ProductCard({ product, onView, onAdd }) {
               text-ink
             "
           >
-            ${product.price}
+            {product.price.toLocaleString("es-CO")} COP
           </div>
 
           <ArtoraButton

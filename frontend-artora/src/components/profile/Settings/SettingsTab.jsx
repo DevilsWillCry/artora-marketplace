@@ -1,9 +1,40 @@
 // src/components/profile/Settings/SettingsTab.jsx
 
-import SettingsRow
-  from "./SettingsRow";
+import { useState } from "react";
+import SettingsRow from "./SettingsRow";
+import useAuth from "@/hooks/useAuth";
+
+import { Toaster, toast} from "sonner";
 
 export default function SettingsTab() {
+  const { user, updateUser } = useAuth();
+
+  const [editingField, setEditingField] = useState(null);
+
+  const [formData, setFormData] = useState({
+    name: user.name,
+    email: user.email,
+    location: user.location,
+    accountType: user.accountType,
+  });
+
+  function handleSave() {
+    updateUser(formData);
+    setEditingField(null);
+    toast.success("Cambios guardados", {
+      duration: 2000,
+      position: "bottom-right",
+      style: {
+        background: "#333",
+        color: "#fff",
+      },
+      iconTheme: {
+        primary: "#fff",
+        secondary: "#333",
+      },
+    });
+  }
+
   return (
     <div className="max-w-3xl">
       <div className="mb-10">
@@ -15,15 +46,14 @@ export default function SettingsTab() {
             text-stone-900
           "
         >
-          Account{" "}
-
+          Configuración de{" "}
           <span
             className="
               italic
-              text-stone-600
+              text-terracotta
             "
           >
-            settings
+            tu perfil
           </span>
         </h2>
 
@@ -37,62 +67,91 @@ export default function SettingsTab() {
             text-stone-500
           "
         >
-          Manage your profile,
-          privacy, notifications,
-          and security preferences.
+          Gestiona tu perfil, privacidad, notificaciones, y preferencias de
+          seguridad.
         </p>
       </div>
 
-      <div
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSave();
+        }}
         className="
           rounded-2xl
           border
-          bg-white
+          bg-cream
           px-8
         "
       >
         <SettingsRow
-          label="Display name"
-          value="Mira Holt"
+          label="Nombre"
+          onEditing={() => setEditingField("name")}
+          isEditing={editingField === "name"}
+          value={formData.name}
+          onChange={(value) =>
+            setFormData({
+              ...formData,
+              name: value,
+            })
+          }
         />
 
         <SettingsRow
-          label="Email"
-          value="mira@holt.studio"
+          label="Correo electrónico"
+          onEditing={() => setEditingField("email")}
+          isEditing={editingField === "email"}
+          value={formData.email}
+          onChange={(value) =>
+            setFormData({
+              ...formData,
+              email: value,
+            })
+          }
         />
 
         <SettingsRow
-          label="Location"
-          value="Lisbon, Portugal"
+          label="Ubicación"
+          onEditing={() => setEditingField("location")}
+          isEditing={editingField === "location"}
+          value={formData.location}
+          onChange={(value) =>
+            setFormData({
+              ...formData,
+              location: value,
+            })
+          }
         />
 
         <SettingsRow
-          label="Password"
+          label="Contraseña"
           value="••••••••••"
-          actionLabel="Change"
+          actionLabel="Cambiar"
         />
 
         <SettingsRow
-          label="Newsletter"
-          value="Subscribed · monthly studio letter"
-          actionLabel="Manage"
+          label="Cuenta"
+          onEditing={() => setEditingField("accountType")}
+          isEditing={editingField === "accountType"}
+          value={user.accountType}
+          onChange={(value) =>
+            setFormData({
+              ...formData,
+              accountType: value,
+            })
+          }
         />
 
         <SettingsRow
-          label="Two-factor authentication"
-          value="Disabled — recommended for sellers"
-          actionLabel="Enable"
-          tone="warning"
-        />
-
-        <SettingsRow
-          label="Delete account"
-          value="Permanently remove your account and all data."
-          actionLabel="Delete"
+          label="Eliminar cuenta"
+          value="Eliminar mi cuenta"
+          actionLabel="Eliminar"
           tone="danger"
           last
         />
-      </div>
+      </form>
+
+      <Toaster />
     </div>
   );
 }

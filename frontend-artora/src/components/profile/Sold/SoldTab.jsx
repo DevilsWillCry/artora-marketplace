@@ -1,46 +1,67 @@
 // src/components/profile/Sold/SoldTab.jsx
 
-import listings
-  from "@/data/profile/listings";
+import { load } from "@/storage/storage";
 
-import SummaryCard
-  from "./SummaryCard";
-
-import StatusPill
-  from "../shared/StatusPill";
+import SummaryCard from "./SummaryCard";
+import SoldTable from "./SoldTable";
+import useVisitUser from "@/hooks/useVisitUser";
 
 export default function SoldTab() {
-  const soldItems =
-    listings.filter(
-      (listing) =>
-        listing.status === "Sold"
-    );
+  const user = load("artora-user", null);
+  const { visitUser } = useVisitUser();
+  const listings = load("listings", []);
+  const products = load("products", []);
+  const categories = load("categories", []);
 
-  const totalRevenue =
-    soldItems.reduce(
-      (acc, item) =>
-        acc + item.soldFor,
-      0
-    );
+  const listingsWithDetails = listings
+    .filter((listing) => listing.artisanId === user.id)
+    .map((listing) => {
+      const product = products.find(
+        (product) => product.id === listing.productId,
+      );
 
-  const activeListings =
-    listings.filter(
-      (listing) =>
-        listing.status === "Active"
-    ).length;
+      const category = categories.find(
+        (category) => category.id === listing.category,
+      );
 
-  const totalViews =
-    listings.reduce(
-      (acc, item) =>
-        acc + item.views,
-      0
-    );
+      return {
+        ...listing,
+        name: product ? product.name : "Unknown product",
+        image: product
+          ? product.image
+          : "https://static.thenounproject.com/png/3482632-200.png",
+        category: category ? category.name : "Unknown category",
+        price: product ? product.price : 0,
+        status: product ? product.status : "Unknown",
+        nameStatus: product ? product.nameStatus : "Unknown",
+      };
+    });
+
+  const soldItems = listingsWithDetails.filter(
+    (listing) => listing.status === "Sold",
+  );
+  
+
+  const totalRevenue = soldItems
+    .reduce((acc, item) => acc + item.price, 0)
+    .toLocaleString("es-CO");
+
+
+  const activeListings = listingsWithDetails.filter(
+    (listing) => listing.status === "Active",
+  ).length;
+
+  const totalViews = listingsWithDetails.reduce(
+    (acc, item) => acc + item.views,
+    0,
+  );
 
   return (
     <div>
       {/* Summary */}
-      <div
-        className="
+      {!visitUser && (
+        <div
+          className="
           mb-12
           grid
           grid-cols-1
@@ -50,32 +71,33 @@ export default function SoldTab() {
 
           xl:grid-cols-4
         "
-      >
-        <SummaryCard
-          label="Pieces sold"
-          value={soldItems.length}
-          hint="all time"
-        />
+        >
+          <SummaryCard
+            label="Piezas vendidas"
+            value={soldItems.length}
+            hint="Total de productos vendidos"
+          />
 
-        <SummaryCard
-          label="Revenue"
-          value={`$${totalRevenue}`}
-          hint="after fees"
-          accent
-        />
+          <SummaryCard
+            label="Ingresos totales"
+            value={`${totalRevenue.toLocaleString("es-CO")} COP`}
+            hint="Despues de impuestos"
+            accent
+          />
 
-        <SummaryCard
-          label="Active listings"
-          value={activeListings}
-          hint="currently visible"
-        />
+          <SummaryCard
+            label="Piezas activas"
+            value={activeListings}
+            hint="Actualmente en venta"
+          />
 
-        <SummaryCard
-          label="Total views"
-          value={totalViews}
-          hint="last 30 days"
-        />
-      </div>
+          <SummaryCard
+            label="Total de vistas"
+            value={totalViews}
+            hint="Vistas acumuladas de tus productos"
+          />
+        </div>
+      )}
 
       {/* Header */}
       <div
@@ -84,6 +106,7 @@ export default function SoldTab() {
           flex
           items-end
           justify-between
+          text-black
         "
       >
         <div>
@@ -95,15 +118,14 @@ export default function SoldTab() {
               text-stone-900
             "
           >
-            Your{" "}
-
+            Tu{" "}
             <span
               className="
                 italic
-                text-stone-600
+                text-terracotta
               "
             >
-              listings
+              listado
             </span>
           </h2>
 
@@ -116,13 +138,13 @@ export default function SoldTab() {
               text-stone-500
             "
           >
-            Manage active, sold,
-            and draft pieces.
+            Gestiona tu actividad, ventas, y borradores.
           </p>
         </div>
 
-        <button
-          className="
+        {!visitUser && (
+          <button
+            className="
             rounded-lg
             border
             px-5
@@ -130,186 +152,19 @@ export default function SoldTab() {
             text-sm
             font-medium
             transition-colors
+            duration-300
 
-            hover:bg-stone-100
+            hover:bg-terracotta
+            hover:text-paper
           "
-        >
-          + List new piece
-        </button>
+          >
+            + Añade un nuevo producto
+          </button>
+        )}
       </div>
 
       {/* Table */}
-      <div
-        className="
-          overflow-hidden
-          rounded-2xl
-          border
-          bg-white
-        "
-      >
-        {/* Head */}
-        <div
-          className="
-            grid
-            grid-cols-[80px_1.5fr_1fr_120px_1fr_auto]
-            gap-5
-            border-b
-            bg-stone-50
-            px-6
-            py-4
-            text-xs
-            uppercase
-            tracking-[0.18em]
-            text-stone-400
-          "
-        >
-          <div></div>
-
-          <div>Piece</div>
-
-          <div>Status</div>
-
-          <div className="text-right">
-            Price
-          </div>
-
-          <div>Activity</div>
-
-          <div></div>
-        </div>
-
-        {/* Rows */}
-        {listings.map((listing) => (
-          <div
-            key={listing.id}
-            className="
-              grid
-              grid-cols-[80px_1.5fr_1fr_120px_1fr_auto]
-              gap-5
-              border-b
-              px-6
-              py-5
-              last:border-none
-            "
-          >
-            <img
-              src={listing.image}
-              alt={listing.title}
-              className="
-                aspect-square
-                rounded-lg
-                object-cover
-              "
-            />
-
-            <div>
-              <h3
-                className="
-                  font-serif
-                  text-lg
-                  text-stone-900
-                "
-              >
-                {listing.title}
-              </h3>
-
-              <p
-                className="
-                  mt-1
-                  text-sm
-                  text-stone-500
-                "
-              >
-                {listing.category}
-              </p>
-            </div>
-
-            <div>
-              <StatusPill
-                status={
-                  listing.status
-                }
-              />
-            </div>
-
-            <div
-              className="
-                text-right
-                font-serif
-                text-lg
-              "
-            >
-              $
-              {listing.status ===
-              "Sold"
-                ? listing.soldFor
-                : listing.price}
-            </div>
-
-            <div
-              className="
-                text-sm
-                text-stone-500
-              "
-            >
-              {listing.status ===
-              "Draft" ? (
-                <span className="italic">
-                  Not published
-                </span>
-              ) : (
-                <div className="flex gap-4">
-                  <span>
-                    👁 {listing.views}
-                  </span>
-
-                  <span>
-                    ♡ {listing.saves}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <div className="flex gap-2">
-              <button
-                className="
-                  rounded-lg
-                  border
-                  px-3
-                  py-2
-                  text-sm
-                  transition-colors
-
-                  hover:bg-stone-100
-                "
-              >
-                {listing.status ===
-                "Draft"
-                  ? "Publish"
-                  : listing.status ===
-                    "Sold"
-                  ? "Receipt"
-                  : "Edit"}
-              </button>
-
-              <button
-                className="
-                  rounded-lg
-                  border
-                  px-3
-                  py-2
-                  text-sm
-                  transition-colors
-
-                  hover:bg-stone-100
-                "
-              >
-                ⋯
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+      <SoldTable listings={listingsWithDetails} />
     </div>
   );
 }

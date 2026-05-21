@@ -7,13 +7,19 @@ const products = [
 
     name: "Jarrón de Lino",
 
-    categoryId : 1,
+    categoryId: 1,
 
     artisanId: 1,
 
-    price: 64,
+    price: 64_000,
+
+    stock: 10,
 
     featured: true,
+
+    status: "Sold",
+
+    nameStatus: "Vendido",
 
     description:
       "Jarrón de cerámica hecho en torno, terminado con un esmalte mate suave inspirado en los tonos terrosos de la costa.",
@@ -30,11 +36,17 @@ const products = [
 
     categoryId: 4,
 
-    artisan: "Atelier Sora",
+    artisanId: 1,
 
-    price: 42,
+    price: 42_000,
+
+    stock: 5,
 
     featured: true,
+
+    status: "Active",
+
+    nameStatus: "Activo",
 
     description:
       "Cesta tejida a mano hecha con fibras naturales y asas de roble.",
@@ -51,11 +63,17 @@ const products = [
 
     categoryId: 1,
 
-    artisan: "Mori Workshop",
+    artisanId: 2,
 
-    price: 78,
+    price: 78_000,
+
+    stock: 3,
 
     featured: true,
+
+    status: "Active",
+
+    nameStatus: "Activo",
 
     description:
       "Juego de café minimalista hecho a mano, elaborado con arcilla de loza texturizada.",
@@ -72,9 +90,15 @@ const products = [
 
     categoryId: 3,
 
-    artisan: "North Candle Co.",
+    artisanId: 2,
 
-    price: 24,
+    status: "Sold",
+
+    nameStatus: "Vendido",
+
+    price: 24_000,
+
+    stock: 5,
 
     featured: false,
 
@@ -93,14 +117,19 @@ const products = [
 
     categoryId: 4,
 
-    artisan: "Casa Roble",
+    artisanId: 3,
 
-    price: 58,
+    status: "Draft",
+
+    nameStatus: "Borrador",
+
+    price: 58_000,
+
+    stock: 2,
 
     featured: true,
 
-    description:
-      "Tabla de servir de nogal macizo tallada y acabada a mano.",
+    description: "Tabla de servir de nogal macizo tallada y acabada a mano.",
 
     image:
       "https://i.etsystatic.com/19935582/r/il/554a52/3631699000/il_fullxfull.3631699000_8ig2.jpg",
@@ -114,17 +143,22 @@ const products = [
 
     categoryId: 2,
 
-    artisan: 2,
+    artisanId: 3,
 
-    price: 88,
+    status: "Draft",
+
+    nameStatus: "Borrador",
+
+    price: 88_000,
+
+    stock: 16,
 
     featured: false,
 
     description:
       "Mantel de lino lavado suave diseñado para rituales de comida lenta.",
 
-    image:
-      "https://m.media-amazon.com/images/I/71Ho1u2po4L._AC_SL1500_.jpg",
+    image: "https://m.media-amazon.com/images/I/71Ho1u2po4L._AC_SL1500_.jpg",
   },
 ];
 

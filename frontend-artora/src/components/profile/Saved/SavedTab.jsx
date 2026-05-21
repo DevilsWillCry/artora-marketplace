@@ -2,7 +2,7 @@
 
 import products from "@/data/products";
 
-import ProductCard from "../../../components/product/ProductCard"
+import ProductCard from "@/components/product/ProductCard";
 
 export default function SavedTab() {
   const savedProducts = products.slice(0, 3);
@@ -18,14 +18,14 @@ export default function SavedTab() {
             text-stone-900
           "
         >
-          Pieces you've{" "}
+          Piezas que has{" "}
           <span
             className="
               italic
-              text-stone-600
+              text-terracotta
             "
           >
-            tucked away
+            guardado
           </span>
         </h2>
 
@@ -39,8 +39,8 @@ export default function SavedTab() {
             text-stone-500
           "
         >
-          Saved pieces for later — we’ll let you know if any become unavailable
-          or go on sale.
+          Artículos guardados para más adelante; te avisaremos si alguno deja de
+          estar disponible o entra en oferta.
         </p>
       </div>
 

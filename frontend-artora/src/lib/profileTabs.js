@@ -3,21 +3,25 @@
 export const PROFILE_TABS = [
   {
     key: "purchased",
-    label: "Purchased",
+    label: "Comprados",
+    public: true,
   },
 
   {
     key: "sold",
-    label: "Sold & listed",
+    label: "Vendidos y listados",
+    public: true,
   },
 
   {
     key: "saved",
-    label: "Saved",
+    label: "Guardados",
+    public: false,
   },
 
   {
     key: "settings",
-    label: "Settings",
+    label: "Configuración",
+    public: false
   },
 ];

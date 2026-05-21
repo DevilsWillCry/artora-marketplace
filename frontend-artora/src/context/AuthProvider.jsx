@@ -6,8 +6,7 @@ import { useEffect } from "react";
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(() => getUser() || null);
   const [loading, setLoading] = useState(true);
-  
-  
+
   useEffect(() => {
     const storedUser = getUser();
 
@@ -17,7 +16,6 @@ export default function AuthProvider({ children }) {
 
     setLoading(false);
   }, []);
-
 
   const login = (userData) => {
     setUser(userData);
@@ -29,6 +27,15 @@ export default function AuthProvider({ children }) {
     removeUser();
   };
 
+  function updateUser(updatedData) {
+    const updatedUser = {
+      ...user,
+      ...updatedData,
+    };
+
+    setUser(updatedUser);
+    saveUser(updatedUser);
+  }
 
   return (
     <AuthContext.Provider
@@ -37,7 +44,7 @@ export default function AuthProvider({ children }) {
         login,
         logout,
         loading,
-        setUser,
+        updateUser,
         isAuthenticated: !!user,
       }}
     >

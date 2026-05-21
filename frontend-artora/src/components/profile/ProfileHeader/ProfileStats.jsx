@@ -1,8 +1,10 @@
 // src/components/profile/ProfileHeader/ProfileStats.jsx
 
 import ProfileStatItem from "./ProfileStatItem";
+import useVisitUser from "@/hooks/useVisitUser";
 
 export default function ProfileStats({ setTab }) {
+  const { visitUser } = useVisitUser();
   return (
     <div
       className="
@@ -18,20 +20,22 @@ export default function ProfileStats({ setTab }) {
       "
     >
       <ProfileStatItem
-        label="Purchased"
+        label="comprados"
         value={14}
         onClick={() => setTab("purchased")}
       />
 
-      <ProfileStatItem label="Sold" value={6} onClick={() => setTab("sold")} />
+      <ProfileStatItem label="Vendidos" value={6} onClick={() => setTab("sold")} />
 
-      <ProfileStatItem
-        label="Saved"
-        value={23}
-        onClick={() => setTab("saved")}
-      />
+      {!visitUser && (
+        <ProfileStatItem
+          label="Guardado"
+          value={23}
+          onClick={() => setTab("saved")}
+        />
+      )}
 
-      <ProfileStatItem label="Following" value={8} />
+      <ProfileStatItem label="Siguiendo" value={8} />
     </div>
   );
 }

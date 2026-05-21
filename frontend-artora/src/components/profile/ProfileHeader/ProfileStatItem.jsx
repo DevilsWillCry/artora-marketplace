@@ -6,6 +6,10 @@ export default function ProfileStatItem({ label, value, onClick }) {
       onClick={onClick}
       className="
         text-center
+        cursor-pointer
+        hover:text-terracotta
+        transition-colors
+        duration-300
       "
     >
       <h3
