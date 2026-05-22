@@ -1,7 +1,5 @@
 // src/components/contact/ContactHero.jsx
 
-import { ARTORA_TOKENS } from "@/theme/tokens";
-
 function ContactHero() {
   return (
     <section
@@ -14,11 +12,9 @@ function ContactHero() {
 
         lg:px-14
         lg:py-24
+
+        bg-cream
       "
-      style={{
-        background: ARTORA_TOKENS.cream,
-        borderColor: ARTORA_TOKENS.rule,
-      }}
     >
       <div className="mx-auto max-w-7xl">
         <span
@@ -28,12 +24,10 @@ function ContactHero() {
             text-[11px]
             uppercase
             tracking-[0.18em]
+            text-terracotta
           "
-          style={{
-            color: ARTORA_TOKENS.terracotta,
-          }}
         >
-          · Get in touch ·
+          · Ponte en contacto ·
         </span>
 
         <h1
@@ -49,11 +43,11 @@ function ContactHero() {
             lg:text-7xl
           "
         >
-          Write to us.
+          Escribenos.
           <br />
 
-          <span className="italic text-stone-500">
-            We'll write back.
+          <span className="italic text-terracotta">
+            Te responderemos.
           </span>
         </h1>
 
@@ -68,9 +62,7 @@ function ContactHero() {
             text-stone-500
           "
         >
-          Questions about a piece, a custom commission,
-          or just want to say hello — we read every
-          message.
+          Si tienes alguna pregunta sobre una pieza, un encargo personalizado o simplemente quieres saludarnos, leemos todos los mensajes.
         </p>
       </div>
     </section>

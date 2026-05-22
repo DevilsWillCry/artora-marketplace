@@ -34,15 +34,15 @@ function ContactForm() {
     const newErrors = {};
 
     if (!form.name.trim()) {
-      newErrors.name = "Please tell us your name";
+      newErrors.name = "Por favor dinos tu nombre";
     }
 
     if (!/^\S+@\S+\.\S+$/.test(form.email)) {
-      newErrors.email = "A valid email, please";
+      newErrors.email = "Ingresa un correo valido, ";
     }
 
     if (form.message.trim().length < 8) {
-      newErrors.message = "A few more words?";
+      newErrors.message = "¿Algunas palabras más?";
     }
 
     setErrors(newErrors);
@@ -86,102 +86,72 @@ function ContactForm() {
           md:grid-cols-2
         "
       >
-        <Field
-          label="Your name"
-          error={errors.name}
-        >
+        <Field label="Tu nombre" error={errors.name}>
           <input
             type="text"
             value={form.name}
             placeholder="Linnea Costa"
-            onChange={(event) =>
-              updateField(
-                "name",
-                event.target.value,
-              )
-            }
+            onChange={(event) => updateField("name", event.target.value)}
             className={inputClass(errors.name)}
           />
         </Field>
 
-        <Field
-          label="Email"
-          error={errors.email}
-        >
+        <Field label="Correo electrónico" error={errors.email}>
           <input
             type="email"
             value={form.email}
             placeholder="hello@example.com"
-            onChange={(event) =>
-              updateField(
-                "email",
-                event.target.value,
-              )
-            }
+            onChange={(event) => updateField("email", event.target.value)}
             className={inputClass(errors.email)}
           />
         </Field>
       </div>
 
-      <Field label="What's it about?">
+      <Field label="¿De qué se trata?">
         <div className="flex flex-wrap gap-3">
-          {[
-            "General",
-            "Order help",
-            "Wholesale",
-            "Press",
-          ].map((subject) => {
-            const active =
-              form.subject === subject;
+          {["General", "Ayuda con una orden", "Reclamos", "Otro"].map(
+            (subject) => {
+              const active = form.subject === subject;
 
-            return (
-              <button
-                key={subject}
-                type="button"
-                onClick={() =>
-                  updateField(
-                    "subject",
-                    subject,
-                  )
-                }
-                className={`
+              return (
+                <button
+                  key={subject}
+                  type="button"
+                  onClick={() => updateField("subject", subject)}
+                  className={`
                   rounded-full
                   border
                   px-4
                   py-2
                   text-sm
-                  font-medium
                   transition-all
 
                   ${
                     active
-                      ? "border-stone-900 bg-stone-900 text-white"
+                      ? "border-terracotta-dk bg-terracotta text-white"
                       : "border-stone-300 hover:bg-stone-100"
                   }
                 `}
-              >
-                {subject}
-              </button>
-            );
-          })}
+                >
+                  {subject}
+                </button>
+              );
+            },
+          )}
         </div>
       </Field>
 
       <Field
-        label="Your message"
+        label="Tu mensaje"
         hint={`${form.message.length} / 500`}
         error={errors.message}
       >
         <textarea
           rows={7}
           maxLength={500}
+          minLength={10}
           value={form.message}
-          onChange={(event) =>
-            updateField(
-              "message",
-              event.target.value,
-            )
-          }
+          onChange={(event) => updateField("message", event.target.value)}
           className={`
             ${inputClass(errors.message)}
             min-h-[180px]
@@ -202,10 +172,8 @@ function ContactForm() {
           sm:items-center
         "
       >
-        <ArtoraButton type="submit">
-          {sent
-            ? "✓ Sent — thank you!"
-            : "Send your message →"}
+        <ArtoraButton type="submit" disabled={sent} className="bg-black hover:bg-terracotta-dk transition-all duration-300">
+          {sent ? "✓ Enviado — ¡Gracias!" : "Envia tu mensaje →"}
         </ArtoraButton>
 
         <span
@@ -216,8 +184,7 @@ function ContactForm() {
             text-stone-500
           "
         >
-          We usually reply within a working
-          day.
+          Solemos responder en el plazo de un día laborable.
         </span>
       </div>
     </form>
@@ -241,11 +208,7 @@ function inputClass(error) {
     focus:border-stone-500
     focus:bg-white
 
-    ${
-      error
-        ? "border-[#b8593a]"
-        : "border-stone-300"
-    }
+    ${error ? "border-[#b8593a]" : "border-stone-300"}
   `;
 }
 

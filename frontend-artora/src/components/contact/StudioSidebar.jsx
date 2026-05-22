@@ -30,49 +30,50 @@ function StudioSidebar() {
           text-stone-500
         "
       >
-        · The studio ·
+        · ARTORA ·
       </span>
 
       <h2
         className="
           mb-8
           font-serif
-          text-3xl
+          text-2xl
+          leading-tight
+          tracking-widest
         "
       >
-        Visit us by appointment
+        Estamos disponibles <em className="text-terracotta">para ti.</em>
       </h2>
 
       <div className="space-y-5">
         <InfoRow
-          label="Email"
-          value="hello@artora.studio"
+          label="Correo Electronico"
+          value="artora@studio.com"
         />
 
         <InfoRow
-          label="Phone"
-          value="+351 21 555 0432"
-          hint="Tue–Sat, 10–17"
+          label="Telefono"
+          value="+57 3178465152"
         />
 
         <InfoRow
-          label="The barn"
+          label="EL GRANERO"
           value={
             <>
-              Rua das Oliveiras 14
+              Cra 102B, #30-40
               <br />
-              2710 Sintra, Portugal
+              Cali, Colombia
             </>
           }
         />
 
         <InfoRow
-          label="Hours"
+          label="Horarios"
           value={
             <>
-              Tue – Sat · 10:00 – 17:00
+              Lunes – Viernes · 09:00 A.M – 05:00 P.M
               <br />
-              Sun – Mon · closed
+              Sabados – Domingo · Cerrado
             </>
           }
           last

@@ -8,6 +8,8 @@ import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
+import ContactPage from "./pages/ContactPage";
+import ProductPage from "./pages/ProducPage";
 
 function App() {
   const density = "compact";
@@ -24,6 +26,8 @@ function App() {
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/shop" element={<ShopPage />} />
           </Route>
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
         </Route>
       </Routes>
     </>

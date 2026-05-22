@@ -14,11 +14,7 @@ function ProductCard({ product, onView, onAdd }) {
     (category) => category.id === product.categoryId,
   );
   const artisan = users.find((user) => user.id === product.artisanId);
-
-  const handleAddToCart = (id) => {
-    console.log("Añadir al carrito", id);
-  };
-
+  
   const handleSendToUser = (id) => {
     navigate(`/profile/${id}`);
   }

@@ -25,6 +25,8 @@ const users = [
 
     listings: [ 102 ],
 
+    followers: [2],
+
     country : "ES",
 
     city : "Barcelona",
@@ -57,6 +59,8 @@ const users = [
     purchasedOrders: [103],
 
     listings: [203],
+
+    followers: [1],
 
     country : "CO",
 
