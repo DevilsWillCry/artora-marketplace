@@ -23,7 +23,6 @@ export default UserIcon;
 const baseStyles = `
   text-black
   h-10
-  flex items-center justify-center
   hover:text-white
   transition-all duration-200
 `;

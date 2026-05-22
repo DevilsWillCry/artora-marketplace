@@ -7,6 +7,7 @@ import SoldTable from "./SoldTable";
 
 import useVisitUser from "@/hooks/useVisitUser";
 import useAuth from "@/hooks/useAuth";
+import { useNavigate } from "react-router";
 
 const FALLBACK_IMAGE = "https://static.thenounproject.com/png/3482632-200.png";
 
@@ -20,6 +21,9 @@ export default function SoldTab() {
   const orders = load("orders", []);
 
   const currentUser = visitUser || user;
+
+  const navigate = useNavigate();
+
 
   const {
     listingsWithDetails,
@@ -226,6 +230,7 @@ export default function SoldTab() {
               hover:bg-terracotta
               hover:text-paper
             "
+            onClick={() => navigate(`/product/listing/${currentUser.id}`)}
           >
             + Añade un nuevo producto
           </button>

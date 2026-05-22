@@ -11,10 +11,6 @@ function HomePage({ density }) {
 
   const featuredProducts = products.filter((product) => product.featured);
 
-  function handleAddToCart(productId) {
-    console.log("Added to cart", productId);
-  }
-
   return (
     <main className="pt-5"> 
       <HeroSection
@@ -26,7 +22,6 @@ function HomePage({ density }) {
         density={density}
         products={featuredProducts}
         onViewProduct={(id) => navigate(`/product/${id}`)}
-        onAddToCart={handleAddToCart}
         onViewAll={() => navigate("/shop")}
       />
     </main>

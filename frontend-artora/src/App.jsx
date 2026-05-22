@@ -10,6 +10,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import ContactPage from "./pages/ContactPage";
 import ProductPage from "./pages/ProducPage";
+import ArtoraListPiecePage from "./pages/ArtoraListPiecePage";
 
 function App() {
   const density = "compact";
@@ -25,9 +26,10 @@ function App() {
           <Route element={<PrivateOutlet />}>
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/shop" element={<ShopPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/product/listing/:id" element={<ArtoraListPiecePage />} />
           </Route>
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
         </Route>
       </Routes>
     </>

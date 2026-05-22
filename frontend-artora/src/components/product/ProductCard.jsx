@@ -5,7 +5,9 @@ import ShoppingCart from "../../assets/icons/ecommerce-cart.min.svg";
 import { load } from "@/storage/storage";
 import { useNavigate } from "react-router";
 
-function ProductCard({ product, onView, onAdd }) {
+import useCart from "@/hooks/useCart";
+
+function ProductCard({ product, onView }) {
   const navigate = useNavigate();
 
   const users = load("users", []);
@@ -14,6 +16,14 @@ function ProductCard({ product, onView, onAdd }) {
     (category) => category.id === product.categoryId,
   );
   const artisan = users.find((user) => user.id === product.artisanId);
+
+  const { addToCart } = useCart();
+
+
+  const handleAddToCart = () => {
+    addToCart(product.id, product.price);
+  };
+
   
   const handleSendToUser = (id) => {
     navigate(`/profile/${id}`);
@@ -144,7 +154,7 @@ function ProductCard({ product, onView, onAdd }) {
           <ArtoraButton
             className="flex flex-row items-center gap-2"
             size="sm"
-            onClick={onAdd}
+            onClick={handleAddToCart}
           >
             Añadir al{" "}
             <img className="w-5" src={ShoppingCart} alt="Shopping Cart Icon" />

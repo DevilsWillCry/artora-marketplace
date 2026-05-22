@@ -33,7 +33,7 @@ export default function ProfilePage() {
   }, [id, user.id]);
 
   return (
-    <main className="min-h-screen bg-stone-50 pt-20">
+    <main className="min-h-screen bg-stone-50 pt-10">
       <ProfileHeader setTab={setTab} watchingUser={visitUser || user} logout={logout} />
 
       <ProfileTabs

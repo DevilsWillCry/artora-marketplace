@@ -26,7 +26,7 @@ function RegisterPage({ density }) {
     name: "",
     email: "",
     password: "",
-    country: "", 
+    country: "",
     city: "",
   });
 
@@ -69,14 +69,16 @@ function RegisterPage({ density }) {
       const newUser = {
         ...form,
         id: uuidv4(),
-        role: "customer",
+        description: "¡Hola! Soy nuevo en Artora.",
+        accountType: "Public",
         avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 100)}`,
+        role: "customer",
         savedProducts: [],
         purchasedOrders: [],
         listings: [],
+        followers: [],
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        followers: [],
       };
 
       save("users", [...users, newUser]);
@@ -108,9 +110,6 @@ function RegisterPage({ density }) {
       setCities(data.data);
     });
   }, [form.country]);
-
-
-
 
   return (
     <AuthShell
