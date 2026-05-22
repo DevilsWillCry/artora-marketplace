@@ -76,6 +76,7 @@ function RegisterPage({ density }) {
         listings: [],
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        followers: [],
       };
 
       save("users", [...users, newUser]);
