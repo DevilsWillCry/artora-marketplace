@@ -4,9 +4,8 @@ import ProductCard from "@/components/product/ProductCard";
 function FeaturedProductsSection({
   density,
   products,
-  onViewProduct,
-  onAddToCart,
   onViewAll,
+  onAddToCart,
 }) {
   const dense = density === "compact";
 
@@ -42,9 +41,6 @@ function FeaturedProductsSection({
           <ProductCard
             key={product.id}
             product={product}
-            onView={() =>
-              onViewProduct(product.id)
-            }
             onAdd={() =>
               onAddToCart(product.id)
             }

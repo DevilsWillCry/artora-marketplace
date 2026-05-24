@@ -1,6 +1,6 @@
 // src/components/cart/CartFooter.jsx
 
-export default function CartFooter({ total }) {
+export default function CartFooter({ total, onSubmit }) {
   return (
     <footer
       className="
@@ -38,6 +38,8 @@ export default function CartFooter({ total }) {
       </div>
 
       <button
+        type="submit"
+        onClick={onSubmit}
         className="
           mt-5 w-full
           rounded-md

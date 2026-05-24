@@ -2,18 +2,26 @@
 import ArtoraButton from "@/components/ui/ArtoraButton";
 import { useNavigate } from "react-router";
 import useVisitUser from "@/hooks/useVisitUser";
+import { load } from "@/storage/storage";
 
 export default function OrderItem({ item }) {
+  const categories = load("categories", []);
   const { visitUser } = useVisitUser();
   const navigate = useNavigate();
+
   const handleViewDetails = (id) => {
-    navigate(`/products/${id}`);
+    navigate(`/product/${id}`);
   };
+
+  const category = categories.find(
+    (category) => category.id === item.categoryId,
+  );
 
   const handleBuyAgain = (id) => {
     console.log("Comprar de nuevo", id);
   };
 
+  
   return (
     <div
       className="
@@ -30,8 +38,8 @@ export default function OrderItem({ item }) {
       "
     >
       <img
-        src={item.image}
-        alt={item.name}
+        src={item.images?.[0].url}
+        alt={item.title}
         className="
           aspect-square
           rounded-lg
@@ -46,7 +54,7 @@ export default function OrderItem({ item }) {
             text-xl
           "
         >
-          {item.name}
+          {item.title}
         </h4>
 
         <p
@@ -56,7 +64,17 @@ export default function OrderItem({ item }) {
             text-stone-500
           "
         >
-          {item.category}
+          {category?.name || "Categoría desconocida"}
+        </p>
+
+        <p
+          className="
+            mt-1
+            text-sm
+            text-stone-500
+          "
+        >
+          Adquirido/s: {item.quantity || "Categoría desconocida"}
         </p>
       </div>
 
@@ -71,7 +89,7 @@ export default function OrderItem({ item }) {
           justify-end
         "
       >
-        <span>{item.price.toLocaleString("es-CO")} COP</span>
+        <span>{(item.price * item.quantity).toLocaleString("es-CO")} COP</span>
 
         <ArtoraButton
           className="justify-self-end bg-cream text-black border border-black cursor-pointer px-3 py-1 hover:bg-terracotta hover:text-white transition-all duration-300"

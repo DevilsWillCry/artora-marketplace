@@ -2,13 +2,13 @@
 
 const listings = [
   {
-    id: 201,
+    id: 101,
 
-    category: 1,
+    categoryId: 1,
 
-    productId: 3,
+    productId: 1,
 
-    artisanId: 2,
+    artisanId: 1,
 
     views: 184,
 
@@ -18,35 +18,67 @@ const listings = [
   },
 
   {
-    id: 101,
+    id: 201,
 
-    category: 3,
-
-    productId: 4,
-
-    artisanId: 2,
-
-    views: 312,
-
-    saves: 41,
-
-    posted: "Hace 3 semanas",
-  },
-
-  {
-    id: 102,
-
-    category: 4,
+    categoryId: 3,
 
     productId: 2,
 
     artisanId: 1,
 
+    views: 312,
+
+    saves: 41,
+
+    posted: "2026-05-24T10:00:00Z", //usar date-nfs para generar estructuras: "Hace N días"
+  },
+
+  {
+    id: 301,
+
+    categoryId: 4,
+
+    productId: 3,
+
+    artisanId: 1,
+
+    views: 312,
+
+    saves: 41,
+
+    posted: "2026-05-24T10:00:00Z", //usar date-nfs para generar estructuras: "Hace N días"
+  },
+
+  {
+    id: 402,
+
+    categoryId: 5,
+
+    productId: 4,
+
+    artisanId: 2,
+
     views: 98,
 
     saves: 12,
 
-    posted: "Hace 1 mes",
+    posted: "2026-03-12T10:00:00Z",
+  },
+
+  {
+  id: 502,
+
+    categoryId: 4,
+
+    productId: 5,
+
+    artisanId: 2,
+
+    views: 98,
+
+    saves: 12,
+
+    posted: "2026-03-12T10:00:00Z",
   },
 ];
 

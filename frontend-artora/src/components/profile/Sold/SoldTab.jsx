@@ -70,7 +70,7 @@ export default function SoldTab() {
       .map((listing) => {
         const product = productsMap.get(listing.productId);
 
-        const category = categoriesMap.get(listing.category);
+        const category = categoriesMap.get(listing.categoryId);
 
         const salesData = soldProductsMap.get(listing.productId);
 
@@ -78,9 +78,9 @@ export default function SoldTab() {
         return {
           ...listing,
 
-          name: product?.name || "Unknown product",
+          name: product?.title || "Unknown product",
 
-          image: product?.image || FALLBACK_IMAGE,
+          image: product?.images?.[0].url || FALLBACK_IMAGE,
 
           category: category?.name || "Unknown category",
 

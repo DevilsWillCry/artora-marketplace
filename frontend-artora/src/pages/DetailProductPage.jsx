@@ -9,9 +9,9 @@ import ProductGallery from "@/components/product/ProductGallery";
 import ProductInfo from "@/components/product/ProductInfo";
 import RelatedProducts from "@/components/product/RelatedProducts";
 
-function ProductPage() {
+function DetailProductPage() {
   const { id } = useParams();
-  
+
   const users = load("users", []);
   const products = load("products", []);
   const categories = load("categories", []);
@@ -31,10 +31,21 @@ function ProductPage() {
     [product, users],
   );
 
-  const productWithDetails = {...product, artisan: artisan.name, country: artisan.city, category: category.name}
-
+  const productWithDetails = {
+    ...product,
+    artisan: artisan.name,
+    country: artisan.city,
+    category: category.name,
+  };
 
   const [quantity, setQuantity] = useState(1);
+
+  const relatedProducts = products
+    .filter(
+      (item) =>
+        item.categoryId === product.categoryId && item.id !== product.id,
+    )
+    .slice(0, 5);
 
   if (!product) {
     return (
@@ -81,15 +92,6 @@ function ProductPage() {
     );
   }
 
-  const relatedProducts = products
-    .filter(
-      (item) =>
-        item.categoryId === product.categoryId &&
-        item.id !== product.id,
-    )
-    .slice(0, 3);
-
-
   return (
     <main className="bg-[#f5f1ea]">
       {/* Breadcrumb */}
@@ -115,33 +117,25 @@ function ProductPage() {
           "
         >
           <div className="flex flex-wrap items-center gap-2">
-            <Link
-              to="/"
-              className="hover:text-stone-900"
-            >
+            <Link to="/" className="hover:text-stone-900">
               Inicio
             </Link>
 
             <span>/</span>
 
-            <Link
-              to="/shop"
-              className="hover:text-stone-900"
-            >
+            <Link to="/shop" className="hover:text-stone-900">
               Tienda
             </Link>
 
             <span>/</span>
 
             <Link to={`/shop/${category.slug}`}>
-            <span>{category.name}</span>
+              <span>{category.name}</span>
             </Link>
 
             <span>/</span>
 
-            <span className="text-stone-900">
-              {product.name}
-            </span>
+            <span className="text-stone-900">{product.title}</span>
           </div>
         </div>
       </div>
@@ -177,4 +171,4 @@ function ProductPage() {
   );
 }
 
-export default ProductPage;
+export default DetailProductPage;

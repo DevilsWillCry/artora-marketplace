@@ -6,14 +6,14 @@ const orders = [
 
     date: "Apr 28, 2026",
 
-    artisanId: 2,
+    artisanId: 1,
 
     items: [
-      { productId: 1, quantity: 2 },
-      { productId: 2, quantity: 1 },
+      { productId: 4, quantity: 1 },
+      { productId: 5, quantity: 1 },
     ],
 
-    total: 108_000,
+    total: 329_000,
 
     status: "delivered",
 
@@ -30,11 +30,10 @@ const orders = [
     artisanId: 1,
 
     items: [
-      { productId: 3, quantity: 2 },
-      { productId: 4, quantity: 1 },
+      { productId: 4, quantity: 3 },
     ],
 
-    total: 102_000,
+    total: 267_000,
 
     status: "delivered",
 
@@ -48,14 +47,15 @@ const orders = [
 
     date: "May 20, 2026",
 
-    artisanId: 1,
+    artisanId: 2,
 
     items: [
-      { productId: 3, quantity: 2 },
-      { productId: 4, quantity: 1 },
+      { productId: 1, quantity: 2 },
+      { productId: 2, quantity: 3 },
+      { productId: 3, quantity: 4 },
     ],
 
-    total: 102_000,
+    total: 2_437_000,
 
     status: "delivered",
 

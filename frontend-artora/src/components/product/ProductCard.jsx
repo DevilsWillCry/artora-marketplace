@@ -2,32 +2,69 @@
 import ArtoraButton from "@/components/ui/ArtoraButton";
 import ShoppingCart from "../../assets/icons/ecommerce-cart.min.svg";
 
-import { load } from "@/storage/storage";
+import { Heart } from "lucide-react";
+
+import { load, save } from "@/storage/storage";
 import { useNavigate } from "react-router";
 
 import useCart from "@/hooks/useCart";
 
-function ProductCard({ product, onView }) {
+import useAuth from "@/hooks/useAuth";
+
+function ProductCard({ product }) {
   const navigate = useNavigate();
+
+  const { user, updateUser } = useAuth();
 
   const users = load("users", []);
   const categories = load("categories", []);
+  const listings = load("listings", []);
+  const { addToCart } = useCart();
+
+  const artisan = users?.find((user) => user.id === product.artisanId);
+
   const category = categories.find(
     (category) => category.id === product.categoryId,
   );
-  const artisan = users.find((user) => user.id === product.artisanId);
 
-  const { addToCart } = useCart();
+  const isListed = listings.find(
+    (listing) =>
+      listing.productId === product.id && listing.artisanId === user?.id,
+  ); // Verifica si el producto está listado
+
+  const savedProduct = user?.savedProducts?.find((id) => id === product.id); // Cambia el color del corazón según si el producto está guardado}
 
 
   const handleAddToCart = () => {
     addToCart(product.id, product.price);
   };
 
-  
   const handleSendToUser = (id) => {
     navigate(`/profile/${id}`);
-  }
+  };
+
+  const handleViewDetails = (id) => {
+    navigate(`/product/${id}`);
+  };
+
+  const handleFavorite = (productId) => {
+    const savedProducts = user?.savedProducts || [];
+
+    const updatedSavedProducts = savedProducts.includes(productId)
+      ? savedProducts.filter((id) => id !== productId)
+      : [...savedProducts, productId];
+
+    const updatedUser = {
+      ...user,
+      savedProducts: updatedSavedProducts,
+    };
+
+    const updatedUsers = users.map((u) => (u.id === user.id ? updatedUser : u));
+
+    updateUser(updatedUser);
+
+    save("users", updatedUsers);
+  };
 
   return (
     <article
@@ -47,25 +84,26 @@ function ProductCard({ product, onView }) {
       "
     >
       {/* Image */}
-      <button
-        onClick={onView}
+      <div
         className="
           relative 
           block 
           w-full
           aspect-square
           overflow-hidden
-        "
+          cursor-pointer
+          "
       >
         <img
-          src={product.image}
-          alt={product.name}
+          src={product.images?.[0].url}
+          alt={product.title}
           className="
             h-full w-full object-cover
             transition-transform duration-500s
             group-hover:scale-[1.03]
             rounded-lg
           "
+          onClick={() => handleViewDetails(product.id)}
         />
 
         {/* Category badge */}
@@ -83,17 +121,43 @@ function ProductCard({ product, onView }) {
         >
           {category.name}
         </span>
-      </button>
+
+        {/* Heart Badge */}
+        <button
+          className={`
+            absolute top-3 right-3
+            rounded-full
+            bg-paper/90
+            p-2
+            text-ink
+            backdrop-blur-sm
+            cursor-pointer
+            hover:bg-paper
+            hover:scale-110
+            transition-all
+            duration-300
+            ${isListed ? "hidden" : "visible"}
+          `}
+          onClick={() => handleFavorite(product.id)}
+        >
+          <Heart
+            size={20}
+            color="#e01b24"
+            fill={savedProduct ? "#e01b24" : "#fff"}
+          />
+        </button>
+      </div>
 
       {/* Content */}
       <div className="space-y-4 p-5 w-full flex flex-col items-start justify-between">
         {/* Product info */}
         <div className="w-full flex flex-col items-start justify-start">
           <button
-            onClick={onView}
+            onClick={() => handleViewDetails(product.id)}
             className="
               text-left
               transition-opacity
+              cursor-pointer
               hover:opacity-70
             "
           >
@@ -105,7 +169,7 @@ function ProductCard({ product, onView }) {
                 text-ink
               "
             >
-              {product.name}
+              {product.title}
             </h3>
           </button>
 
@@ -116,7 +180,10 @@ function ProductCard({ product, onView }) {
             "
             onClick={() => handleSendToUser(product.artisanId)}
           >
-            Hecho por <em className="text-terracotta cursor-pointer border-b hover:text-ink transition-colors">{artisan?.name}</em>
+            Hecho por{" "}
+            <em className="text-terracotta cursor-pointer border-b hover:text-ink transition-colors">
+              {artisan?.name}
+            </em>
           </button>
 
           <p
@@ -152,7 +219,7 @@ function ProductCard({ product, onView }) {
           </div>
 
           <ArtoraButton
-            className="flex flex-row items-center gap-2"
+            className={`flex flex-row items-center gap-2 ${isListed ? "hidden" : ""}`}
             size="sm"
             onClick={handleAddToCart}
           >

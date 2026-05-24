@@ -3,162 +3,297 @@
 const products = [
   {
     id: 1,
-    slug: "linen-earth-vase",
-
-    name: "Jarrón de Lino",
-
-    categoryId: 1,
-
-    artisanId: 1,
-
-    price: 64_000,
-
-    stock: 10,
-
-    featured: true,
-
-    status: "Sold",
-
-    nameStatus: "Vendido",
-
+    title: "Jarrón Artesanal en Cerámica Negra",
+    price: 185000,
     description:
-      "Jarrón de cerámica hecho en torno, terminado con un esmalte mate suave inspirado en los tonos terrosos de la costa.",
-
-    image:
-      "https://http2.mlstatic.com/D_NQ_NP_792376-MLM100099182419_122025-O.webp",
+      "Jarrón decorativo hecho a mano con acabado mate en cerámica negra. Perfecto para espacios modernos y minimalistas.",
+    materials: "Cerámica artesanal, esmalte mate",
+    categoryId: 1,
+    artisanId: 1,
+    conditionId: 1,
+    stock: 3,
+    status: "Active",
+    nameStatus: "Activo",
+    featured: true,
+    shippingFrom: "Cali, Colombia",
+    shippingMethod: "standard",
+    returns: "30",
+    year: 2025,
+    dimensions: {
+      w: "18 cm",
+      h: "35 cm",
+      d: "18 cm",
+    },
+    images: [
+      {
+        id: "img_1001_1",
+        type: "image/webp",
+        size: 245678,
+        url: "https://http2.mlstatic.com/D_NQ_NP_844671-CBT79952209562_102024-O-juego-de-jarrones-de-ceramica-negra-3-floreros-pequenos-de.webp",
+      },
+      {
+        id: "img_1001_2",
+        type: "image/jpeg",
+        size: 198456,
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMtACoDbL7Uzr2peU7gaLKJ2Qm8hh-dMtZKg&s",
+      },
+      {
+        id: "img_1001_3",
+        type: "image/jpeg",
+        size: 301245,
+        url: "https://m.media-amazon.com/images/I/41aWQ+uSpHS._AC_UF894,1000_QL80_.jpg",
+      },
+      {
+        id: "img_1001_4",
+        type: "image/jpeg",
+        size: 267890,
+        url: "https://m.media-amazon.com/images/I/51DGnsNhwjS._AC_UF350,350_QL80_.jpg",
+      },
+      {
+        id: "img_1001_5",
+        type: "image/webp",
+        size: 221908,
+        url: "https://http2.mlstatic.com/D_Q_NP_762905-MLM92206380624_092025-O.webp",
+      },
+    ],
+    created_at: "2025-03-15T10:30:00.000Z",
+    visibility: "public",
   },
 
   {
     id: 2,
-    slug: "woven-oak-basket",
-
-    name: "Cesta de Roble Tejida",
-
-    categoryId: 4,
-
-    artisanId: 1,
-
-    price: 42_000,
-
-    stock: 5,
-
-    featured: true,
-
-    status: "Active",
-
-    nameStatus: "Activo",
-
+    title: "Bolso Tejido en Fique Natural",
+    price: 129000,
     description:
-      "Cesta tejida a mano hecha con fibras naturales y asas de roble.",
-
-    image:
-      "https://a.1stdibscdn.com/antique-early-20th-century-american-woven-oak-melon-basket-for-sale-picture-2/f_74672/f_41986562/IMG_9209_1729593838971_master.JPG",
+      "Bolso artesanal colombiano tejido en fique natural con diseño tradicional y acabados resistentes.",
+    materials: "Fique natural, cuero sintético",
+    categoryId: 2,
+    artisanId: 1,
+    conditionId: 3,
+    stock: 5,
+    status: "Active",
+    nameStatus: "Activo",
+    featured: true,
+    shippingFrom: "Cali, Colombia",
+    shippingMethod: "standard",
+    returns: "30",
+    year: 2024,
+    dimensions: {
+      w: "30 cm",
+      h: "28 cm",
+      d: "10 cm",
+    },
+    images: [
+      {
+        id: "img_1002_1",
+        type: "image/jpeg",
+        size: 210456,
+        url: "https://artesaniascolombianas.co/wordpress/wp-content/uploads/2017/11/bolso_fique_mini_19_2.jpg",
+      },
+      {
+        id: "img_1002_2",
+        type: "image/jpeg",
+        size: 232145,
+        url: "https://www.carana.com.co/cdn/shop/files/5_1024x1024.jpg?v=1683595814",
+      },
+      {
+        id: "img_1002_3",
+        type: "image/jpeg",
+        size: 245120,
+        url: "https://www.carana.com.co/cdn/shop/files/image_1c1fc529-f29c-46a8-b6bc-748ce768f628_1024x1024.jpg?v=1717725067",
+      },
+      {
+        id: "img_1002_4",
+        type: "image/jpeg",
+        size: 198765,
+        url: "https://m.media-amazon.com/images/I/71TIxuaUjRL._AC_SX425_.jpg",
+      },
+      {
+        id: "img_1002_5",
+        type: "image/jpeg",
+        size: 287654,
+        url: "https://i.etsystatic.com/17708609/r/il/42d4e9/4886399629/il_570xN.4886399629_lkgt.jpg",
+      },
+    ],
+    created_at: "2025-01-12T08:15:00.000Z",
+    visibility: "public",
   },
 
   {
     id: 3,
-    slug: "stoneware-coffee-set",
-
-    name: "Juego de café de gres",
-
-    categoryId: 1,
-
-    artisanId: 2,
-
-    price: 78_000,
-
-    stock: 3,
-
-    featured: true,
-
-    status: "Active",
-
-    nameStatus: "Activo",
-
+    title: "Mesa Auxiliar en Madera de Roble",
+    price: 420000,
     description:
-      "Juego de café minimalista hecho a mano, elaborado con arcilla de loza texturizada.",
-
-    image:
-      "https://i.etsystatic.com/10009111/r/il/2c80ae/4460714279/il_1080xN.4460714279_msgd.jpg",
+      "Mesa auxiliar fabricada artesanalmente en madera de roble con acabado natural y estilo contemporáneo.",
+    materials: "Madera de roble, barniz ecológico",
+    categoryId: 4,
+    artisanId: 1,
+    conditionId: 1,
+    stock: 2,
+    status: "Active",
+    nameStatus: "Activo",
+    featured: true,
+    shippingFrom: "Cali, Colombia",
+    shippingMethod: "standard",
+    returns: "30",
+    year: 2023,
+    dimensions: {
+      w: "45 cm",
+      h: "55 cm",
+      d: "45 cm",
+    },
+    images: [
+      {
+        id: "img_1003_1",
+        type: "image/webp",
+        size: 312450,
+        url: "https://http2.mlstatic.com/D_NQ_NP_950701-MCO94794413264_102025-O.webp",
+      },
+      {
+        id: "img_1003_2",
+        type: "image/jpeg",
+        size: 298765,
+        url: "https://i.etsystatic.com/22663455/r/il/4bc2c2/5789416503/il_fullxfull.5789416503_ht8z.jpg",
+      },
+      {
+        id: "img_1003_3",
+        type: "image/jpeg",
+        size: 276543,
+        url: "https://media.adeo.com/mkp/6a99594f5dd133fd58f3dc3a795ad5c9/media.jpg?width=650&height=650&format=jpg&quality=80&fit=bounds",
+      },
+      {
+        id: "img_1003_4",
+        type: "image/jpeg",
+        size: 287901,
+        url: "https://m.media-amazon.com/images/I/81R1rG0iV7L._AC_UF894,1000_QL80_.jpg",
+      },
+      {
+        id: "img_1003_5",
+        type: "image/jpeg",
+        size: 264320,
+        url: "https://img.kwcdn.com/product/fancy/e43a3a92-5c74-4789-a063-6a9ab534de72.jpg?imageView2/2/w/500/q/60/format/webp",
+      },
+    ],
+    created_at: "2024-11-20T14:00:00.000Z",
+    visibility: "public",
   },
 
   {
     id: 4,
-    slug: "beeswax-ritual-candle",
-
-    name: "Vela Ritual de Cera de Abeja",
-
-    categoryId: 3,
-
-    artisanId: 2,
-
-    status: "Sold",
-
-    nameStatus: "Vendido",
-
-    price: 24_000,
-
-    stock: 0,
-
-    featured: false,
-
+    title: "Collar Artesanal con Piedras Naturales",
+    price: 89000,
     description:
-      "Vela de cera de abeja de combustión lenta con sutiles notas de cedro y ámbar.",
-
-    image:
-      "https://i.etsystatic.com/17195470/r/il/54391e/3116506827/il_600x600.3116506827_b831.jpg",
+      "Collar artesanal inspirado en diseños ancestrales elaborado con piedras naturales y detalles metálicos.",
+    materials: "Piedras naturales, acero inoxidable",
+    categoryId: 5,
+    artisanId: 2,
+    conditionId: 1,
+    stock: 8,
+    status: "Active",
+    nameStatus: "Activo",
+    featured: true,
+    shippingFrom: "Cali, Colombia",
+    shippingMethod: "standard",
+    returns: "30",
+    year: 2025,
+    dimensions: {
+      w: "5 cm",
+      h: "45 cm",
+      d: "1 cm",
+    },
+    images: [
+      {
+        id: "img_1004_1",
+        type: "image/jpeg",
+        size: 178234,
+        url: "https://i.ytimg.com/vi/rua25ccxyu8/maxresdefault.jpg",
+      },
+      {
+        id: "img_1004_2",
+        type: "image/jpeg",
+        size: 189765,
+        url: "https://i.pinimg.com/736x/a2/ee/70/a2ee706cdc476316bafff9760139c829.jpg",
+      },
+      {
+        id: "img_1004_3",
+        type: "image/jpeg",
+        size: 210987,
+        url: "https://i.ebayimg.com/images/g/PAkAAeSwkDxo7ZKo/s-l1200.webp",
+      },
+      {
+        id: "img_1004_4",
+        type: "image/jpeg",
+        size: 165432,
+        url: "https://m.media-amazon.com/images/I/91Cuyg3QdLL._AC_UF350,350_QL80_.jpg",
+      },
+      {
+        id: "img_1004_5",
+        type: "image/jpeg",
+        size: 201234,
+        url: "https://img1.elyerromenu.com/images/brujitas-gems-bisuteria-artesanal/collar-de-piedras-naturales-con-dije-y-cadenas/img.webp",
+      },
+    ],
+    created_at: "2025-04-05T16:45:00.000Z",
+    visibility: "public",
   },
 
   {
     id: 5,
-    slug: "hand-carved-serving-board",
-
-    name: "Tabla para servir tallada a mano",
-
-    categoryId: 4,
-
-    artisanId: 3,
-
-    status: "Draft",
-
-    nameStatus: "Borrador",
-
-    price: 58_000,
-
-    stock: 2,
-
-    featured: true,
-
-    description: "Tabla de servir de nogal macizo tallada y acabada a mano.",
-
-    image:
-      "https://i.etsystatic.com/19935582/r/il/554a52/3631699000/il_fullxfull.3631699000_8ig2.jpg",
-  },
-
-  {
-    id: 6,
-    slug: "natural-linen-tablecloth",
-
-    name: "Mantel de lino natural",
-
-    categoryId: 2,
-
-    artisanId: 3,
-
-    status: "Draft",
-
-    nameStatus: "Borrador",
-
-    price: 88_000,
-
-    stock: 16,
-
-    featured: false,
-
+    title: "Lámpara Decorativa en Bambú",
+    price: 240000,
     description:
-      "Mantel de lino lavado suave diseñado para rituales de comida lenta.",
-
-    image: "https://m.media-amazon.com/images/I/71Ho1u2po4L._AC_SL1500_.jpg",
+      "Lámpara decorativa tejida a mano en bambú natural con iluminación cálida para interiores modernos.",
+    materials: "Bambú natural, metal, cableado eléctrico",
+    categoryId: 4,
+    artisanId: 2,
+    conditionId: 1,
+    stock: 4,
+    status: "Active",
+    nameStatus: "Activo",
+    featured: true,
+    shippingFrom: "Cali, Colombia",
+    shippingMethod: "standard",
+    returns: "30",
+    year: 2024,
+    dimensions: {
+      w: "25 cm",
+      h: "40 cm",
+      d: "25 cm",
+    },
+    images: [
+      {
+        id: "img_1005_1",
+        type: "image/webp",
+        size: 298765,
+        url: "https://http2.mlstatic.com/D_NQ_NP_830263-CBT91625986038_092025-O.webp",
+      },
+      {
+        id: "img_1005_2",
+        type: "image/webp",
+        size: 287654,
+        url: "https://http2.mlstatic.com/D_Q_NP_605722-MLA94291237631_102025-O.webp",
+      },
+      {
+        id: "img_1005_3",
+        type: "image/webp",
+        size: 245678,
+        url: "https://http2.mlstatic.com/D_NQ_NP_910448-MCO79428957657_092024-O.webp",
+      },
+      {
+        id: "img_1005_4",
+        type: "image/jpeg",
+        size: 256789,
+        url: "https://i.pinimg.com/736x/02/3f/cb/023fcb123ceb3e726216718fac91dd82.jpg",
+      },
+      {
+        id: "img_1005_5",
+        type: "image/jpeg",
+        size: 243210,
+        url: "https://perlighting.com/wp-content/uploads/2021/01/4100780-5500_m2-1024x1024.jpg",
+      },
+    ],
+    created_at: "2025-02-18T09:20:00.000Z",
+    visibility: "public",
   },
 ];
 

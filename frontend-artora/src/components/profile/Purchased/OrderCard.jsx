@@ -11,9 +11,14 @@ export default function OrderCard({ order }) {
   const products = load("products", []);
   const { visitUser } = useVisitUser();
 
-  const productsFiltered = order.items.map(({ productId: item }) => {
-    return products.find((product) => product.id === item);
+  const productsFiltered = order.items.map(({ productId: item, quantity }) => {
+    return {
+      ...products.find((product) => product.id === item),
+      quantity,
+    };
   });
+
+  console.log();
 
   return (
     <article

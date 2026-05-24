@@ -18,7 +18,7 @@ function PriceSection({ form, errors, updateField }) {
   const youReceive = +(price - platformFee - paymentFee).toFixed(2);
 
   useEffect(() => {
-    updateField("price", (Math.max(0, youReceive)).toLocaleString("es-CO"));
+    updateField("price", (Math.max(0, youReceive)));
 
   }, [youReceive]);
 
@@ -87,7 +87,7 @@ function PriceSection({ form, errors, updateField }) {
             <button
               type="button"
               onClick={() =>
-                updateField("quantity", Math.max(1, form.quantity - 1))
+                updateField("stock", Math.max(1, form.stock - 1))
               }
               className="
                 h-12 w-12 border-r
@@ -105,12 +105,12 @@ function PriceSection({ form, errors, updateField }) {
                 text-lg font-medium
               "
             >
-              {form.quantity}
+              {form.stock}
             </span>
 
             <button
               type="button"
-              onClick={() => updateField("quantity", form.quantity + 1)}
+              onClick={() => updateField("stock", form.stock + 1)}
               className="
                 h-12 w-12 border-l
                 border-stone-200 text-xl

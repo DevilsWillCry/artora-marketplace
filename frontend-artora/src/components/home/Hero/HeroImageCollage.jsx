@@ -12,16 +12,18 @@ function HeroImageCollage({ dense, className }) {
       <div
         className="
           absolute top-0 right-0
-          aspect-4/5
-          w-[78%]
+          aspect-5/5
+          w-[60%]
           overflow-hidden rounded-md
           shadow-[0_20px_60px_rgba(60,40,20,0.18)]
+          max-md:w-[80%]
         "
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=900&q=80')",
+            "url('https://image.made-in-china.com/202f0j00RvqlZBDzbckG/Matte-Ceramic-Round-Ball-Vase-Black-Minimalistic-Flower-Vase-Design-Gold-Modern-Luxury-Table-Vases.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       />
 
@@ -29,14 +31,15 @@ function HeroImageCollage({ dense, className }) {
       <div
         className="
           absolute bottom-0 left-0
-          aspect-4/5
-          w-[52%]
+          aspect-5/5
+          w-[50%]
           overflow-hidden rounded-md border-4 border-cream
           shadow-[0_16px_40px_rgba(60,40,20,0.14)]
+          max-md:w-[80%]
         "
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=600&q=80')",
+            "url('https://ilumina.pe/cdn/shop/files/9_ec44c022-1c6e-46d9-9ef3-5b6d9641f8fd.jpg?v=1768345303&width=1214')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -64,9 +67,7 @@ function HeroImageCollage({ dense, className }) {
           Studio Linnea
         </div>
 
-        <span className="text-[11px] text-inkMute">
-          Ceramista, Sintra
-        </span>
+        <span className="text-[11px] text-inkMute">Ceramista, Sintra</span>
       </div>
     </div>
   );

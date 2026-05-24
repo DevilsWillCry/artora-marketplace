@@ -19,7 +19,7 @@ const users = [
 
     role: "customer",
 
-    savedProducts: [1, 6, 5],
+    savedProducts: [4, 5],
 
     purchasedOrders: [101, 102],
 
@@ -54,7 +54,7 @@ const users = [
 
     role: "customer",
 
-    savedProducts: [2],
+    savedProducts: [1, 2],
 
     purchasedOrders: [103],
 

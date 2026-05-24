@@ -52,6 +52,16 @@ const categories = [
     image:
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80",
   },
+
+  {
+    id: 5,
+    slug: "jewelry",
+    name: "Joyerias",
+    description:
+      "Handmade jewelry pieces made with natural materials.",
+    image:
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80",
+  },
 ];
 
 export default categories;

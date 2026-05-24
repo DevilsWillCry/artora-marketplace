@@ -7,6 +7,7 @@ import { load } from "@/storage/storage";
 function DetailsSection({ form, setForm, errors, updateField }) {
   const categories = load("categories", []);
   const conditions = load("conditions", []);
+
   return (
     <div>
       <ListingSection
@@ -17,15 +18,15 @@ function DetailsSection({ form, setForm, errors, updateField }) {
         <ListingField
           label="Photos"
           required
-          error={errors.photos}
+          error={errors.images}
           hint="Natural light works best."
         >
           <PhotoUploader
-            photos={form.photos}
-            setPhotos={(photos) =>
+            images={form.images}
+            setImages={(images) =>
               setForm((prev) => ({
                 ...prev,
-                photos,
+                images,
               }))
             }
           />

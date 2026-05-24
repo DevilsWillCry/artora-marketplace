@@ -16,6 +16,7 @@ export default function SoldTable({ listings }) {
     navigate(`/products/${id}`);
   };
 
+
   return (
     <div
       className={`

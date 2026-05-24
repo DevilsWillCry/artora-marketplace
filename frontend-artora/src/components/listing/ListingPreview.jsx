@@ -5,7 +5,7 @@ import { load } from "@/storage/storage";
 
 function ListingPreview({ form }) {
   const { user } = useAuth();
-  const hasCover = form.photos?.[0]?.url || "";
+  const hasCover = form.images?.[0]?.url || "";
 
   const categories = load("categories", []);
   const conditions = load("conditions", []);
@@ -13,8 +13,7 @@ function ListingPreview({ form }) {
   
   const category = categories.find((item) => item.id === form.categoryId);
   const condition = conditions.find((item) => item.id === form.conditionId);
-  
-  console.log(category, condition);
+
   return (
     <aside className="sticky top-24">
       {/* Preview Card */}
@@ -122,7 +121,7 @@ function ListingPreview({ form }) {
           <PreviewLine
             label="Quantity"
             value={
-              form.quantity === 1 ? "One of one" : `${form.quantity} available`
+              form.stock === 1 ? "One of one" : `${form.stock} available`
             }
             last
           />

@@ -1,9 +1,9 @@
 // src/components/cart/CartItem.jsx
 import { load } from "@/storage/storage";
 import useCart from "@/hooks/useCart";
-
-export default function CartItem({ item }) {
+export default function CartItem({ item, errors }) {
   const products = load("products", []);
+  const users = load("users", []);
   const { updateQty, removeFromCart } = useCart();
 
   const product = products.find((p) => p.id === item.productId);
@@ -11,6 +11,7 @@ export default function CartItem({ item }) {
   if (!product) {
     return null;
   }
+  const user  = users.find((u) => u.id === product.artisanId);
 
   return (
     <article
@@ -30,7 +31,7 @@ export default function CartItem({ item }) {
         "
       >
         <img
-          src={product.image}
+          src={product.images?.[0]?.url}
           alt={product.name}
           className="
             h-full w-full object-cover
@@ -54,7 +55,7 @@ export default function CartItem({ item }) {
                 text-stone-900
               "
             >
-              {product.name}
+              {product.title}
             </h3>
 
             <p
@@ -63,7 +64,7 @@ export default function CartItem({ item }) {
                 text-stone-500
               "
             >
-              {product.maker}
+              {user.name}
             </p>
           </div>
 
@@ -100,8 +101,8 @@ export default function CartItem({ item }) {
               onClick={() =>
                 updateQty(
                   item.productId,
-                  item.qty - 1,
-                 (product.price * item.qty) - product.price,
+                  item.quantity - 1,
+                 (product.price * item.quantity) - product.price,
                 )
               }
               className="
@@ -121,15 +122,15 @@ export default function CartItem({ item }) {
                 text-sm
               "
             >
-              {item.qty}
+              {item.quantity}
             </span>
 
             <button
               onClick={() =>
                 updateQty(
                   item.productId,
-                  item.qty + 1,
-                  (product.price * item.qty) + product.price,
+                  item.quantity + 1,
+                  (product.price * item.quantity) + product.price,
                 )
               }
               className="
@@ -151,7 +152,7 @@ export default function CartItem({ item }) {
               text-stone-900
             "
           >
-            ${(product.price * item.qty).toLocaleString("es-CO")}
+            ${(product.price * item.quantity).toLocaleString("es-CO")}
           </div>
         </div>
       </div>

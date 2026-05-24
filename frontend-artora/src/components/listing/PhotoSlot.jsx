@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-function PhotoSlot({ index, isPrimary = false, photos, photo, setPhotos }) {
+function PhotoSlot({ index, isPrimary = false, images, image, setImages }) {
   const primary = index === 0 || isPrimary;
 
   const inputRef = useRef(null);
@@ -13,21 +13,21 @@ function PhotoSlot({ index, isPrimary = false, photos, photo, setPhotos }) {
 
     const localUrl = URL.createObjectURL(file);
 
-    const uploadFile = [...photos];
+    const uploadFile = [...images];
     uploadFile[index] = {
       id: crypto.randomUUID(),
       file,
       url: localUrl,
     };
-    setPhotos(uploadFile);
+    setImages(uploadFile);
   };
 
   const removePhoto = (e) => {
     e.stopPropagation();
-    if (photo?.url) URL.revokeObjectURL(photo.url);
-    const removeFile = [...photos];
+    if (image?.url) URL.revokeObjectURL(image.url);
+    const removeFile = [...images];
     removeFile[index] = null;
-    setPhotos(removeFile);
+    setImages(removeFile);
   };
 
   return (
@@ -48,13 +48,13 @@ function PhotoSlot({ index, isPrimary = false, photos, photo, setPhotos }) {
       bg-stone-50 hover:bg-stone-100
       cursor-pointer
       ${primary ? "col-span-2 row-span-2" : ""}
-      ${photo ? "border-stone-400" : "border-stone-300"}
+      ${image ? "border-stone-400" : "border-stone-300"}
     `}
       >
-        {photo ? (
+        {image ? (
           <>
             <img
-              src={photo.url}
+              src={image.url}
               alt=""
               className="h-full w-full object-cover aspect-square"
             />

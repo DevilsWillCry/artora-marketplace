@@ -27,7 +27,7 @@ export default function CartProvider({ children }) {
   }, [cart]);
 
   // Add
-  function addToCart(productId, price = 0, qty = 1) {
+  function addToCart(productId, price = 0, quantity = 1) {
     
     setCart((prev) => {
       const existing = prev.find((item) => item.productId === productId);
@@ -37,7 +37,7 @@ export default function CartProvider({ children }) {
           item.productId === productId
             ? {
                 ...item,
-                qty: item.qty + qty,
+                quantity: item.quantity + quantity,
                 price: item.price + price,
               }
             : item,
@@ -48,7 +48,7 @@ export default function CartProvider({ children }) {
         ...prev,
         {
           productId,
-          qty,
+          quantity,
           price,
         },
       ];
@@ -61,8 +61,8 @@ export default function CartProvider({ children }) {
   }
 
   // Update qty
-  function updateQty(productId, qty, price) {
-    if (qty <= 0) {
+  function updateQty(productId, quantity, price) {
+    if (quantity <= 0) {
       removeFromCart(productId);
       return;
     }
@@ -72,7 +72,7 @@ export default function CartProvider({ children }) {
         item.productId === productId
           ? {
               ...item,
-              qty,
+              quantity,
               price,
             }
           : item,
@@ -87,7 +87,7 @@ export default function CartProvider({ children }) {
 
   // Count
   const cartCount = useMemo(() => {
-    return cart.reduce((acc, item) => acc + item.qty, 0);
+    return cart.reduce((acc, item) => acc + item.quantity, 0);
   }, [cart]);
 
 

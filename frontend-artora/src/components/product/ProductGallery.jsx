@@ -24,10 +24,10 @@ function ProductGallery({ product }) {
         "
       >
         <img
-          src={images[activeImage]}
-          alt={product.name}
+          src={images[activeImage]?.url}
+          alt={product.title}
           className="
-            aspect-[4/5]
+            aspect-[5/5]
             w-full
             object-cover
           "
@@ -75,7 +75,7 @@ function ProductGallery({ product }) {
         className="
           mt-4
           grid
-          grid-cols-4
+          grid-cols-5
           gap-3
         "
       >
@@ -88,6 +88,7 @@ function ProductGallery({ product }) {
               rounded-md
               border-2
               transition-colors
+              hover:border-[#b8593a]
 
               ${
                 activeImage === index
@@ -97,8 +98,8 @@ function ProductGallery({ product }) {
             `}
           >
             <img
-              src={image}
-              alt={`${product.name} ${index + 1}`}
+              src={image?.url}
+              alt={`${product.title} ${index + 1}`}
               className="
                 aspect-square
                 w-full

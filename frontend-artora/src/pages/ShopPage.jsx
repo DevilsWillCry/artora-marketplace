@@ -25,8 +25,6 @@ function ShopPage() {
 
   const [sort, setSort] = useState("Featured");
 
-  console.log(sort)
-
 
   const filteredProducts = useMemo(() => {
     let list =

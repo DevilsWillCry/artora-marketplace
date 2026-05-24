@@ -11,7 +11,13 @@ import { VisibilitySection } from "../components/listing/VisibilitySection";
 import { useParams } from "react-router";
 import DetailsSection from "../components/listing/DetailsSection";
 
+import { load, save } from "@/storage/storage";
+
+import { uploadCloudinary } from "@/utils/uploadCloudinary";
+
 export default function ArtoraListPiecePage() {
+  const products = load("products", []);
+  const listings = load("listings", []);
   const { id } = useParams();
 
   // TOMAR COMO REFERENCIA ESTE OBJETO AL ENVIAR EL PRODUCTO,
@@ -51,6 +57,7 @@ export default function ArtoraListPiecePage() {
   };
    */
   const [form, setForm] = useState({
+    id: crypto.randomUUID(),
     title: "",
     price: 0,
     description: "",
@@ -58,13 +65,16 @@ export default function ArtoraListPiecePage() {
     categoryId: 1,
     artisanId: parseInt(id),
     conditionId: 1,
-    quantity: 1,
+    stock: 1,
+    status: "Active",
+    nameStatus: "Activo",
+    featured: true,
     shippingFrom: "Cali, Colombia",
     shippingMethod: "standard",
     returns: "30",
     year: new Date().getFullYear(),
     dimensions: { w: "", h: "", d: "" },
-    photos: [null, null, null, null, null],
+    images: [null, null, null, null, null],
     created_at: new Date().toISOString(),
     visibility: "public",
   });
@@ -73,7 +83,7 @@ export default function ArtoraListPiecePage() {
 
   const [submitted, setSubmitted] = useState(false);
 
-  const uploadImageToCloudinaryTest = async (files) => {
+  const uploadImageToCloudinary = async (files) => {
     if (!files)
       return {
         message: "No files",
@@ -81,47 +91,60 @@ export default function ArtoraListPiecePage() {
       };
     /*
      */
-    const promisesPhotos = Promise.all(
+    const promisesImages = Promise.all(
       Array.from(files).map((file) => {
         return {
           id: file?.id,
           type: file?.file.type,
           size: (file?.file.size / 1024).toFixed(2),
-          //url: uploadCloudinary(file.file),
+          url: uploadCloudinary(file?.file),
         };
       }),
     );
 
-    return await promisesPhotos;
+    return await promisesImages;
   };
 
   //console.log(form.photos.includes(null)); VERIFY IF ALL PHOTOS ARE UPLOADED
 
   const submit = async () => {
     const er = {};
+    let imagesUploadedToCloud = [];
 
     if (form.title.trim().length < 3) {
       er.title = "Give your piece a name";
     }
-
-    if (form.photos.includes(null)) {
-      er.photos = "All photos must be uploaded";
-    }
-
-    // if promise claudinary error
-    const photosUploadedToCloud = await uploadImageToCloudinaryTest(
-      form.photos,
-    );
-
-    if (photosUploadedToCloud.some((photo) => photo.error)) {
-      er.photos = "Try again, the image could not be uploaded";
+    if (form.images.includes(null)) {
+      er.images = "All images must be uploaded";
+    } else {
+      // if promise claudinary error
+      imagesUploadedToCloud = await uploadImageToCloudinary(form.images);
+      if (imagesUploadedToCloud.some((photo) => photo.error)) {
+        er.images = "Try again, the image could not be uploaded";
+      } else {
+        updateField("images", imagesUploadedToCloud);
+      }
     }
 
     setErrors(er);
 
     if (Object.keys(er).length === 0) {
       setSubmitted(true);
-      console.log(form);
+
+      save("products", [...products, form]);
+
+      save("listings", [
+        ...listings,
+        {
+          id: crypto.randomUUID(),
+          categoryId: form.categoryId,
+          productId: form.id,
+          artisanId: form.artisanId,
+          views: 0,
+          saves: 0,
+          posted: new Date().toISOString(),
+        },
+      ]);
     }
   };
 
@@ -155,7 +178,12 @@ export default function ArtoraListPiecePage() {
           <ListingPreview form={form} />
 
           {/* LEFT - PRICE */}
-          <PriceSection form={form} setForm={setForm} errors={errors} updateField={updateField} />
+          <PriceSection
+            form={form}
+            setForm={setForm}
+            errors={errors}
+            updateField={updateField}
+          />
         </div>
 
         <ShippingSection form={form} setForm={setForm} />

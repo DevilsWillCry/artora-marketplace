@@ -4,11 +4,61 @@ import CartEmpty from "./CartEmpty";
 import CartItem from "./CartItem";
 import CartFooter from "./CartFooter";
 import useCart from "@/hooks/useCart";
+import { useState } from "react";
+import { useEffect } from "react";
+import { v4 as uuid } from "uuid";
+import useAuth from "@/hooks/useAuth";
+import { load, save } from "@/storage/storage";
+import { useNavigate } from "react-router";
 
 export default function CartDrawer() {
-  const { cartOpen, setCartOpen, cart, totalAmount } = useCart();
+  const { user } = useAuth();
+  const { cartOpen, setCartOpen, cart, totalAmount, clearCart } = useCart();
+  const orders = load("orders", []);
+  const products = load("products", []);
+  const navigate = useNavigate();
 
-  
+  const [errors, setErrors] = useState(null);
+
+  const [form, setForm] = useState({
+    id: uuid(),
+    artisanId: user?.id,
+    items: [],
+    total: 0,
+    status: "pending",
+    nameStatus: "Pendiente",
+    createdAt: new Date().toISOString(),
+  });
+
+  const updateField = (key, value) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  useEffect(() => {
+    updateField("items", cart);
+    updateField("total", totalAmount);
+  }, [cart]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    save("orders", [...orders, form]);
+    setCartOpen(false);
+    clearCart();
+    setForm({
+      id: uuid(),
+      artisanId: user?.id,
+      items: [],
+      total: 0,
+      status: "pending",
+      nameStatus: "Pendiente",
+      createdAt: new Date().toISOString(),
+    });
+    navigate(`/profile/${user?.id}`);
+  };
 
   return (
     <>
@@ -59,13 +109,15 @@ export default function CartDrawer() {
           ) : (
             <div className="flex flex-col">
               {cart.map((item) => (
-                <CartItem key={item.id} item={item} />
+                <CartItem key={item.productId} item={item} />
               ))}
             </div>
           )}
         </div>
 
-        {cart.length > 0 && <CartFooter total={totalAmount} />}
+        {cart.length > 0 && (
+          <CartFooter total={totalAmount} onSubmit={handleSubmit} />
+        )}
       </aside>
     </>
   );

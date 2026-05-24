@@ -4,10 +4,11 @@ import { useNavigate } from "react-router";
 
 import FeaturedProductsSection from "@/components/home/Featured/FeaturedProductsSection";
 
-import products from "@/data/products";
+import { load } from "@/storage/storage";
 
 function HomePage({ density }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const products = load("products");
 
   const featuredProducts = products.filter((product) => product.featured);
 
@@ -21,7 +22,6 @@ function HomePage({ density }) {
       <FeaturedProductsSection
         density={density}
         products={featuredProducts}
-        onViewProduct={(id) => navigate(`/product/${id}`)}
         onViewAll={() => navigate("/shop")}
       />
     </main>

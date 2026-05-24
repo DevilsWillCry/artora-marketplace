@@ -1,6 +1,7 @@
 // src/components/product/ProductInfo.jsx
 
 import { useState } from "react";
+import useCart from "@/hooks/useCart";
 
 const tabs = [
   {
@@ -19,6 +20,12 @@ const tabs = [
 
 function ProductInfo({ product, quantity, setQuantity }) {
   const [activeTab, setActiveTab] = useState("details");
+
+  const { addToCart } = useCart();
+
+  function handleAddToCart() {
+    addToCart(product.id, product.price * quantity, quantity);
+  }
 
   return (
     <div
@@ -52,7 +59,7 @@ function ProductInfo({ product, quantity, setQuantity }) {
           lg:text-5xl
         "
       >
-        {product.name}
+        {product.title}
       </h1>
 
       {/* Price */}
@@ -95,7 +102,8 @@ function ProductInfo({ product, quantity, setQuantity }) {
               ${product.stock > 0 ? "bg-green-500" : "bg-red-500"}
             `}
           />
-          <em >{product.stock > 0 ? "Queda stock" : "Sin stock"}</em> · Envío de 2-3 días
+          <em>{product.stock > 0 ? "Queda stock" : "Sin stock"}</em> · Envío de
+          2-3 días
         </div>
       </div>
 
@@ -185,6 +193,7 @@ function ProductInfo({ product, quantity, setQuantity }) {
             transition-opacity
             hover:opacity-90
           "
+          onClick={handleAddToCart}
         >
           Añadir al carrito ·{" "}
           {(product.price * quantity).toLocaleString("es-CO") + " COP"}

@@ -1,14 +1,22 @@
 // src/components/shop/ProductList.jsx
 
 import { Link } from "react-router";
+import { load } from "@/storage/storage";
+import useCart from "@/hooks/useCart";
 
 function ProductList({ products }) {
+  const users = load("users", []);
+  const categories = load("categories", []);
+  const { addToCart } = useCart();
+  const handleAddToCart = (product) => {
+    addToCart(product.id, product.price);
+  };
+
   return (
     <div className="flex flex-col">
       {products.map((product, index) => (
-        <Link
+        <div
           key={product.id}
-          to={`/product/${product.id}`}
           className={`
             grid
             gap-6
@@ -25,19 +33,21 @@ function ProductList({ products }) {
             ${index === 0 ? "border-t" : ""}
           `}
         >
-          <img
-            src={
-              product.image ||
-              "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=1200&auto=format&fit=crop"
-            }
-            alt={product.name}
-            className="
-              
-              w-full
-              rounded-md
-              object-cover
-            "
-          />
+          <Link to={`/product/${product.id}`}>
+            <img
+              src={
+                product.images[0]?.url ||
+                "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=1200&auto=format&fit=crop"
+              }
+              alt={product.title}
+              className="
+                
+                w-full
+                rounded-md
+                object-cover
+              "
+            />
+          </Link>
 
           <div>
             <p
@@ -49,7 +59,8 @@ function ProductList({ products }) {
                 text-stone-400
               "
             >
-              {product.category} · {product.maker}
+              {categories.find((c) => c.id === product.categoryId).name} ·{" "}
+              {users.find((u) => u.id === product.artisanId).name}
             </p>
 
             <h3
@@ -59,7 +70,7 @@ function ProductList({ products }) {
                 text-stone-900
               "
             >
-              {product.name}
+              {product.title}
             </h3>
 
             <p
@@ -95,7 +106,6 @@ function ProductList({ products }) {
             >
               ${product.price}
             </span>
-
             <button
               className="
                 mt-4
@@ -109,11 +119,12 @@ function ProductList({ products }) {
                 hover:bg-stone-900
                 hover:text-white
               "
+              onClick={() => handleAddToCart(product)}
             >
               Añadir
             </button>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );

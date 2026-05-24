@@ -6,6 +6,7 @@ import { load } from "@/storage/storage";
 export default function PurchasedTab({ watchingUser }) {
   const orders = load("orders", []);
 
+
   const ordersFiltered = orders.filter(
     (order) => order.artisanId === watchingUser.id,
   );
@@ -14,6 +15,8 @@ export default function PurchasedTab({ watchingUser }) {
     (total, order) => total + order.total,
     0,
   );
+
+
 
   return (
     <div className="space-y-5 ">

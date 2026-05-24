@@ -4,7 +4,7 @@ import useCart from "@/hooks/useCart";
 export default function CartHeader() {
   const { setCartOpen, cart } = useCart();
 
-  const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <header
