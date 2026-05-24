@@ -22,7 +22,6 @@ function ListingField({
           `}
         >
           {label}
-
           {required && (
             <span className="ml-1 text-red-700">
               *

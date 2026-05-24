@@ -1,35 +1,26 @@
 // components/listing/PriceSection.jsx
 
 import ListingSection from "@/components/listing/ListingSection";
-import ListingField  from "@/components/listing/ListingField";
+import ListingField from "@/components/listing/ListingField";
 import FeeRow from "@/components/listing/FeeRow";
+import { useState } from "react";
+import { useEffect } from "react";
 
-function PriceSection({
-  form,
-  setForm,
-  errors,
-}) {
-  const updateField = (field, value) => {
-    setForm((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
+function PriceSection({ form, errors, updateField }) {
+  const [currencyPrice, setCurrencyPrice] = useState("");
 
-  const price = Number(form.price) || 0;
+  const price = Number(currencyPrice) || 0;
 
   const platformFee = +(price * 0.08).toFixed(2);
 
-  const paymentFee =
-    price > 0
-      ? +(price * 0.029 + 0.3).toFixed(2)
-      : 0;
+  const paymentFee = price > 0 ? +(price * 0.029 + 0.3).toFixed(2) : 0;
 
-  const youReceive = +(
-    price -
-    platformFee -
-    paymentFee
-  ).toFixed(2);
+  const youReceive = +(price - platformFee - paymentFee).toFixed(2);
+
+  useEffect(() => {
+    updateField("price", (Math.max(0, youReceive)).toLocaleString("es-CO"));
+
+  }, [youReceive]);
 
   return (
     <ListingSection
@@ -37,22 +28,14 @@ function PriceSection({
       title="The price"
       subtitle="Set a fair value for your work."
     >
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-10 items-center">
         {/* PRICE */}
-        <ListingField
-          label="Listing price"
-          required
-          error={errors.price}
-        >
+        <ListingField label="Listing price" hint="How much will you sell it for?" required error={errors.price}>
           <div
             className={`
               flex items-center overflow-hidden
               rounded-md border bg-white
-              ${
-                errors.price
-                  ? "border-red-700"
-                  : "border-stone-300"
-              }
+              ${errors.price ? "border-red-700" : "border-stone-300"}
             `}
           >
             <span
@@ -67,14 +50,9 @@ function PriceSection({
             <input
               type="number"
               min="0"
-              step="1"
-              value={form.price}
-              onChange={(e) =>
-                updateField(
-                  "price",
-                  e.target.value
-                )
-              }
+              step="50"
+              value={currencyPrice}
+              onChange={(e) => setCurrencyPrice(e.target.value)}
               placeholder="0"
               className="
                 w-full bg-transparent
@@ -89,7 +67,7 @@ function PriceSection({
                 tracking-widest text-stone-400
               "
             >
-              USD
+              COP
             </span>
           </div>
         </ListingField>
@@ -109,13 +87,7 @@ function PriceSection({
             <button
               type="button"
               onClick={() =>
-                updateField(
-                  "quantity",
-                  Math.max(
-                    1,
-                    form.quantity - 1
-                  )
-                )
+                updateField("quantity", Math.max(1, form.quantity - 1))
               }
               className="
                 h-12 w-12 border-r
@@ -138,12 +110,7 @@ function PriceSection({
 
             <button
               type="button"
-              onClick={() =>
-                updateField(
-                  "quantity",
-                  form.quantity + 1
-                )
-              }
+              onClick={() => updateField("quantity", form.quantity + 1)}
               className="
                 h-12 w-12 border-l
                 border-stone-200 text-xl
@@ -176,21 +143,21 @@ function PriceSection({
         <FeeRow
           label="Listing price"
           value={
-            price
-              ? `$${price.toFixed(2)}`
+            currencyPrice
+              ? `$${parseFloat(currencyPrice).toLocaleString("es-CO")}`
               : "—"
           }
         />
 
         <FeeRow
           label="Platform fee · 8%"
-          value={`− $${platformFee.toFixed(2)}`}
+          value={`− $${platformFee.toLocaleString("es-CO")}`}
           muted
         />
 
         <FeeRow
-          label="Payment processing · 2.9% + $0.30"
-          value={`− $${paymentFee.toFixed(2)}`}
+          label={`Payment processing · 2.9% + 1.103 COP`}
+          value={`− $${paymentFee.toLocaleString("es-CO")}`}
           muted
         />
 
@@ -198,10 +165,7 @@ function PriceSection({
 
         <FeeRow
           label="You receive"
-          value={`$${Math.max(
-            0,
-            youReceive
-          ).toFixed(2)}`}
+          value={`$${Math.max(0, youReceive).toLocaleString("es-CO")}`}
           bold
           accent
         />

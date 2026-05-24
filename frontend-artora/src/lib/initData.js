@@ -3,6 +3,7 @@ import products from "@/data/products";
 import orders from "@/data/profile/orders";
 import listings from "@/data/profile/listings";
 import categories from "@/data/categories";
+import conditions from "@/data/conditions";
 
 import { save } from "@/storage/storage";
 
@@ -27,4 +28,7 @@ export function initData() {
     save("categories", categories);
   }
 
+  if (!localStorage.getItem("conditions")) {
+    save("conditions", conditions);
+  }
 }

@@ -3,7 +3,6 @@ import useCart from "@/hooks/useCart";
 
 function CartShopIcon({ size = "sm", className, ...props }) {
   const { cartCount } = useCart();
-  console.log(cartCount);
   return (
     <div className="relative" {...props} >
       <span className={`absolute -top-2 right-1 rounded-full bg-red-500 w-auto h-auto text-xs flex items-center justify-center text-white p-0.5 animate-pulse animate-infinite animate-duration-3200 animate-ease-out font-extrabold tracking-widest ${cartCount === 0 ? "hidden" : ""}`}>

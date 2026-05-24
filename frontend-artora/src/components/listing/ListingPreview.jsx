@@ -1,10 +1,20 @@
 // components/list-piece/ListingPreview.jsx
 import PreviewLine from "@/components/listing/PreviewLine";
+import useAuth from "@/hooks/useAuth";
+import { load } from "@/storage/storage";
 
 function ListingPreview({ form }) {
+  const { user } = useAuth();
   const hasCover = form.photos?.[0]?.url || "";
 
+  const categories = load("categories", []);
+  const conditions = load("conditions", []);
 
+  
+  const category = categories.find((item) => item.id === form.categoryId);
+  const condition = conditions.find((item) => item.id === form.conditionId);
+  
+  console.log(category, condition);
   return (
     <aside className="sticky top-24">
       {/* Preview Card */}
@@ -60,7 +70,7 @@ function ListingPreview({ form }) {
 
           {/* Category */}
           <div className="absolute left-3 top-3 rounded bg-white/80 px-2 py-1 text-[10px] uppercase tracking-[0.12em] text-stone-700 backdrop-blur-sm">
-            {form.category}
+            {category.name}
           </div>
         </div>
 
@@ -76,12 +86,22 @@ function ListingPreview({ form }) {
             </h3>
 
             <p className="mt-1 text-sm text-stone-500">
-              by {form.maker || "You"}
+              by {user.name || "You"}
             </p>
+
+            <p
+              className={`font-serif text-md leading-tight pt-3 ${
+                form.description ? "text-stone-600" : "italic text-stone-400"
+              }`}
+            >
+              {form.description || "Your piece, describe it"}
+            </p>
+
+            
           </div>
 
           <div className="font-serif text-lg font-medium text-stone-900">
-            ${Number(form.price || 0).toFixed(0)}
+            ${form.price.toLocaleString("es-CO") || 0}
           </div>
         </div>
 
@@ -90,7 +110,7 @@ function ListingPreview({ form }) {
 
         {/* Summary */}
         <div className="space-y-3 text-sm">
-          <PreviewLine label="Condition" value={form.condition} />
+          <PreviewLine label="Condition" value={condition.name} />
 
           <PreviewLine label="Ships from" value={form.shippingFrom || "—"} />
 

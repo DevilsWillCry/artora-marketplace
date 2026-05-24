@@ -2,17 +2,18 @@
 
 import { useState } from "react";
 
-import ListingSection from "@/components/listing/ListingSection";
-
-import ListingField from "@/components/listing/ListingField";
-import PhotoUploader from "@/components/listing/PhotoUploader";
 import PriceSection from "../components/listing/PriceSection";
 import ShippingSection from "../components/listing/ShippingSection";
 import ListingHeader from "../components/listing/ListingHeader";
 import ListingPreview from "../components/listing/ListingPreview";
 import { VisibilitySection } from "../components/listing/VisibilitySection";
 
+import { useParams } from "react-router";
+import DetailsSection from "../components/listing/DetailsSection";
+
 export default function ArtoraListPiecePage() {
+  const { id } = useParams();
+
   // TOMAR COMO REFERENCIA ESTE OBJETO AL ENVIAR EL PRODUCTO,
   // NECESITAMOS categoryId, productId, artisanId, etc..
   /*
@@ -51,37 +52,76 @@ export default function ArtoraListPiecePage() {
    */
   const [form, setForm] = useState({
     title: "",
-    price: "",
+    price: 0,
     description: "",
     materials: "",
-    condition: "Excellent", //Añadir condiciones
+    categoryId: 1,
+    artisanId: parseInt(id),
+    conditionId: 1,
     quantity: 1,
     shippingFrom: "Cali, Colombia",
     shippingMethod: "standard",
     returns: "30",
-    year: "",
+    year: new Date().getFullYear(),
     dimensions: { w: "", h: "", d: "" },
     photos: [null, null, null, null, null],
     created_at: new Date().toISOString(),
+    visibility: "public",
   });
-
-  console.log(form);
 
   const [errors, setErrors] = useState({});
 
   const [submitted, setSubmitted] = useState(false);
 
-  const submit = () => {
+  const uploadImageToCloudinaryTest = async (files) => {
+    if (!files)
+      return {
+        message: "No files",
+        error: true,
+      };
+    /*
+     */
+    const promisesPhotos = Promise.all(
+      Array.from(files).map((file) => {
+        return {
+          id: file?.id,
+          type: file?.file.type,
+          size: (file?.file.size / 1024).toFixed(2),
+          //url: uploadCloudinary(file.file),
+        };
+      }),
+    );
+
+    return await promisesPhotos;
+  };
+
+  //console.log(form.photos.includes(null)); VERIFY IF ALL PHOTOS ARE UPLOADED
+
+  const submit = async () => {
     const er = {};
 
     if (form.title.trim().length < 3) {
       er.title = "Give your piece a name";
     }
 
+    if (form.photos.includes(null)) {
+      er.photos = "All photos must be uploaded";
+    }
+
+    // if promise claudinary error
+    const photosUploadedToCloud = await uploadImageToCloudinaryTest(
+      form.photos,
+    );
+
+    if (photosUploadedToCloud.some((photo) => photo.error)) {
+      er.photos = "Try again, the image could not be uploaded";
+    }
+
     setErrors(er);
 
     if (Object.keys(er).length === 0) {
       setSubmitted(true);
+      console.log(form);
     }
   };
 
@@ -103,77 +143,21 @@ export default function ArtoraListPiecePage() {
             gap-8
           "
         >
-          {/* LEFT - PHOTOS SECTION*/}
-          <div>
-            <ListingSection
-              num="1"
-              title="The photos"
-              subtitle="Add up to five images."
-            >
-              <ListingField
-                label="Photos"
-                required
-                error={errors.photos}
-                hint="Natural light works best."
-              >
-                <PhotoUploader
-                  photos={form.photos}
-                  setPhotos={(photos) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      photos,
-                    }))
-                  }
-                />
-              </ListingField>
-            </ListingSection>
-
-            <ListingSection
-              num="2"
-              title="The details"
-              subtitle="Name it and describe it."
-            >
-              <ListingField label="Title" required error={errors.title}>
-                <input
-                  type="text"
-                  value={form.title}
-                  onChange={(e) => updateField("title", e.target.value)}
-                  placeholder="Handmade ceramic vase"
-                  className="
-                    w-full rounded-md border
-                    border-stone-300 bg-white
-                    px-4 py-3 outline-none
-                    transition focus:border-stone-500
-                  "
-                />
-              </ListingField>
-
-              <ListingField
-                label="Description"
-                required
-                error={errors.description}
-              >
-                <textarea
-                  rows={6}
-                  value={form.description}
-                  onChange={(e) => updateField("description", e.target.value)}
-                  placeholder="Tell buyers about your process..."
-                  className="
-                    w-full resize-none rounded-md
-                    border border-stone-300
-                    bg-white px-4 py-3
-                    outline-none transition
-                    focus:border-stone-500
-                  "
-                />
-              </ListingField>
-            </ListingSection>
-          </div>
+          {/* LEFT - DETAILS AND PHOTOS SECTION*/}
+          <DetailsSection
+            form={form}
+            setForm={setForm}
+            errors={errors}
+            updateField={updateField}
+          />
 
           {/* RIGHT - PREVIEW */}
           <ListingPreview form={form} />
+
+          {/* LEFT - PRICE */}
+          <PriceSection form={form} setForm={setForm} errors={errors} updateField={updateField} />
         </div>
-        <PriceSection form={form} setForm={setForm} errors={errors} />
+
         <ShippingSection form={form} setForm={setForm} />
 
         <VisibilitySection

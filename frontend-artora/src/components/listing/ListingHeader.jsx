@@ -13,21 +13,20 @@ function ListingHeader({ completeness, onBack }) {
             className="mb-4 flex items-center gap-2 text-sm text-stone-500 transition hover:text-stone-900"
           >
             <ArrowLeft size={14} />
-            Back to your studio
+            De vuelta al estudio
           </button>
 
           <span className="mb-3 block text-[11px] uppercase tracking-[0.2em] text-orange-700">
-            · A new listing ·
+            · UN NUEVO PRODUCTO ·
           </span>
 
           <h1 className="max-w-3xl font-serif text-5xl font-normal leading-none tracking-tight text-stone-900">
-            List a piece{" "}
-            <em className="text-orange-700">for sale.</em>
+           Crea una pieza{" "}
+            <em className="text-orange-700">para vender.</em>
           </h1>
 
           <p className="mt-5 max-w-2xl font-serif text-lg italic text-stone-600">
-            Tell us about your piece. Good photos and a few honest
-            sentences help it find the right home.
+            Cuéntanos sobre tu obra. Unas buenas fotos y unas pocas frases sinceras ayudarán a que encuentre el lugar adecuado.
           </p>
         </div>
 
