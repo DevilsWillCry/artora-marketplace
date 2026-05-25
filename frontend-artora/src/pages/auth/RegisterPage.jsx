@@ -35,6 +35,8 @@ function RegisterPage({ density }) {
   const [errors, setErrors] = useState({});
   const { login } = useAuth();
 
+  console.log(form)
+
   function submit(e) {
     e.preventDefault();
     const userFindedByEmail = users.find(
@@ -61,6 +63,15 @@ function RegisterPage({ density }) {
 
     if (userFindedByEmail) {
       er.email = "Correo ya registrado, intenta de nuevo";
+    }
+
+    if (form.city.length === 0) {
+      er.city = "Por favor ingresa tu ciudad";
+    }
+
+
+    if (form.country.length === 0) {
+      er.country = "Por favor ingresa tu país";
     }
 
     setErrors(er);
@@ -205,6 +216,7 @@ function RegisterPage({ density }) {
                 country: value,
               }))
             }
+            error={errors.country}
           />
 
           {cities && (
@@ -220,6 +232,7 @@ function RegisterPage({ density }) {
                   city: value,
                 }))
               }
+              error={errors.city}
             />
           )}
 

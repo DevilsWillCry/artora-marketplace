@@ -69,7 +69,7 @@ function PhotoSlot({ index, isPrimary = false, images, image, setImages }) {
               text-white
             "
               >
-                Cover
+                Portada
               </div>
             )}
 
@@ -112,7 +112,7 @@ function PhotoSlot({ index, isPrimary = false, images, image, setImages }) {
 
             <div className="text-center">
               <p className="text-xs uppercase tracking-widest">
-                {primary ? "Add cover photo" : "Add photo"}
+                {primary ? "Añadir foto de portada" : "Añadir foto"}
               </p>
 
               {primary && (

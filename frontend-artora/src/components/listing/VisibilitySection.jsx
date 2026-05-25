@@ -1,35 +1,26 @@
 // components/list-piece/VisibilitySection.jsx
 
 import { Eye, FileText } from "lucide-react";
-
 export function VisibilitySection({
   form,
-  setForm,
   submit,
   submitted,
-  navigate,
+  updateField,
 }) {
   const options = [
     {
       value: "public",
-      title: "Publish now",
-      subtitle: "Visible in the shop immediately",
+      title: "Publicar ahora",
+      subtitle: "Visible para todos inmediatamente",
       icon: Eye,
     },
     {
       value: "draft",
-      title: "Save as draft",
-      subtitle: "Only visible to you for now",
+      title: "Guardar como borrador",
+      subtitle: "Solo visible para ti",
       icon: FileText,
     },
   ];
-
-  const updateVisibility = (value) => {
-    setForm((prev) => ({
-      ...prev,
-      visibility: value,
-    }));
-  };
 
   return (
     <section className="rounded-md border border-stone-200 bg-stone-100 p-8">
@@ -41,11 +32,12 @@ export function VisibilitySection({
 
         <div>
           <h2 className="font-serif text-3xl text-stone-900">
-            Ready to share?
+            ¿Listo para publicar?
           </h2>
 
           <p className="mt-1 font-serif text-sm italic text-stone-500">
-            Save as a quiet draft, or publish for the world.
+            Guárdalo como borrador para uso personal o publícalo para que todo
+            el mundo lo sepa.
           </p>
         </div>
       </div>
@@ -60,7 +52,7 @@ export function VisibilitySection({
             <button
               key={option.value}
               type="button"
-              onClick={() => updateVisibility(option.value)}
+              onClick={() => updateField("visibility", option.value)}
               className={`rounded-md border p-5 text-left transition-all ${
                 active
                   ? "border-orange-700 bg-white"
@@ -102,8 +94,9 @@ export function VisibilitySection({
         </div>
 
         <p className="font-serif text-sm italic leading-relaxed text-stone-600">
-          By publishing, you confirm this piece is yours to sell and accurately
-          described. You can edit or unlist at any time.
+          Al publicar, confirmas que esta pieza es tuya para vender y que la
+          descripción es precisa. Puedes editarla o retirarla de la publicación
+          en cualquier momento.
         </p>
       </div>
 
@@ -111,22 +104,28 @@ export function VisibilitySection({
       <div className="mt-8 flex justify-end gap-3">
         <button
           type="button"
-          onClick={() => navigate("profile")}
           className="rounded-md border border-stone-300 px-5 py-3 text-sm uppercase tracking-[0.08em] text-stone-700 transition hover:bg-stone-200"
+          disabled={submitted}
+          aria-disabled={submitted}
+          onClick={() => submit("cancel")}
+
         >
-          Cancel
+          CANCELAR
         </button>
 
         <button
           type="button"
-          onClick={submit}
-          className="rounded-md bg-stone-900 px-6 py-3 text-sm uppercase tracking-[0.08em] text-white transition hover:opacity-90"
+          className="rounded-md bg-stone-900 px-6 py-3 text-sm uppercase tracking-[0.08em] text-white transition hover:bg-terracotta"
+          disabled={submitted}
+          aria-disabled={submitted}
+          onClick={() => submit("success")}
+
         >
           {submitted
-            ? "✓ Listing live"
+            ? "✓ Producto creado."
             : form.visibility === "public"
-              ? "Publish listing →"
-              : "Save draft →"}
+              ? "Publicar →"
+              : "Guardar →"}
         </button>
       </div>
     </section>

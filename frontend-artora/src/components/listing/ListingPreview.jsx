@@ -30,7 +30,7 @@ function ListingPreview({ form }) {
             <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z" />
             <circle cx="8" cy="8" r="2.5" />
           </svg>
-          Live preview
+          Vista previa
         </div>
 
         {/* Image */}
@@ -61,7 +61,7 @@ function ListingPreview({ form }) {
                 </svg>
 
                 <p className="text-[10px] uppercase tracking-[0.15em] text-stone-500">
-                  Add a cover photo
+                  Añadir una foto de portada
                 </p>
               </div>
             </div>
@@ -81,11 +81,11 @@ function ListingPreview({ form }) {
                 form.title ? "text-stone-900" : "italic text-stone-400"
               }`}
             >
-              {form.title || "Your piece, named here"}
+              {form.title || "Tu pieza, llamada aquí"}
             </h3>
 
             <p className="mt-1 text-sm text-stone-500">
-              by {user.name || "You"}
+              por {user.name || "ti"}
             </p>
 
             <p
@@ -93,7 +93,7 @@ function ListingPreview({ form }) {
                 form.description ? "text-stone-600" : "italic text-stone-400"
               }`}
             >
-              {form.description || "Your piece, describe it"}
+              {form.description || "Tu pieza, describela"}
             </p>
 
             
@@ -109,19 +109,19 @@ function ListingPreview({ form }) {
 
         {/* Summary */}
         <div className="space-y-3 text-sm">
-          <PreviewLine label="Condition" value={condition.name} />
+          <PreviewLine label="CONDICIÓN" value={condition.name} />
 
-          <PreviewLine label="Ships from" value={form.shippingFrom || "—"} />
+          <PreviewLine label="ENVIAR DESDE" value={form.shippingFrom || "—"} />
 
           <PreviewLine
             label="Returns"
-            value={form.returns === "0" ? "Final sale" : `${form.returns} days`}
+            value={form.returns === "0" ? "No devoluciones" : `${form.returns} días`}
           />
 
           <PreviewLine
-            label="Quantity"
+            label="Cantidad"
             value={
-              form.stock === 1 ? "One of one" : `${form.stock} available`
+              form.stock === 1 ? "Uno de Uno" : `${form.stock} disponible`
             }
             last
           />
@@ -131,15 +131,14 @@ function ListingPreview({ form }) {
       {/* Tips */}
       <div className="mt-4 rounded-md border border-stone-200 bg-white p-5">
         <div className="mb-4 text-[10px] uppercase tracking-[0.15em] text-orange-700">
-          · Listing tips ·
+          · Consejos para tu pieza ·
         </div>
 
         <ul className="space-y-3">
           {[
-            "5 photos sell 2× more than 1.",
-            "Mention the materials early in the description.",
-            "Price for the long shelf — buyers wait.",
-            "Tell the maker’s story if you know it.",
+            "5 fotos venden el doble que 1.",
+            "Menciona los materiales al principio de la descripción.",
+            "Si conoces la historia del fabricante, cuéntala.",
           ].map((tip) => (
             <li
               key={tip}

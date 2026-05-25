@@ -8,54 +8,23 @@ import ListingHeader from "../components/listing/ListingHeader";
 import ListingPreview from "../components/listing/ListingPreview";
 import { VisibilitySection } from "../components/listing/VisibilitySection";
 
-import { useParams } from "react-router";
 import DetailsSection from "../components/listing/DetailsSection";
 
 import { load, save } from "@/storage/storage";
 
 import { uploadCloudinary } from "@/utils/uploadCloudinary";
+import { useNavigate, useParams } from "react-router";
+
+import { toast } from "sonner";
 
 export default function ArtoraListPiecePage() {
   const products = load("products", []);
   const listings = load("listings", []);
   const { id } = useParams();
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
-  // TOMAR COMO REFERENCIA ESTE OBJETO AL ENVIAR EL PRODUCTO,
-  // NECESITAMOS categoryId, productId, artisanId, etc..
-  /*
-
-    const newProduct = {
-    id: crypto.randomUUID(),
-
-    name: form.title,
-    category: form.category,
-    maker: form.maker || "Independent Studio",
-
-    price: Number(form.price),
-
-    desc: form.description,
-
-    materials: form.materials,
-
-    condition: form.condition,
-
-    quantity: form.quantity,
-
-    shippingFrom: form.shippingFrom,
-
-    shippingMethod: form.shippingMethod,
-
-    returns: form.returns,
-
-    year: form.year,
-
-    dimensions: form.dimensions,
-
-    photos: form.photos,
-
-    createdAt: new Date().toISOString(),
-  };
-   */
   const [form, setForm] = useState({
     id: crypto.randomUUID(),
     title: "",
@@ -79,10 +48,6 @@ export default function ArtoraListPiecePage() {
     visibility: "public",
   });
 
-  const [errors, setErrors] = useState({});
-
-  const [submitted, setSubmitted] = useState(false);
-
   const uploadImageToCloudinary = async (files) => {
     if (!files)
       return {
@@ -105,25 +70,49 @@ export default function ArtoraListPiecePage() {
     return await promisesImages;
   };
 
-  //console.log(form.photos.includes(null)); VERIFY IF ALL PHOTOS ARE UPLOADED
-
-  const submit = async () => {
+  const submit = async (message) => {
     const er = {};
-    let imagesUploadedToCloud = [];
 
-    if (form.title.trim().length < 3) {
-      er.title = "Give your piece a name";
+    if (message === "cancel") {
+      toast.error("Operación cancelada", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+        duration: 1500,
+      });
+      setTimeout(() => {
+        navigate(-1);
+        return;
+      }, 1000);
     }
+
     if (form.images.includes(null)) {
-      er.images = "All images must be uploaded";
+      er.images = "Todas las fotos son requeridas";
     } else {
-      // if promise claudinary error
-      imagesUploadedToCloud = await uploadImageToCloudinary(form.images);
-      if (imagesUploadedToCloud.some((photo) => photo.error)) {
-        er.images = "Try again, the image could not be uploaded";
+      const imagesUploadedToCloud = await uploadImageToCloudinary(form.images);
+      if (imagesUploadedToCloud.some((image) => image.error)) {
+        er.images = "Intenta de nuevo, algunas fotos no pudieron subirse";
       } else {
         updateField("images", imagesUploadedToCloud);
       }
+    }
+
+    if (form.title.trim().length < 3) {
+      er.title = "Al menos 10 caracteres";
+    }
+
+    if (form.description.trim().length < 50) {
+      er.description = "Al menos 50 caracteres";
+    }
+
+    if (form.materials.trim().length < 20) {
+      er.materials = "Al menos 20 caracteres";
+    }
+
+    if (form.price <= 0 || isNaN(form.price)) {
+      er.price = "Precio no válido, debe ser un número entero mayor que 0";
     }
 
     setErrors(er);
@@ -145,6 +134,18 @@ export default function ArtoraListPiecePage() {
           posted: new Date().toISOString(),
         },
       ]);
+
+      toast.success("Listado creado con éxito", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+        duration: 1500,
+      });
+      setTimeout(() => {
+        navigate(`/shop`);
+      }, 1000);
     }
   };
 
@@ -154,7 +155,6 @@ export default function ArtoraListPiecePage() {
       [field]: value,
     }));
   };
-
   return (
     <main className="min-h-screen bg-[#faf6ee]">
       <ListingHeader completeness={1} />
@@ -178,21 +178,19 @@ export default function ArtoraListPiecePage() {
           <ListingPreview form={form} />
 
           {/* LEFT - PRICE */}
-          <PriceSection
-            form={form}
-            setForm={setForm}
-            errors={errors}
-            updateField={updateField}
-          />
+          <PriceSection form={form} updateField={updateField} errors={errors} />
         </div>
 
-        <ShippingSection form={form} setForm={setForm} />
+        {/* LEFT - SHIPPING */}
+        <ShippingSection form={form} updateField={updateField} />
 
+        {/* LEFT - VISIBILITY */}
         <VisibilitySection
           form={form}
-          setForm={setForm}
+          updateField={updateField}
           submit={submit}
           submitted={submitted}
+          errors={errors}
         />
       </section>
     </main>

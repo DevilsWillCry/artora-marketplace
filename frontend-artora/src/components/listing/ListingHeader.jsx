@@ -34,7 +34,7 @@ function ListingHeader({ completeness, onBack }) {
         <div className="min-w-[260px]">
           <div className="mb-2 flex items-baseline justify-between">
             <span className="text-[10px] uppercase tracking-[0.15em] text-stone-500">
-              Completeness
+              Tu avance de completitud
             </span>
 
             <span className="font-serif text-2xl font-medium text-stone-900">
@@ -52,10 +52,10 @@ function ListingHeader({ completeness, onBack }) {
 
           <p className="mt-3 font-serif text-sm italic text-stone-500">
             {completeness < 50
-              ? "Keep going — buyers like complete listings."
+              ? "Sigue adelante: a los compradores les gustan los listados completos."
               : completeness < 100
-              ? "Looking good. Just a few more details."
-              : "All set — review and publish when you're ready."}
+              ? "Tiene buena pinta. Solo faltan algunos detalles."
+              : "Todo listo: revísalo y publícalo cuando estés preparado."}
           </p>
         </div>
       </div>

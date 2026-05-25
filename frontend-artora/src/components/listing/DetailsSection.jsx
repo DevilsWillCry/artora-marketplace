@@ -12,14 +12,14 @@ function DetailsSection({ form, setForm, errors, updateField }) {
     <div>
       <ListingSection
         num="1"
-        title="The photos"
-        subtitle="Add up to five images."
+        title="LAS FOTOS"
+        subtitle="Añade 5 fotos de tu pieza."
       >
         <ListingField
-          label="Photos"
+          label="FOTOS"
           required
           error={errors.images}
-          hint="Natural light works best."
+          hint="Luz natural funciona mejor."
         >
           <PhotoUploader
             images={form.images}
@@ -35,12 +35,12 @@ function DetailsSection({ form, setForm, errors, updateField }) {
 
       <ListingSection
         num="2"
-        title="The details"
-        subtitle="Name it and describe it."
+        title="Los detalles"
+        subtitle="Nómbralo y descríbelo."
       >
         <ListingField
-          label="Title"
-          hint="Be specific — 'Hand-thrown stoneware mug, oat glaze' beats 'Mug.'"
+          label="Titulo"
+          hint="Sé específico: 'Taza de gres hecha a mano, esmalte de avena' es mejor que 'Taza'."
           required
           error={errors.title}
         >
@@ -48,20 +48,21 @@ function DetailsSection({ form, setForm, errors, updateField }) {
             type="text"
             value={form.title}
             onChange={(e) => updateField("title", e.target.value)}
-            placeholder="Handmade ceramic vase"
-            className="
-                    w-full rounded-md border
-                    border-stone-300 bg-white
+            placeholder="Jarrón de cerámica hecho a mano"
+            className={`
+                    w-full rounded-md border 
+                    bg-white
                     px-4 py-3 outline-none
                     transition focus:border-stone-500
-                  "
+                    ${errors.title ? "border-red-700" : "border-stone-300"}
+                  `}
           />
         </ListingField>
 
         <div className="grid grid-cols-2 gap-4">
           <ListingField
-            label="Category"
-            hint="What kind of piece is it?"
+            label="Categoría"
+            hint="¿Qué tipo de pieza es?"
             required
             error={errors.categoryId}
           >
@@ -99,7 +100,7 @@ function DetailsSection({ form, setForm, errors, updateField }) {
 
           <ListingField
             label="Condición"
-            hint="What kind of piece is it?"
+            hint="¿Que estado tiene la pieza?"
             required
             error={errors.conditionId}
           >
@@ -137,8 +138,8 @@ function DetailsSection({ form, setForm, errors, updateField }) {
         </div>
 
         <ListingField
-          label="Description"
-          hint="0 / 600 — what makes it special, how it was made, any quiet imperfections."
+          label="Descripción"
+          hint="0 / 600 — ¿Qué lo hace especial? ¿Cómo se fabricó? ¿Tiene alguna imperfección sutil?"
           required
           error={errors.description}
         >
@@ -146,20 +147,21 @@ function DetailsSection({ form, setForm, errors, updateField }) {
             rows={6}
             value={form.description}
             onChange={(e) => updateField("description", e.target.value)}
-            placeholder="Tell buyers about your process..."
-            className="
+            placeholder="Cuentale a la gente que hace especial tu pieza..."
+            className={`
                     w-full resize-none rounded-md
-                    border border-stone-300
+                    border
                     bg-white px-4 py-3
                     outline-none transition
                     focus:border-stone-500
-                  "
+                    ${errors.description ? "border-red-700" : "border-stone-300"}
+                  `}
           />
         </ListingField>
 
         <ListingField
-          label="Materials"
-          hint="Comma-separated. e.g. 'Stoneware clay, food-safe matte glaze'"
+          label="Materiales"
+          hint="Separados por comas. Por ejemplo: «Arcilla de gres, esmalte mate apto para uso alimentario»."
           required
           error={errors.materials}
         >
@@ -167,7 +169,7 @@ function DetailsSection({ form, setForm, errors, updateField }) {
             type="text"
             value={form.materials}
             onChange={(e) => updateField("materials", e.target.value)}
-            placeholder="What it's actually made from "
+            placeholder="De que esta hecha tu pieza..."
             className="
               w-full rounded-md border
               border-stone-300 bg-white

@@ -6,52 +6,45 @@ import ListingField from "./ListingField";
 const shippingOptions = [
   {
     value: "standard",
-    title: "Standard · 5–7 days",
-    description: "Reliable shipping for most pieces.",
+    title: "Estándar · 5–7 días",
+    description: "Envío fiable para la mayoría de los artículos..",
   },
   {
     value: "express",
-    title: "Express · 2–3 days",
-    description: "Faster delivery for urgent orders.",
+    title: "Express · 2–3 días",
+    description: "Entrega más rápida para pedidos urgentes..",
   },
   {
     value: "pickup",
-    title: "Local pickup",
-    description: "Buyer picks up the item in person.",
+    title: "Recoger en tienda",
+    description: "El comprador recoge el artículo en persona..",
   },
 ];
 
 const returnOptions = [
   {
     value: "0",
-    label: "Final sale",
+    label: "No devoluciones",
   },
   {
     value: "14",
-    label: "14 days",
+    label: "14 días",
   },
   {
     value: "30",
-    label: "30 days",
+    label: "30 días",
   },
 ];
 
-function ShippingSection({ form, setForm }) {
-  const updateField = (field, value) => {
-    setForm((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
+function ShippingSection({ form, updateField }) {
   return (
     <ListingSection
       num="4"
-      title="Shipping"
-      subtitle="How buyers will receive your piece."
+      title="Envío"
+      subtitle="Cómo recibirán los compradores su pieza."
     >
       {/* SHIPPING FROM */}
-      <ListingField label="Ships from" hint="City and country.">
+      <ListingField label="Se envía desde" hint="Ciudad, País">
         <input
           type="text"
           value={form.shippingFrom}
@@ -67,7 +60,7 @@ function ShippingSection({ form, setForm }) {
       </ListingField>
 
       {/* SHIPPING METHODS */}
-      <ListingField label="Shipping method">
+      <ListingField label="Metodo de envío">
         <div className="flex flex-col gap-3">
           {shippingOptions.map((option) => {
             const active = form.shippingMethod === option.value;
@@ -134,7 +127,7 @@ function ShippingSection({ form, setForm }) {
       </ListingField>
 
       {/* RETURNS */}
-      <ListingField label="Returns policy">
+      <ListingField label="Devoluciones">
         <div className="flex flex-wrap gap-3">
           {returnOptions.map((option) => {
             const active = form.returns === option.value;

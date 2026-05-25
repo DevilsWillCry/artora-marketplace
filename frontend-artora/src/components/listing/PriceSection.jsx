@@ -6,7 +6,7 @@ import FeeRow from "@/components/listing/FeeRow";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function PriceSection({ form, errors, updateField }) {
+function PriceSection({ form, updateField, errors}) {
   const [currencyPrice, setCurrencyPrice] = useState("");
 
   const price = Number(currencyPrice) || 0;
@@ -22,15 +22,16 @@ function PriceSection({ form, errors, updateField }) {
 
   }, [youReceive]);
 
+
   return (
     <ListingSection
       num="3"
-      title="The price"
-      subtitle="Set a fair value for your work."
+      title="El precio"
+      subtitle="Establece un valor justo para tu trabajo. El precio es en COP."
     >
       <div className="grid grid-cols-2 gap-10 items-center">
         {/* PRICE */}
-        <ListingField label="Listing price" hint="How much will you sell it for?" required error={errors.price}>
+        <ListingField label="Precio de venta (No usar decimales por favor)" hint="¿Por cuánto lo venderás?" required error={errors.price}>
           <div
             className={`
               flex items-center overflow-hidden
@@ -74,8 +75,8 @@ function PriceSection({ form, errors, updateField }) {
 
         {/* QUANTITY */}
         <ListingField
-          label="Quantity available"
-          hint="Leave at 1 if it's unique."
+          label="Cantidad disponible"
+          hint="Déjelo en 1 si es único."
         >
           <div
             className="
@@ -137,11 +138,11 @@ function PriceSection({ form, errors, updateField }) {
             text-stone-400
           "
         >
-          Per piece sold
+          Precio por pieza
         </div>
 
         <FeeRow
-          label="Listing price"
+          label="Precio de venta"
           value={
             currencyPrice
               ? `$${parseFloat(currencyPrice).toLocaleString("es-CO")}`
@@ -150,13 +151,13 @@ function PriceSection({ form, errors, updateField }) {
         />
 
         <FeeRow
-          label="Platform fee · 8%"
+          label="Tarifa de plataforma · 8%"
           value={`− $${platformFee.toLocaleString("es-CO")}`}
           muted
         />
 
         <FeeRow
-          label={`Payment processing · 2.9% + 1.103 COP`}
+          label={`Procesamiento de pagos · 2.9% + 1.103 COP`}
           value={`− $${paymentFee.toLocaleString("es-CO")}`}
           muted
         />
@@ -164,7 +165,7 @@ function PriceSection({ form, errors, updateField }) {
         <div className="my-3 h-px bg-stone-200" />
 
         <FeeRow
-          label="You receive"
+          label="Precio final"
           value={`$${Math.max(0, youReceive).toLocaleString("es-CO")}`}
           bold
           accent
