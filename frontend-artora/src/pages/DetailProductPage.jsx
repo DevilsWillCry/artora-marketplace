@@ -31,11 +31,15 @@ function DetailProductPage() {
     [product, users],
   );
 
+  console.log(product)
+
+  console.log(artisan)
+
   const productWithDetails = {
     ...product,
-    artisan: artisan.name,
-    country: artisan.city,
-    category: category.name,
+    artisan: artisan?.name || "Desconocido",
+    country: artisan?.city || "Desconocida",
+    category: category?.name || "Sin categoría",
   };
 
   const [quantity, setQuantity] = useState(1);

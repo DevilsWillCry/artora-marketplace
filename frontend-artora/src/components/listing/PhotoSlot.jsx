@@ -33,6 +33,7 @@ function PhotoSlot({ index, isPrimary = false, images, image, setImages }) {
   return (
     <>
       <input
+        id="images"
         ref={inputRef}
         type="file"
         accept="image/*"
@@ -112,7 +113,7 @@ function PhotoSlot({ index, isPrimary = false, images, image, setImages }) {
 
             <div className="text-center">
               <p className="text-xs uppercase tracking-widest">
-                {primary ? "Añadir foto de portada" : "Añadir foto"}
+                {primary ? "Añadir foto de portada" : "Añadir foto  "}
               </p>
 
               {primary && (

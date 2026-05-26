@@ -19,7 +19,7 @@ function EmptyState() {
           text-stone-900
         "
       >
-        Nothing here yet
+        Nada por aquí aún
       </h2>
 
       <p
@@ -31,11 +31,10 @@ function EmptyState() {
           text-stone-600
         "
       >
-        Try another category or come back next
-        month for new handcrafted pieces.
+        Parece que no hay nada por aqui. Intenta buscar algo diferente.
       </p>
     </div>
   );
 }
- 
+
 export default EmptyState;

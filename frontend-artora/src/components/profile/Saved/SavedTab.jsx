@@ -7,6 +7,8 @@ import ProductCard from "@/components/product/ProductCard";
 import { load } from "@/storage/storage";
 import useAuth from "@/hooks/useAuth";
 
+import EmptyState from "@/components/shop/EmptyState";
+
 export default function SavedTab() {
   const { user } = useAuth();
 
@@ -50,6 +52,8 @@ export default function SavedTab() {
           estar disponible o entra en oferta.
         </p>
       </div>
+
+      {savedProducts.length === 0 && <EmptyState />}
 
       <div
         className="

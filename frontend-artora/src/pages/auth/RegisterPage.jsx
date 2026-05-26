@@ -18,6 +18,8 @@ import countries from "@/data/countries";
 import ArtoraSelect from "../../components/ui/form/ArtoraSelect";
 import { useEffect } from "react";
 
+import { Toaster, toast } from "sonner";
+
 function RegisterPage({ density }) {
   const navigate = useNavigate();
   const users = load("users", []);
@@ -35,7 +37,7 @@ function RegisterPage({ density }) {
   const [errors, setErrors] = useState({});
   const { login } = useAuth();
 
-  console.log(form)
+  console.log(form);
 
   function submit(e) {
     e.preventDefault();
@@ -69,7 +71,6 @@ function RegisterPage({ density }) {
       er.city = "Por favor ingresa tu ciudad";
     }
 
-
     if (form.country.length === 0) {
       er.country = "Por favor ingresa tu país";
     }
@@ -94,8 +95,18 @@ function RegisterPage({ density }) {
 
       save("users", [...users, newUser]);
       login(newUser);
-      navigate("/");
       setCities([]);
+
+      toast.success("¡Registro exitoso!", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     }
   }
 
@@ -129,6 +140,7 @@ function RegisterPage({ density }) {
       image="https://img.freepik.com/fotos-premium/bodegon-jarron-arcilla-blanca-mate-jarrones-varias-formas_639836-413.jpg"
       textHero="A veces, el mejor comienzo es un nombre que se siente tuyo."
     >
+      <Toaster position="bottom-right" richColors />
       <div className="max-w-105 animate-fade-right animate-once animate-ease-out">
         <div
           className="

@@ -1,11 +1,15 @@
 // components/list-piece/VisibilitySection.jsx
 
+import { LoaderCircle } from "lucide-react";
 import { Eye, FileText } from "lucide-react";
 export function VisibilitySection({
   form,
   submit,
   submitted,
   updateField,
+  loading,
+  setLoading,
+  navigateTo,
 }) {
   const options = [
     {
@@ -105,27 +109,34 @@ export function VisibilitySection({
         <button
           type="button"
           className="rounded-md border border-stone-300 px-5 py-3 text-sm uppercase tracking-[0.08em] text-stone-700 transition hover:bg-stone-200"
-          disabled={submitted}
-          aria-disabled={submitted}
-          onClick={() => submit("cancel")}
-
+          disabled={loading || submitted}
+          aria-disabled={loading || submitted}
+          onClick={() => {
+            navigateTo(-1, "cancel");
+          }}
         >
-          CANCELAR
+          {loading ? <LoaderCircle className="animate-spin" /> : "Cancelar"}
         </button>
 
         <button
           type="button"
           className="rounded-md bg-stone-900 px-6 py-3 text-sm uppercase tracking-[0.08em] text-white transition hover:bg-terracotta"
-          disabled={submitted}
-          aria-disabled={submitted}
-          onClick={() => submit("success")}
-
+          disabled={loading || submitted}
+          aria-disabled={loading || submitted}
+          onClick={() => {
+            setLoading(true);
+            submit();
+          }}
         >
-          {submitted
-            ? "✓ Producto creado."
-            : form.visibility === "public"
-              ? "Publicar →"
-              : "Guardar →"}
+          {loading ? (
+            <LoaderCircle className="animate-spin" />
+          ) : submitted ? (
+            "✓ Producto creado."
+          ) : form.visibility === "public" ? (
+            "Publicar →"
+          ) : (
+            "Guardar →"
+          )}
         </button>
       </div>
     </section>

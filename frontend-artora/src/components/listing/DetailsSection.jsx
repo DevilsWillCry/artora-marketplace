@@ -45,6 +45,7 @@ function DetailsSection({ form, setForm, errors, updateField }) {
           error={errors.title}
         >
           <input
+            id="title-listing"
             type="text"
             value={form.title}
             onChange={(e) => updateField("title", e.target.value)}
@@ -144,6 +145,7 @@ function DetailsSection({ form, setForm, errors, updateField }) {
           error={errors.description}
         >
           <textarea
+            id="description"
             rows={6}
             value={form.description}
             onChange={(e) => updateField("description", e.target.value)}
@@ -166,6 +168,7 @@ function DetailsSection({ form, setForm, errors, updateField }) {
           error={errors.materials}
         >
           <input
+            id="materials"
             type="text"
             value={form.materials}
             onChange={(e) => updateField("materials", e.target.value)}

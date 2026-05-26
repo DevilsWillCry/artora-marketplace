@@ -7,6 +7,7 @@ import AuthProvider from "@/context/AuthProvider";
 import VisitUserProvider from "@/context/VisitUserProvider";
 import CartProvider from "@/context/CartProvider";
 import { initData } from "./lib/initData.js";
+import ScrollToTop from "./components/ui/ScrollToTop.jsx";
 
 initData();
 
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")).render(
       <AuthProvider>
         <CartProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <App />
           </BrowserRouter>
         </CartProvider>

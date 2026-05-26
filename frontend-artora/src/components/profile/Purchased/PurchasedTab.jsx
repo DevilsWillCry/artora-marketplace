@@ -2,6 +2,8 @@
 import OrderCard from "./OrderCard";
 
 import { load } from "@/storage/storage";
+import EmptyState from "@/components/shop/EmptyState";
+
 
 export default function PurchasedTab({ watchingUser }) {
   const orders = load("orders", []);
@@ -43,6 +45,8 @@ export default function PurchasedTab({ watchingUser }) {
       {ordersFiltered.map((order) => (
         <OrderCard key={order.id} order={order} />
       ))}
+
+      {ordersFiltered.length === 0 && <EmptyState />}
     </div>
   );
 }

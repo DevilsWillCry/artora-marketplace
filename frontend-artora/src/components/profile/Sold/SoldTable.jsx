@@ -3,6 +3,7 @@
 import { useNavigate } from "react-router";
 import StatusPill from "../shared/StatusPill";
 import useVisitUser from "@/hooks/useVisitUser";
+import EmptyState from "@/components/shop/EmptyState";
 
 export default function SoldTable({ listings }) {
   const navigate = useNavigate();
@@ -15,7 +16,6 @@ export default function SoldTable({ listings }) {
   const handleViewDetails = (id) => {
     navigate(`/products/${id}`);
   };
-
 
   return (
     <div
@@ -59,7 +59,6 @@ export default function SoldTable({ listings }) {
               >
                 Precio
               </th>
-
 
               <th
                 className="
@@ -140,14 +139,12 @@ export default function SoldTable({ listings }) {
                   </div>
                 </td>
 
-
                 {/* Stock */}
                 <td className="px-6 py-5 align-middle text-left">
                   <span className="font-serif text-lg text-stone-900">
                     {listing.stock}
                   </span>
                 </td>
-
 
                 {/* Status */}
                 <td className="px-6 py-5 align-middle">
@@ -176,7 +173,6 @@ export default function SoldTable({ listings }) {
                     ${listing.price.toLocaleString("es-CO")}
                   </span>
                 </td>
-
 
                 {/* Stock solded */}
                 <td
@@ -327,6 +323,7 @@ export default function SoldTable({ listings }) {
             ))}
           </tbody>
         </table>
+        {listings.length === 0 && <EmptyState />}
       </div>
     </div>
   );
