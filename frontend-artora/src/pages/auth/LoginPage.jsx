@@ -16,6 +16,9 @@ import { load } from "@/storage/storage";
 
 import { Toaster, toast } from "sonner";
 
+import { MoveLeft } from 'lucide-react';
+
+
 function LoginPage({ density }) {
   const navigate = useNavigate();
   const users = load("users", []); 
@@ -78,6 +81,9 @@ function LoginPage({ density }) {
       image="https://img.kwcdn.com/product/fancy/e319154d-9950-4c5b-8be9-65a576647a07.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"
       textHero="Volver a un nombre que conoces se siente como algo pequeño y apropiado."
     >
+
+      <MoveLeft className="absolute top-5 left-10 animate-fade-left animate-once animate-duration-1000 animate-ease-out animate-fill-backwards cursor-pointer" onClick={() => navigate("/")} />
+
       <div className="max-w-105 animate-fade-left animate-once animate-ease-out">
         <div
           className="

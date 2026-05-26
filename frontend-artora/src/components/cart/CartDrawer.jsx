@@ -10,6 +10,7 @@ import { v4 as uuid } from "uuid";
 import useAuth from "@/hooks/useAuth";
 import { load, save } from "@/storage/storage";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export default function CartDrawer() {
   const { user } = useAuth();
@@ -42,8 +43,49 @@ export default function CartDrawer() {
     updateField("total", totalAmount);
   }, [cart]);
 
+  console.log(form);
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (form.items.length === 0 || form.total === 0) {
+      setErrors("El carrito esta vacio");
+      return;
+    }
+
+    if (
+      form.items.find((item) => {
+        const { productId } = item;
+        const product = products.find((product) => product.id === productId);
+        return product.artisanId === user?.id;
+      })
+    ) {
+      toast.error("Hay un producto propio agregado al carrito, eliminalo", {
+        position: "bottom-left",
+        style: {
+          background: "#000",
+          color: "#fff",
+          borderRadius: "10px",
+        },
+        duration: 2000,
+      });
+      return;
+    }
+
+    if (!form.artisanId) {
+      toast.error("Error al enviar la orden", {
+        position: "bottom-left",
+        style: {
+          background: "#000",
+          color: "#fff",
+          borderRadius: "10px",
+        },
+        duration: 1000,
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+      return;
+    }
 
     save("orders", [...orders, form]);
     setCartOpen(false);

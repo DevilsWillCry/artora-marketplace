@@ -14,11 +14,7 @@ export default function ArtoraInput({
   return (
     <div className="flex flex-col gap-1">
       {/* Label */}
-      {label && (
-        <label className="text-sm text-ink font-medium">
-          {label}
-        </label>
-      )}
+      {label && <label className="text-sm text-ink font-medium">{label}</label>}
 
       {/* Input */}
       <input
@@ -39,19 +35,14 @@ export default function ArtoraInput({
 
           placeholder:text-inkSoft
         `,
-          error &&
-            "border-red-400 focus:border-red-500 focus:ring-red-300/30",
-          className
+          error && "border-red-400 focus:border-red-500 focus:ring-red-300/30",
+          className,
         )}
         {...props}
       />
 
       {/* Error */}
-      {error && (
-        <p className="text-xs text-red-500 mt-1">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
     </div>
   );
 }

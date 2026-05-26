@@ -42,7 +42,7 @@ function ShopPage() {
         break;
 
       case "A → Z":
-        list.sort((a, b) => a.name.localeCompare(b.name));
+        list.sort((a, b) => a.title.localeCompare(b.title));
         break;
 
       default:

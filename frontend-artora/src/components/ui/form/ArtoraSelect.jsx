@@ -24,8 +24,9 @@ function ArtoraSelect({
       >
         <option value="null">{hint}</option>
         {options.map((option, index) => (
-          <option key={index} value={option.code || option}>
-            {option.name || option}
+          <option key={index} value={option.dial_code || option.code || option}>
+            {option.name || option}{" "}
+            {option.dial_code || "" || option.code || ""}
           </option>
         ))}
       </select>

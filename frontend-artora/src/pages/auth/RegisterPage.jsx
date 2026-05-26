@@ -14,11 +14,14 @@ import ArtoraButton from "@/components/ui/ArtoraButton";
 import useAuth from "@/hooks/useAuth";
 import { save, load } from "@/storage/storage";
 
-import countries from "@/data/countries";
-import ArtoraSelect from "../../components/ui/form/ArtoraSelect";
+//import countries from "@/data/countries";
+import ArtoraSelect from "@/components/ui/form/ArtoraSelect";
 import { useEffect } from "react";
 
 import { Toaster, toast } from "sonner";
+import { MoveLeft } from "lucide-react";
+
+import phoneCodes from "@/data/phoneCodes";
 
 function RegisterPage({ density }) {
   const navigate = useNavigate();
@@ -28,6 +31,8 @@ function RegisterPage({ density }) {
     name: "",
     email: "",
     password: "",
+    phoneCode: "",
+    phone: "",
     country: "",
     city: "",
   });
@@ -36,8 +41,6 @@ function RegisterPage({ density }) {
 
   const [errors, setErrors] = useState({});
   const { login } = useAuth();
-
-  console.log(form);
 
   function submit(e) {
     e.preventDefault();
@@ -73,6 +76,14 @@ function RegisterPage({ density }) {
 
     if (form.country.length === 0) {
       er.country = "Por favor ingresa tu país";
+    }
+
+    if (form.phone.length === 0) {
+      er.phone = "Por favor ingresa tu número de teléfono";
+    }
+
+    if (form.phoneCode.length === 0) {
+      er.phoneCode = "Por favor ingresa tu código de país";
     }
 
     setErrors(er);
@@ -111,6 +122,9 @@ function RegisterPage({ density }) {
   }
 
   useEffect(() => {
+    if (!form.country) {
+      return;
+    }
     const getCity = async () => {
       const response = await fetch(
         "https://countriesnow.space/api/v0.1/countries/cities",
@@ -120,7 +134,7 @@ function RegisterPage({ density }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            iso2: form.country,
+            country: form.country,
           }),
         },
       );
@@ -133,6 +147,20 @@ function RegisterPage({ density }) {
     });
   }, [form.country]);
 
+  useEffect(() => {
+    if (form.phoneCode.length === 0) {
+      return;
+    }
+    const getCity = phoneCodes.find(
+      (item) => item.dial_code === form.phoneCode,
+    );
+
+    setForm({
+      ...form,
+      country: getCity.name,
+    });
+  }, [form.phoneCode]);
+
   return (
     <AuthShell
       side="left"
@@ -140,7 +168,13 @@ function RegisterPage({ density }) {
       image="https://img.freepik.com/fotos-premium/bodegon-jarron-arcilla-blanca-mate-jarrones-varias-formas_639836-413.jpg"
       textHero="A veces, el mejor comienzo es un nombre que se siente tuyo."
     >
-      <Toaster position="bottom-right" richColors />
+      <Toaster position="bottom-right" />
+
+      <MoveLeft
+        className="absolute top-5  left-10 animate-fade-left animate-once  animate-duration-1000 animate-ease-out animate-fill-backwards cursor-pointer"
+        onClick={() => navigate("/")}
+      />
+
       <div className="max-w-105 animate-fade-right animate-once animate-ease-out">
         <div
           className="
@@ -216,22 +250,48 @@ function RegisterPage({ density }) {
             placeholder="••••••••"
           />
 
-          <ArtoraSelect
-            options={countries}
-            name="Countries"
-            id="location-countries"
-            hint="Selecciona el país"
-            value={form.country}
-            onChange={(value) =>
-              setForm((prev) => ({
-                ...prev,
-                country: value,
-              }))
-            }
-            error={errors.country}
-          />
+          <section className="flex flex-col  justify-center gap-3">
+            <ArtoraSelect
+              options={phoneCodes}
+              name="phone-codes"
+              id="phone-codes"
+              hint="Prefijo"
+              value={form.phoneCode}
+              onChange={(value) =>
+                setForm((prev) => ({
+                  ...prev,
+                  phoneCode: value,
+                }))
+              }
+              error={errors.phoneCode}
+            />
+            <div>
+              <input
+                type="text"
+                className="h-11 w-full rounded-md border border-rule bg-paper px-4 text-[15px] text-ink items-center"
+                placeholder="XXXXXXX..."
+                error={errors.phone}
+                value={form.phone}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    phone: e.target.value,
+                  }))
+                }
+              />
+              {errors.phone && (
+                <p className="text-xs text-red-500">{errors.phone}</p>
+              )}
+            </div>
+          </section>
 
-          {cities && (
+          {form.phoneCode && (
+            <span className="h-11 w-full rounded-md border border-rule bg-paper px-4 text-[15px] text-ink items-center flex">
+              {form.country}
+            </span>
+          )}
+
+          {form.country && (
             <ArtoraSelect
               options={cities}
               name="Cities"

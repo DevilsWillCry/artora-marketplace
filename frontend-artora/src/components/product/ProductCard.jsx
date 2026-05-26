@@ -11,6 +11,8 @@ import useCart from "@/hooks/useCart";
 
 import useAuth from "@/hooks/useAuth";
 
+import { toast } from "sonner";
+
 function ProductCard({ product }) {
   const navigate = useNavigate();
 
@@ -34,9 +36,17 @@ function ProductCard({ product }) {
 
   const savedProduct = user?.savedProducts?.find((id) => id === product.id); // Cambia el color del corazón según si el producto está guardado}
 
-
   const handleAddToCart = () => {
     addToCart(product.id, product.price);
+    toast.success("Producto agregado al carrito", {
+      position: "bottom-right",
+      style: {
+        background: "#000",
+        color: "#fff",
+        borderRadius: "10px",
+      },
+      duration: 1000,
+    });
   };
 
   const handleSendToUser = (id) => {
