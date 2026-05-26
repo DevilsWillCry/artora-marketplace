@@ -45,7 +45,7 @@ function ProductCard({ product }) {
         color: "#fff",
         borderRadius: "10px",
       },
-      duration: 1000,
+      duration: 1000, 
     });
   };
 

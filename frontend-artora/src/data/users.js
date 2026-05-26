@@ -27,9 +27,13 @@ const users = [
 
     followers: [2],
 
-    country : "ES",
+    country : "Spain",
 
     city : "Barcelona",
+
+    phoneCode: "+57",
+
+    phone: "3178465152",
 
     createdAt: "2026-01-15T10:00:00Z",
 
@@ -62,9 +66,13 @@ const users = [
 
     followers: [1],
 
-    country : "CO",
+    country : "Colombia",
 
     city : "Cali",
+
+    phoneCode: "+57",
+
+    phone: "3178465152",
 
     createdAt: "2026-02-20T14:30:00Z",
       

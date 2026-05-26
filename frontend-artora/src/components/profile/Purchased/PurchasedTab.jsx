@@ -18,8 +18,6 @@ export default function PurchasedTab({ watchingUser }) {
     0,
   );
 
-
-
   return (
     <div className="space-y-5 ">
       <div className="mb-5">

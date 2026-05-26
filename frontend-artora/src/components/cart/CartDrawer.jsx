@@ -11,6 +11,8 @@ import useAuth from "@/hooks/useAuth";
 import { load, save } from "@/storage/storage";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { groupProductsByArtisan } from "@/utils/groupByArtisan";
+import { checkoutWhatsapp } from "@/utils/checkoutWhatsapp";
 
 export default function CartDrawer() {
   const { user } = useAuth();
@@ -43,7 +45,6 @@ export default function CartDrawer() {
     updateField("total", totalAmount);
   }, [cart]);
 
-  console.log(form);
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -99,6 +100,16 @@ export default function CartDrawer() {
       nameStatus: "Pendiente",
       createdAt: new Date().toISOString(),
     });
+
+    const grouped =  groupProductsByArtisan({
+      items: form.items,
+      products,
+      users: load("users", []),
+    });
+
+    checkoutWhatsapp(grouped);
+
+
     navigate(`/profile/${user?.id}`);
   };
 
