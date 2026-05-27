@@ -6,6 +6,11 @@ import ArtoraButton from "@/components/ui/ArtoraButton";
 
 import Field from "./Field";
 
+import { sendEmail } from "@/utils/emailjs";
+
+import { toast } from "sonner";
+import { LoaderCircle } from "lucide-react";
+
 function ContactForm() {
   const [form, setForm] = useState({
     name: "",
@@ -17,6 +22,8 @@ function ContactForm() {
   const [errors, setErrors] = useState({});
 
   const [sent, setSent] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const updateField = (key, value) => {
     setForm((prev) => ({
@@ -52,21 +59,54 @@ function ContactForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
 
     if (!validate()) return;
 
-    setSent(true);
-
-    setTimeout(() => {
-      setSent(false);
-
-      setForm({
-        name: "",
-        email: "",
-        subject: "General",
-        message: "",
+    sendEmail({
+      name: form.name,
+      email: form.email,
+      subject: form.subject,
+      message: form.message,
+    })
+      .then((result) => {
+        setSent(true);
+        if (result.status === 200) {
+          setForm({
+            name: "",
+            email: "",
+            subject: "General",
+            message: "",
+          });
+          toast.success("Mensaje enviado", {
+            position: "bottom-right",
+            style: {
+              background: "#000",
+              color: "#fff",
+              borderRadius: "10px",
+            },
+            duration: 1000,
+          });
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        setSent(false);
+        if (error.status === 400) {
+          setLoading(false);
+          setErrors(error.data);
+          toast.error(error.data.message, {
+            position: "bottom-right",
+            style: {
+              background: "#000",
+              color: "#fff",
+              borderRadius: "10px",
+            },
+            duration: 1000,
+          });
+        }
       });
-    }, 3500);
+    setSent(false);
   };
 
   return (
@@ -172,8 +212,12 @@ function ContactForm() {
           sm:items-center
         "
       >
-        <ArtoraButton type="submit" disabled={sent} className="bg-black hover:bg-terracotta-dk transition-all duration-300">
-          {sent ? "✓ Enviado — ¡Gracias!" : "Envia tu mensaje →"}
+        <ArtoraButton
+          type="submit"
+          disabled={sent}
+          className="bg-black hover:bg-terracotta-dk transition-all duration-300"
+        >
+          {loading ? <LoaderCircle className="animate-spin" /> : "Enviar"}
         </ArtoraButton>
 
         <span

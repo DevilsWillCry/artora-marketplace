@@ -3,13 +3,24 @@
 import { Link } from "react-router";
 import { load } from "@/storage/storage";
 import useCart from "@/hooks/useCart";
+import useAuth from "@/hooks/useAuth";
 
 function ProductList({ products }) {
+  const { user } = useAuth();
   const users = load("users", []);
+  const listings = load("listings", []);
   const categories = load("categories", []);
   const { addToCart } = useCart();
   const handleAddToCart = (product) => {
     addToCart(product.id, product.price);
+  };
+
+  const productListed = (product) => {
+    const listing = listings.find(
+      (listing) =>
+        listing.productId == product.id && listing.artisanId != user?.id,
+    );
+    return listing;
   };
 
   return (
@@ -60,7 +71,7 @@ function ProductList({ products }) {
               "
             >
               {categories.find((c) => c.id === product.categoryId).name} ·{" "}
-              {users.find((u) => u.id === product.artisanId).name}
+              {users.find((u) => u.id == product.artisanId).name}
             </p>
 
             <h3
@@ -104,10 +115,11 @@ function ProductList({ products }) {
                 text-stone-900
               "
             >
-              ${product.price}
+              {product.price.toLocaleString("es-CO")} COP
             </span>
-            <button
-              className="
+            {productListed(product) && (
+              <button
+                className="
                 mt-4
                 rounded-md
                 border
@@ -119,10 +131,11 @@ function ProductList({ products }) {
                 hover:bg-stone-900
                 hover:text-white
               "
-              onClick={() => handleAddToCart(product)}
-            >
-              Añadir
-            </button>
+                onClick={() => handleAddToCart(product)}
+              >
+                Añadir
+              </button>
+            )}
           </div>
         </div>
       ))}
