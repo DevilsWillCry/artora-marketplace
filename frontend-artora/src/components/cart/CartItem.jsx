@@ -11,7 +11,7 @@ export default function CartItem({ item, errors }) {
   if (!product) {
     return null;
   }
-  const user  = users.find((u) => u.id === product.artisanId);
+  const user  = users.find((u) => u.id == product.artisanId);
 
   return (
     <article

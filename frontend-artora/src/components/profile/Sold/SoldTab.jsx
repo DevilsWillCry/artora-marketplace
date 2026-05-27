@@ -24,6 +24,8 @@ export default function SoldTab() {
 
   const navigate = useNavigate();
 
+  console.log(listings)
+
 
   const {
     listingsWithDetails,
@@ -66,7 +68,7 @@ export default function SoldTab() {
 
     // Listings enriquecidos
     const listingsWithDetails = listings
-      .filter((listing) => listing.artisanId === currentUser.id)
+      .filter((listing) => listing.artisanId == currentUser.id)
       .map((listing) => {
         const product = productsMap.get(listing.productId);
 

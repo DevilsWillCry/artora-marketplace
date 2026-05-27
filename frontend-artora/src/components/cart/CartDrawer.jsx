@@ -57,7 +57,7 @@ export default function CartDrawer() {
       form.items.find((item) => {
         const { productId } = item;
         const product = products.find((product) => product.id === productId);
-        return product.artisanId === user?.id;
+        return product.artisanId == user?.id;
       })
     ) {
       toast.error("Hay un producto propio agregado al carrito, eliminalo", {

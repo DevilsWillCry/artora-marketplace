@@ -31,7 +31,7 @@ function ProductCard({ product }) {
 
   const isListed = listings.find(
     (listing) =>
-      listing.productId === product.id && listing.artisanId === user?.id,
+      listing.productId === product.id && listing.artisanId == user?.id,
   ); // Verifica si el producto está listado
 
   const savedProduct = user?.savedProducts?.find((id) => id === product.id); // Cambia el color del corazón según si el producto está guardado}
@@ -45,7 +45,7 @@ function ProductCard({ product }) {
         color: "#fff",
         borderRadius: "10px",
       },
-      duration: 1000, 
+      duration: 1000,
     });
   };
 
