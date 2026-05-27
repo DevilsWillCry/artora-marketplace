@@ -12,6 +12,8 @@ import ContactPage from "./pages/ContactPage";
 import ArtoraListPiecePage from "./pages/ArtoraListPiecePage";
 import DetailProductPage from "./pages/DetailProductPage";
 
+console.log(import.meta.env.VITE_CLOUDINARY_CLOUD);
+
 function App() {
   const density = "compact";
   return (
@@ -22,7 +24,6 @@ function App() {
         <Route element={<BaseLayout />}>
           <Route path="/" element={<HomePage density={density} />} />
           <Route path="/about" element={<AboutPage />} />
-
           <Route element={<PrivateOutlet />}>
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/shop" element={<ShopPage />} />
